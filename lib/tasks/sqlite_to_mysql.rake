@@ -22,7 +22,8 @@ namespace :sqlite_to_mysql do
   task :export_csv => :create_dump_dir do
     db_file = ENV['DB_FILE'] || "db/#{Rails.env}.sqlite3"
     TABLES.each do |table_name|
-      `sqlite3 -csv -header #{db_file} "SELECT * FROM #{table_name}" > #{Rails.root.join('db', 'dump', "#{table_name}.csv")}`
+      puts "export db/dump/#{table_name}.csv ..."
+      puts `sqlite3 -csv -header #{db_file} "SELECT * FROM #{table_name}" > #{Rails.root.join('db', 'dump', "#{table_name}.csv")}`
     end
   end
 
@@ -37,8 +38,8 @@ namespace :sqlite_to_mysql do
         LOAD DATA LOCAL INFILE "#{Rails.root.join('db', 'dump', "#{table_name}.csv")}" REPLACE INTO TABLE #{table_name} FIELDS TERMINATED BY ',' ENCLOSED BY '"' IGNORE 1 LINES
       SQL
       sql.gsub!(/"/, '\\"')
-      puts %(mysql --local-infile=1 -h #{host} -u#{user} -p#{password} #{app_name}_#{Rails.env} -e "#{sql}")
-      `mysql --local-infile=1 -h #{host} -u#{user} -p#{password} #{app_name}_#{Rails.env} -e "#{sql}"`
+      puts "import #{table_name}.csv ..."
+      puts `mysql --local-infile=1 -h #{host} -u#{user} -p#{password} #{app_name}_#{Rails.env} -e "#{sql}"`
     end
   end
 end
