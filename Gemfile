@@ -53,6 +53,7 @@ group :deployment do
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
+  gem 'capistrano-passenger'
 end
 
 gem 'casein', '~>5.1.1'
