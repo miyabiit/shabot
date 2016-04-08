@@ -45,6 +45,13 @@ group :development, :test do
   gem 'spring'
 end
 
+group :deployment do
+  gem 'capistrano', '~> 3.4.0'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-bundler'
+end
+
 gem 'casein', '~>5.1.1'
 gem 'prawn'
 gem 'prawn-table'

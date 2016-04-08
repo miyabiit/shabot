@@ -16,7 +16,6 @@
 !/log/.keep
 /tmp
 
-/*.lock
 /vendor/bundle
 /db/dump
 
