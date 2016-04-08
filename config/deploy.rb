@@ -15,11 +15,16 @@ set :bundle_without,  [:development, :test]
 set :user, "ec2-user"
 set :group, "ec2-user"
 
+set :rbenv_custom_path, '/usr/local/rbenv'
 set :rbenv_type, :system
 set :rbenv_ruby, '2.1.6'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
+
+set :default_environment, {
+  'PATH' => "/usr/local/rbenv/shims:/usr/local/rbenv/bin:$PATH"
+}
 
 set :bundle_binstubs, nil
 
@@ -28,6 +33,7 @@ set :linked_files, fetch(:linked_files, []).push('.env')
 set :linked_dirs, %w{log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle}
 
 set :passenger_restart_with_sudo, true
+set :passenger_restart_command, 'PATH=$PATH passenger-config restart-app'
  
 set :ssh_options, {
   user: 'ec2-user',

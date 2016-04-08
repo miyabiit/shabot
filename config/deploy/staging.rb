@@ -9,7 +9,7 @@ set :rails_env, "staging"
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
-server '54.249.83.66', user: 'ec2-user', roles: %w{app}
+server '54.249.83.66', user: 'ec2-user', roles: %w{web app db}
 
 # role-based syntax
 # ==================
@@ -24,6 +24,8 @@ server '54.249.83.66', user: 'ec2-user', roles: %w{app}
 # role :db,  %w{deploy@example.com}
 #
 role :app, %w{ec2-user@54.249.83.66}
+role :web, %w{ec2-user@54.249.83.66}
+role :db, %w{ec2-user@54.249.83.66}
 
 
 
