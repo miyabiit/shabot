@@ -23,7 +23,7 @@ namespace :sqlite_to_mysql do
     db_file = ENV['DB_FILE'] || "db/#{Rails.env}.sqlite3"
     TABLES.each do |table_name|
       puts "export db/dump/#{table_name}.csv ..."
-      puts `sqlite3 -csv -header #{db_file} "SELECT * FROM #{table_name}" > #{Rails.root.join('db', 'dump', "#{table_name}.csv")}`
+      puts `sqlite3 -csv -header #{db_file} -cmd ".nullvalue '\\\\N'" "SELECT * FROM #{table_name}" > #{Rails.root.join('db', 'dump', "#{table_name}.csv")}`
     end
   end
 
