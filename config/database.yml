@@ -28,6 +28,12 @@ test:
   <<: *default
   database: shabot_test
 
+staging:
+  <<: *default
+  database: shabot_staging
+  username: root
+  password: <%= ENV['SHABOT_DATABASE_PASSWORD'] %>
+
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
@@ -50,5 +56,5 @@ test:
 production:
   <<: *default
   database: shabot_production
-  username: shabot
+  username: root
   password: <%= ENV['SHABOT_DATABASE_PASSWORD'] %>
