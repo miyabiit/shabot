@@ -31,7 +31,8 @@ test:
 staging:
   <<: *default
   database: shabot_staging
-  username: root
+  username: <%= ENV['SHABOT_DATABASE_USER'] %>
+  host: <%= ENV['SHABOT_DATABASE_HOST'] %>
   password: <%= ENV['SHABOT_DATABASE_PASSWORD'] %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
@@ -56,5 +57,6 @@ staging:
 production:
   <<: *default
   database: shabot_production
-  username: root
-  password: <%= ENV['SHABOT_DATABASE_PASSWORD'] %>
+  username: <%= ENV['PRODUCTION_SHABOT_DATABASE_USER'] %>
+  host: <%= ENV['PRODUCTION_SHABOT_DATABASE_HOST'] %>
+  password: <%= ENV['PRODUCTION_SHABOT_DATABASE_PASSWORD'] %>
