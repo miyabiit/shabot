@@ -59,3 +59,9 @@
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
+
+set :rails_env, "production"
+server "54.64.3.35", user: 'ec2-user', roles: %w{web app db}
+role :app, %w{ec2-user@54.64.3.35}
+role :web, %w{ec2-user@54.64.3.35}
+role :db,  %w{ec2-user@54.64.3.35}
