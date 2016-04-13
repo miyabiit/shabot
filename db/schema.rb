@@ -11,97 +11,103 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150820092510) do
+ActiveRecord::Schema.define(version: 20160401050510) do
 
   create_table "accounts", force: :cascade do |t|
-    t.string   "name"
-    t.string   "bank"
-    t.string   "bank_branch"
-    t.string   "category"
-    t.string   "ac_no"
+    t.string   "name",        limit: 255
+    t.string   "bank",        limit: 255
+    t.string   "bank_branch", limit: 255
+    t.string   "category",    limit: 255
+    t.string   "ac_no",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "blogs", force: :cascade do |t|
+    t.text     "content",    limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "casein_admin_users", force: :cascade do |t|
-    t.string   "login",                           null: false
-    t.string   "name"
-    t.string   "email"
-    t.integer  "access_level",        default: 0, null: false
-    t.string   "crypted_password",                null: false
-    t.string   "password_salt",                   null: false
-    t.string   "persistence_token"
-    t.string   "single_access_token"
-    t.string   "perishable_token"
-    t.integer  "login_count",         default: 0, null: false
-    t.integer  "failed_login_count",  default: 0, null: false
+    t.string   "login",               limit: 255,             null: false
+    t.string   "name",                limit: 255
+    t.string   "email",               limit: 255
+    t.integer  "access_level",        limit: 4,   default: 0, null: false
+    t.string   "crypted_password",    limit: 255,             null: false
+    t.string   "password_salt",       limit: 255,             null: false
+    t.string   "persistence_token",   limit: 255
+    t.string   "single_access_token", limit: 255
+    t.string   "perishable_token",    limit: 255
+    t.integer  "login_count",         limit: 4,   default: 0, null: false
+    t.integer  "failed_login_count",  limit: 4,   default: 0, null: false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
-    t.string   "current_login_ip"
-    t.string   "last_login_ip"
-    t.string   "time_zone"
+    t.string   "current_login_ip",    limit: 255
+    t.string   "last_login_ip",       limit: 255
+    t.string   "time_zone",           limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "member_code"
-    t.string   "section"
+    t.string   "member_code",         limit: 255
+    t.string   "section",             limit: 255
   end
 
   create_table "items", force: :cascade do |t|
-    t.string   "name"
-    t.string   "group"
+    t.string   "name",       limit: 255
+    t.string   "group",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "number_masters", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "now_val"
-    t.integer  "max_val"
-    t.integer  "min_val"
-    t.string   "prefix"
-    t.integer  "steps",      default: 1
-    t.string   "type"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name",       limit: 255
+    t.integer  "now_val",    limit: 4
+    t.integer  "max_val",    limit: 4
+    t.integer  "min_val",    limit: 4
+    t.string   "prefix",     limit: 255
+    t.integer  "steps",      limit: 4,   default: 1
+    t.string   "type",       limit: 255
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
-  add_index "number_masters", ["type"], name: "index_number_masters_on_type"
+  add_index "number_masters", ["type"], name: "index_number_masters_on_type", using: :btree
 
   create_table "payment_headers", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "account_id"
+    t.integer  "user_id",      limit: 4
+    t.integer  "account_id",   limit: 4
     t.date     "payable_on"
-    t.integer  "project_id"
+    t.integer  "project_id",   limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "org_name"
-    t.string   "slip_no"
-    t.text     "comment"
-    t.string   "budget_code"
-    t.string   "fee_who_paid"
+    t.string   "org_name",     limit: 255
+    t.string   "slip_no",      limit: 255
+    t.text     "comment",      limit: 65535
+    t.string   "budget_code",  limit: 255
+    t.string   "fee_who_paid", limit: 255
   end
 
   create_table "payment_parts", force: :cascade do |t|
-    t.integer  "payment_header_id"
-    t.integer  "item_id"
-    t.integer  "amount"
+    t.integer  "payment_header_id", limit: 4
+    t.integer  "item_id",           limit: 4
+    t.integer  "amount",            limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string   "name"
-    t.string   "category"
+    t.string   "name",       limit: 255
+    t.string   "category",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "reports", force: :cascade do |t|
-    t.string   "name"
-    t.string   "filename"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       limit: 255
+    t.string   "filename",   limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
 end
