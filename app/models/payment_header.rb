@@ -1,8 +1,11 @@
 class PaymentHeader < ActiveRecord::Base
 	has_many :payment_parts
 	belongs_to :account
+  belongs_to :my_account
+  belongs_to :project
   
 	MAX_PARTS_LENGTH = 5
+  # FIXME enumerize で管理する
 	WHO_PAY = ["先方負担", "自社負担"]
 	ORG_NAMES = %w(シャロンテック 聚楽荘 JAM ベルク ブルームコンサルティング その他)
 	validates :comment, length: { maximum: 400 }
@@ -39,5 +42,18 @@ class PaymentHeader < ActiveRecord::Base
 		end
 		ttl
 	end
+
+  # FIXME: decorator等で処理
+  def my_bank_label
+    my_account_model = self.my_account || self.project.try(:my_account)
+    return "" unless my_account_model
+    my_account_model.bank
+  end
+
+  def my_bank_branch_and_number_label
+    my_account_model = self.my_account || self.project.try(:my_account)
+    return "" unless my_account_model
+    "#{my_account_model.bank_branch} #{my_account_model.category} #{my_account_model.ac_no}" 
+  end
 end
 

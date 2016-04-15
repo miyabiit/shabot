@@ -8,6 +8,7 @@ class Account < ActiveRecord::Base
 	validates :category, length: { maximum: 10 }
 	validates :ac_no, length: { maximum: 20 }
 
+  # FIXME enumerize で管理する
 	CAT_NAMES =%w(普通 当座 ー)
 
 	def self.search(search)

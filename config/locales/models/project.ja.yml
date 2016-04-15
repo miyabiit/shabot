@@ -1,0 +1,9 @@
+ja:
+  activerecord:
+    models:
+      project: "事業・プロジェクト"
+    attributes:
+      project:
+        name: "事業"
+        category: "プロジェクト"
+        my_account_id: "引落元口座"

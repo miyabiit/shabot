@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
 	#Casein routes
 	namespace :casein do
+		resources :my_accounts
 		#resources :reports
 		resources :payment_parts
 		#resources :payment_headers

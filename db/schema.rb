@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160401050510) do
+ActiveRecord::Schema.define(version: 20160415041801) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -60,6 +60,15 @@ ActiveRecord::Schema.define(version: 20160401050510) do
     t.datetime "updated_at"
   end
 
+  create_table "my_accounts", force: :cascade do |t|
+    t.string   "bank",        limit: 255
+    t.string   "bank_branch", limit: 255
+    t.string   "category",    limit: 255
+    t.string   "ac_no",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "number_masters", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.integer  "now_val",    limit: 4
@@ -75,18 +84,21 @@ ActiveRecord::Schema.define(version: 20160401050510) do
   add_index "number_masters", ["type"], name: "index_number_masters_on_type", using: :btree
 
   create_table "payment_headers", force: :cascade do |t|
-    t.integer  "user_id",      limit: 4
-    t.integer  "account_id",   limit: 4
+    t.integer  "user_id",       limit: 4
+    t.integer  "account_id",    limit: 4
     t.date     "payable_on"
-    t.integer  "project_id",   limit: 4
+    t.integer  "project_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "org_name",     limit: 255
-    t.string   "slip_no",      limit: 255
-    t.text     "comment",      limit: 65535
-    t.string   "budget_code",  limit: 255
-    t.string   "fee_who_paid", limit: 255
+    t.string   "org_name",      limit: 255
+    t.string   "slip_no",       limit: 255
+    t.text     "comment",       limit: 65535
+    t.string   "budget_code",   limit: 255
+    t.string   "fee_who_paid",  limit: 255
+    t.integer  "my_account_id", limit: 4
   end
+
+  add_index "payment_headers", ["my_account_id"], name: "index_payment_headers_on_my_account_id", using: :btree
 
   create_table "payment_parts", force: :cascade do |t|
     t.integer  "payment_header_id", limit: 4
@@ -97,11 +109,14 @@ ActiveRecord::Schema.define(version: 20160401050510) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.string   "category",   limit: 255
+    t.string   "name",          limit: 255
+    t.string   "category",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "my_account_id", limit: 4
   end
+
+  add_index "projects", ["my_account_id"], name: "index_projects_on_my_account_id", using: :btree
 
   create_table "reports", force: :cascade do |t|
     t.string   "name",       limit: 255

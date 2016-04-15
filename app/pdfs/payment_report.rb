@@ -35,7 +35,7 @@ class PaymentReport < Prawn::Document
 		self.line_width = 0.5
 		undash
 		stroke do
-			12.times do |n|
+			13.times do |n|
 				horizontal_line 0, 510, :at => 700 - (25 * n)
 			end
 		end
@@ -46,12 +46,12 @@ class PaymentReport < Prawn::Document
 		end
 		self.line_width = 0.5
 		stroke do
-			vertical_line 700, 425, :at => 0
-			vertical_line 700, 425, :at => 70
-			vertical_line 700, 425, :at => 240 
-			vertical_line 700, 425, :at => 310
-			vertical_line 700, 425, :at => 510
-			rectangle [0,423], 510, 100
+			vertical_line 700, 400, :at => 0
+			vertical_line 700, 400, :at => 70
+			vertical_line 700, 400, :at => 240 
+			vertical_line 700, 400, :at => 310
+			vertical_line 700, 400, :at => 510
+			rectangle [0,398], 510, 100
 		end
 
 		# label
@@ -62,21 +62,21 @@ class PaymentReport < Prawn::Document
 		draw_text "支払申請書", :size => 18, :at => [5,730]
 		draw_text "No." + @payment.slip_no.to_s , :size => 12, :at => [5,710]
 
-		cols = %w(個人コード 所属 勘定科目１ 勘定科目２ 勘定科目３ 勘定科目４ 勘定科目５ 支払日 振込先 事業名 予算区分)
+		cols = %w(個人コード 所属 勘定科目１ 勘定科目２ 勘定科目３ 勘定科目４ 勘定科目５ 支払日 振込先 事業名 予算区分 引落元)
 		cols.each_with_index do |s, n|
 			draw_text s, :size => 12, :at => [5,( (700 - 25 + 7) - (25 * n))]
 		end
-		cols = %w(申請者 支払先 金額 金額 金額 金額 金額 計 支店・口座 PROJECT 振込手数料)
+		cols = %w(申請者 支払先 金額 金額 金額 金額 金額 計 支店・口座 PROJECT 振込手数料 支店・口座)
 		cols.each_with_index do |s, n|
 			draw_text s, :size => 12, :at => [245,( (700 - 25 + 7) - (25 * n))]
 		end
-		draw_text '適用・目的・効果', :size => 10, :at => [5,410]
-		draw_text '(証憑等添付)', :size => 10, :at => [5,310]
+		draw_text '適用・目的・効果', :size => 10, :at => [5,385]
+		draw_text '(証憑等添付)', :size => 10, :at => [5,285]
 		#text Account.find(@payment.account_id).name
 
 		# value
 		account = Account.find(@payment.account_id)
-		# cols = %w(個人コード 所属 勘定科目１ 勘定科目２ 勘定科目３ 勘定科目４ 勘定科目５ 支払日 振込先 事業名 予算区分)
+		# cols = %w(個人コード 所属 勘定科目１ 勘定科目２ 勘定科目３ 勘定科目４ 勘定科目５ 支払日 振込先 事業名 予算区分 引落元)
 		draw_text Casein::AdminUser.find(@payment.user_id).member_code.to_s, :size => 12, :at => [100 ,( (700 - 25 + 7) - (25 * 0))]
 		draw_text Casein::AdminUser.find(@payment.user_id).section.to_s, :size => 12, :at => [100 ,( (700 - 25 + 7) - (25 * 1))]
 		@payment.payment_parts.each_with_index do |part, i|
@@ -86,10 +86,11 @@ class PaymentReport < Prawn::Document
 		draw_text account.bank, :size => 12, :at => [100 ,( (700 - 25 + 7) - (25 * 8))]
 		draw_text Project.find(@payment.project_id).name, :size => 12, :at => [100 ,( (700 - 25 + 7) - (25 * 9))]
 		draw_text @payment.budget_code, :size => 12, :at => [100 ,( (700 - 25 + 7) - (25 * 10))]
+		draw_text @payment.my_bank_label, :size => 12, :at => [100 ,( (700 - 25 + 7) - (25 * 11))] # 引落元
 
-		text_box @payment.comment, :size => 12, :at => [5 ,( (700 - 25) - (25 * 11))], :width => 500, :height => 100, :align => :left, :valign => :top
+		text_box @payment.comment, :size => 12, :at => [5 ,( (700 - 25) - (25 * 12))], :width => 500, :height => 100, :align => :left, :valign => :top
 
-		# cols = %w(申請者 支払先 金額 金額 金額 金額 金額 計 支店・口座 PROJECT 振込手数料)
+		# cols = %w(申請者 支払先 金額 金額 金額 金額 金額 計 支店・口座 PROJECT 振込手数料 支店・口座)
 		draw_text Casein::AdminUser.find(@payment.user_id).name, :size => 12, :at => [330 ,( (700 - 25 + 7) - (25 * 0))]
 		if account.name.length < 15
 			draw_text account.name, :size => 12, :at => [330 ,( (700 - 25 + 7) - (25 * 1))]
@@ -105,5 +106,6 @@ class PaymentReport < Prawn::Document
 		draw_text account.bank_branch + " " + account.category + " " + account.ac_no.to_s, :size => 12, :at => [330 ,( (700 - 25 + 7) - (25 * 8))]
 		draw_text Project.find(@payment.project_id).category, :size => 12, :at => [330 ,( (700 - 25 + 7) - (25 * 9))]
 		draw_text @payment.fee_who_paid, :size => 12, :at => [330 ,( (700 - 25 + 7) - (25 * 10))]
+		draw_text @payment.my_bank_branch_and_number_label, :size => 12, :at => [330 ,( (700 - 25 + 7) - (25 * 11))] # 支店・口座
 	end
 end
