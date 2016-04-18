@@ -1,14 +1,17 @@
 class PaymentHeader < ActiveRecord::Base
+  extend Enumerize
+
 	has_many :payment_parts
   belongs_to :user, class_name: 'Casein::AdminUser', foreign_key: 'user_id'
 	belongs_to :account
   belongs_to :my_account
   belongs_to :project
-  
+
+  enumerize :fee_who_paid, in: ["先方負担", "自社負担"]
+  enumerize :org_name, in: %w(シャロンテック 聚楽荘 JAM ベルク ブルームコンサルティング その他)
+
 	MAX_PARTS_LENGTH = 5
-  # FIXME enumerize で管理する
-	WHO_PAY = ["先方負担", "自社負担"]
-	ORG_NAMES = %w(シャロンテック 聚楽荘 JAM ベルク ブルームコンサルティング その他)
+
 	validates :comment, length: { maximum: 400 }
 	validates :payment_parts, length: { maximum: MAX_PARTS_LENGTH }
 

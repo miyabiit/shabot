@@ -15,7 +15,7 @@
 		<%= casein_text_field f, f.object, :bank_branch, {:casein_label => '支店'} %>
 	</div>
 	<div class="col-lg-6">
-		<%= casein_select f, f.object, :category, Account::CAT_NAMES, {:casein_label => '種別'} %>
+		<%= casein_select f, f.object, :category, Account.category.options, {:casein_label => '種別'} %>
 	</div>
 </div>
 

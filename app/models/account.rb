@@ -1,4 +1,6 @@
 class Account < ActiveRecord::Base
+  extend Enumerize
+
 	has_many :payment_headers
   
 	validates :name, uniqueness: true
@@ -8,8 +10,7 @@ class Account < ActiveRecord::Base
 	validates :category, length: { maximum: 10 }
 	validates :ac_no, length: { maximum: 20 }
 
-  # FIXME enumerize で管理する
-	CAT_NAMES =%w(普通 当座 ー)
+  enumerize :category, in: %w(普通 当座 ー)
 
 	def self.search(search)
 		if search

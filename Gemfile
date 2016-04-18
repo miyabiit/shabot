@@ -75,3 +75,5 @@ gem 'prawn-table'
 gem 'quiet_assets'
 
 gem 'therubyracer'
+
+gem 'enumerize'
