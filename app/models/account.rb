@@ -18,4 +18,9 @@ class Account < ActiveRecord::Base
 			Account.all
 		end
 	end
+
+  # FXME decorator 等に移動
+  def bank_label
+    "#{bank} #{bank_branch}"
+  end
 end

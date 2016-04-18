@@ -1,0 +1,15 @@
+ja:
+  activerecord:
+    models:
+      receipt_header: "入金予定"
+    attributes:
+      receipt_header:
+        user_id: "作成者"
+        account_id: "入金元"
+        receipt_on: "入金予定日"
+        project_id: "事業・プロジェクト"
+        comment: "適応・目的・効果"
+        item_id: "費目"
+        amount: "金額"
+        my_account_id: "銀行口座"
+

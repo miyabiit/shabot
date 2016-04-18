@@ -2,6 +2,12 @@ Rails.application.routes.draw do
 
 	#Casein routes
 	namespace :casein do
+		resources :receipt_headers do
+			member do
+				get 'copy'
+			end
+    end
+
 		resources :my_accounts
 		#resources :reports
 		resources :payment_parts

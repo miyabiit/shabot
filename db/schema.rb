@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415041801) do
+ActiveRecord::Schema.define(version: 20160418052756) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -117,6 +117,24 @@ ActiveRecord::Schema.define(version: 20160415041801) do
   end
 
   add_index "projects", ["my_account_id"], name: "index_projects_on_my_account_id", using: :btree
+
+  create_table "receipt_headers", force: :cascade do |t|
+    t.integer  "user_id",       limit: 4
+    t.integer  "account_id",    limit: 4
+    t.date     "receipt_on"
+    t.integer  "project_id",    limit: 4
+    t.text     "comment",       limit: 65535
+    t.integer  "item_id",       limit: 4
+    t.integer  "amount",        limit: 4
+    t.integer  "my_account_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "receipt_headers", ["account_id"], name: "index_receipt_headers_on_account_id", using: :btree
+  add_index "receipt_headers", ["item_id"], name: "index_receipt_headers_on_item_id", using: :btree
+  add_index "receipt_headers", ["my_account_id"], name: "index_receipt_headers_on_my_account_id", using: :btree
+  add_index "receipt_headers", ["user_id"], name: "index_receipt_headers_on_user_id", using: :btree
 
   create_table "reports", force: :cascade do |t|
     t.string   "name",       limit: 255

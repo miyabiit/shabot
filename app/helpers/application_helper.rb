@@ -1,9 +1,11 @@
 module ApplicationHelper
-  def casein_text_field_i18n(form, method, options = {})
-    if form.object
-      options[:casein_label] ||= form.object.class.human_attribute_name method
-    end
-    casein_text_field(form, form.object, method, options)
+  %W(text_field text_area date_select).each do |input_name|
+    define_method("casein_#{input_name}_i18n", ->(form, method, options = {}) {
+      if form.object
+        options[:casein_label] ||= form.object.class.human_attribute_name method
+      end
+      send("casein_#{input_name}", form, form.object, method, options)
+    })
   end
 
   def casein_select_i18n(form, method, collection, options={})
