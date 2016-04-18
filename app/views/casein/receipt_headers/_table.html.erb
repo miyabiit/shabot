@@ -6,6 +6,7 @@
       <% %W(user_id account_id receipt_on amount project_id comment).each do |attr_name| -%>
         <th><%= casein_sort_link ReceiptHeader.human_attribute_name(attr_name), attr_name %></th>
       <% end -%>
+      <th nowrap>入金<br/>予定</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -18,6 +19,9 @@
       <td><%= casein_table_cell_link receipt_header.amount, casein_receipt_header_path(receipt_header) %></td>
       <td><%= casein_table_cell_link receipt_header.project.try(:name), casein_receipt_header_path(receipt_header) %></td>
       <td><%= casein_table_cell_link receipt_header.comment, casein_receipt_header_path(receipt_header) %></td>
+			<td class="new">
+        <%= link_to(casein_show_row_icon("plus-sign"), copy_casein_receipt_header_path(receipt_header)) %>
+      </td>
       <td class="delete">
         <%= link_to(casein_show_row_icon("trash"), casein_receipt_header_path(receipt_header), :method => :delete, :data => { :confirm => "Are you sure you want to delete this receipt header?" }) %>
       </td>

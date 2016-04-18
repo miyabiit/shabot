@@ -25,7 +25,10 @@ module Casein
     def copy
       @casein_page_title = I18n.t('views.receipt_header.copy.title')
 
-    	@receipt_header = ReceiptHeader.new
+    	src_receipt_header = ReceiptHeader.find(params[:id])
+			@receipt_header = src_receipt_header.dup
+
+      render :new
     end
 
     def create
