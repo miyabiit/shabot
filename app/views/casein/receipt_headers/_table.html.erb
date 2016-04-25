@@ -14,10 +14,10 @@
   <% receipt_headers.each do |receipt_header| %>
     <tr>
       <td><%= casein_table_cell_link receipt_header.user.try(:name), casein_receipt_header_path(receipt_header) %></td>
-      <td><%= casein_table_cell_link receipt_header.account.try(:bank_label), casein_receipt_header_path(receipt_header) %></td>
+      <td><%= casein_table_cell_link receipt_header.account.try(:name), casein_receipt_header_path(receipt_header) %></td>
       <td><%= casein_table_cell_link receipt_header.receipt_on, casein_receipt_header_path(receipt_header) %></td>
       <td><%= casein_table_cell_link receipt_header.amount, casein_receipt_header_path(receipt_header) %></td>
-      <td><%= casein_table_cell_link receipt_header.project.try(:name), casein_receipt_header_path(receipt_header) %></td>
+      <td><%= casein_table_cell_link receipt_header.project.try(:name_and_category), casein_receipt_header_path(receipt_header) %></td>
       <td><%= casein_table_cell_link receipt_header.comment, casein_receipt_header_path(receipt_header) %></td>
 			<td class="new">
         <%= link_to(casein_show_row_icon("plus-sign"), copy_casein_receipt_header_path(receipt_header)) %>
