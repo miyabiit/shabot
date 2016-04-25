@@ -1,35 +1,35 @@
 Rails.application.routes.draw do
 
-	#Casein routes
-	namespace :casein do
-		resources :receipt_headers do
-			member do
-				get 'copy'
-			end
+  #Casein routes
+  namespace :casein do
+    resources :receipt_headers do
+      member do
+        get 'copy'
+      end
     end
 
-		resources :my_accounts
-		#resources :reports
-		resources :payment_parts
-		#resources :payment_headers
-		resources :accounts
-		resources :items
-		resources :projects
-		resources :payment_headers do
-			member do
-				get 'add_part'
-				get 'pdf'
-				get 'new_by_last'
-			end
-		end
-		resources :reports do
-			collection do
-				get 'pdf_list'
-				get 'pdf_list2'
-				get 'pdf_monthly'
-			end
-		end
-	end
+    resources :my_accounts
+    #resources :reports
+    resources :payment_parts
+    #resources :payment_headers
+    resources :accounts
+    resources :items
+    resources :projects
+    resources :payment_headers do
+      member do
+        get 'add_part'
+        get 'pdf'
+        get 'new_by_last'
+      end
+    end
+    resources :reports do
+      collection do
+        get 'pdf_list'
+        get 'pdf_list2'
+        get 'pdf_monthly'
+      end
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
