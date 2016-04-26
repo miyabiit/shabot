@@ -101,7 +101,7 @@ module Casein
     private
       
       def payment_header_params
-        params.require(:payment_header).permit(:user_id, :account_id, :payable_on, :project_id, :org_name, :slip_no, :comment, :budget_code, :fee_who_paid)
+        params.require(:payment_header).permit(:user_id, :account_id, :payable_on, :project_id, :org_name, :slip_no, :comment, :budget_code, :fee_who_paid, :my_account_id)
       end
 
   end

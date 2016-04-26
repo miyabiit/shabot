@@ -29,6 +29,14 @@
 	</div>
 </div>
 
+<% if @session_user.is_admin? -%>
+<div class="row">
+	<div class="col-lg-6">
+		<%= casein_collection_select_i18n f, :my_account_id, MyAccount.all, label_method: :bank_label, include_blank: "(事業・プロジェクトと同じ口座)" %>
+	</div>
+</div>
+<% end -%>
+
 <div class="row">
 	<div class="col-lg-12">
 		<%= casein_text_area f, f.object, :comment, {:casein_label => '効果・適用・目的'} %>

@@ -59,7 +59,7 @@ module Casein
     private
       
       def project_params
-        params.require(:project).permit(:name, :category)
+        params.require(:project).permit(:name, :category, :my_account_id)
       end
 
   end

@@ -1,0 +1,8 @@
+ja:
+  activerecord:
+    models:
+      payment_header: "支払申請書"
+    attributes:
+      payment_header:
+        my_account_id: "引落元口座"
+        manual_my_account: "事業・プロジェクトと異なる口座を設定"
