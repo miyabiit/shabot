@@ -9,12 +9,12 @@ module Casein
   
     def index
       @casein_page_title = I18n.t('views.receipt_header.index.title')
-  		@receipt_headers = ReceiptHeader.order(sort_order(:user_id)).paginate :page => params[:page]
+  		@receipt_headers = receipt_header_search.order(sort_order(:user_id)).paginate :page => params[:page]
     end
   
     def show
       @casein_page_title = I18n.t('views.receipt_header.show.title')
-      @receipt_header = ReceiptHeader.find params[:id]
+      @receipt_header = receipt_header_search.find params[:id]
     end
   
     def new
@@ -25,7 +25,7 @@ module Casein
     def copy
       @casein_page_title = I18n.t('views.receipt_header.copy.title')
 
-    	src_receipt_header = ReceiptHeader.find(params[:id])
+    	src_receipt_header = receipt_header_search.find(params[:id])
 			@receipt_header = src_receipt_header.dup
 
       render :new
@@ -47,7 +47,7 @@ module Casein
     def update
       @casein_page_title = I18n.t('views.receipt_header.update.title')
       
-      @receipt_header = ReceiptHeader.find params[:id]
+      @receipt_header = receipt_header_search.find params[:id]
       @receipt_header.user = @session_user
     
       if @receipt_header.update_attributes receipt_header_params
@@ -60,7 +60,7 @@ module Casein
     end
  
     def destroy
-      @receipt_header = ReceiptHeader.find params[:id]
+      @receipt_header = receipt_header_search.find params[:id]
 
       @receipt_header.destroy
       flash[:notice] = 'Receipt header has been deleted'
@@ -71,6 +71,10 @@ module Casein
       
       def receipt_header_params
         params.require(:receipt_header).permit(:account_id, :receipt_on, :project_id, :comment, :item_id, :amount, :my_account_id)
+      end
+
+      def receipt_header_search
+        ReceiptHeader.onlymine(@session_user)
       end
 
   end
