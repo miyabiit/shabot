@@ -2,43 +2,51 @@
 
 
 <div class="row">
-	<div class="col-lg-4">
-		<%= casein_hidden_field f, f.object, :user_id  %>
-		<%= casein_hidden_field f, f.object, :account_id  %>
-		<%= casein_hidden_field f, f.object, :slip_no  %>
-		<%= 'No. ' + f.object.slip_no.to_s  %>
-		<%= casein_select f, f.object, :org_name, PaymentHeader::ORG_NAMES, {:casein_label => '請求元法人'} %>
-	</div>
-	<div class="col-lg-4">
-		<%= '請求先 ' + Account.find(f.object.account_id).name %>
-		<%= casein_text_field f, f.object, :budget_code, {:casein_label => '予算区分'} %>
-	</div>
-	<div class="col-lg-4">
-		<%= '_' %>
-		<%= casein_select f, f.object, :fee_who_paid, PaymentHeader::WHO_PAY, {:casein_label => '振込手数料'} %>
-	</div>
+  <div class="col-lg-4">
+    <%= casein_hidden_field f, f.object, :user_id  %>
+    <%= casein_hidden_field f, f.object, :account_id  %>
+    <%= casein_hidden_field f, f.object, :slip_no  %>
+    <%= 'No. ' + f.object.slip_no.to_s  %>
+    <%= casein_select f, f.object, :org_name, PaymentHeader::ORG_NAMES, {:casein_label => '請求元法人'} %>
+  </div>
+  <div class="col-lg-4">
+    <%= '請求先 ' + Account.find(f.object.account_id).name %>
+    <%= casein_text_field f, f.object, :budget_code, {:casein_label => '予算区分'} %>
+  </div>
+  <div class="col-lg-4">
+    <%= '_' %>
+    <%= casein_select f, f.object, :fee_who_paid, PaymentHeader::WHO_PAY, {:casein_label => '振込手数料'} %>
+  </div>
 </div>
 
 <div class="row">
-	<div class="col-lg-6">
-		<%= casein_date_select f, f.object, :payable_on, {:casein_label => '支払日'} %>
-	</div>
-	<div class="col-lg-6">
-		<% projects = Project.all %>
-		<%= casein_collection_select f, f.object, :payment_header, :project_id, projects, :id, :name_and_category, {:casein_label => '事業・プロジェクト'} %>
-	</div>
+  <div class="col-lg-6">
+    <%= casein_date_select f, f.object, :payable_on, {:casein_label => '支払日'} %>
+  </div>
+  <div class="col-lg-6">
+    <% projects = Project.all %>
+    <%= casein_collection_select f, f.object, :payment_header, :project_id, projects, :id, :name_and_category, {:casein_label => '事業・プロジェクト'} %>
+  </div>
 </div>
 
 <% if @session_user.is_admin? -%>
 <div class="row">
-	<div class="col-lg-6">
-		<%= casein_collection_select_i18n f, :my_account_id, MyAccount.all, label_method: :bank_label, include_blank: "(事業・プロジェクトと同じ口座)" %>
-	</div>
+  <div class="col-lg-6">
+    <%= casein_collection_select_i18n f, :my_account_id, MyAccount.all, label_method: :bank_label, include_blank: "(事業・プロジェクトと同じ口座)" %>
+  </div>
+  <div class="col-lg-6">
+    <div class="form-group">
+      <%= f.label :planned, {class: 'control-label'} %>
+      <div class="well" style="height: 74px">
+        <%= f.check_box :planned %>&nbsp; <%= f.label :planned, '予定', {class: 'control-label'} %>
+      </div>
+    </div>
+  </div>
 </div>
 <% end -%>
 
 <div class="row">
-	<div class="col-lg-12">
-		<%= casein_text_area f, f.object, :comment, {:casein_label => '効果・適用・目的'} %>
-	</div>
+  <div class="col-lg-12">
+    <%= casein_text_area f, f.object, :comment, {:casein_label => '効果・適用・目的'} %>
+  </div>
 </div>

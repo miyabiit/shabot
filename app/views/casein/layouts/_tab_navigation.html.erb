@@ -7,6 +7,7 @@
 <li id="tab-my_accounts"><%= link_to MyAccount.model_name.human, casein_my_accounts_path %></li>
 <% end %>
 <li id="tab-accounts"><%= link_to "お取引先", casein_accounts_path %></li>
+<li id="tab-planned_payment_headers"><%= link_to "支払予定", casein_planned_payment_headers_path %></li>
 <li id="tab-payment_headers"><%= link_to "支払申請書", casein_payment_headers_path %></li>
 <li id="tab-items"><%= link_to "費目", casein_items_path %></li>
 <% if @session_user.is_admin? %>

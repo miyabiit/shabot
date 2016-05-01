@@ -16,6 +16,12 @@ Rails.application.routes.draw do
 				get 'new_by_last'
 			end
 		end
+		resources :planned_payment_headers do
+			member do
+				get 'add_part'
+				get 'new_by_last'
+			end
+		end
 		resources :reports do
 			collection do
 				get 'pdf_list'

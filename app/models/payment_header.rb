@@ -11,6 +11,9 @@ class PaymentHeader < ActiveRecord::Base
 	validates :comment, length: { maximum: 400 }
 	validates :payment_parts, length: { maximum: MAX_PARTS_LENGTH }
 
+  scope :planned_only, -> { where(planned: true) }
+  scope :result_only , -> { where(planned: false) }
+
 	def self.search(slip_no = nil)
 		if slip_no
 			PaymentHeader.where(['slip_no like ?', "%#{slip_no}%"])
