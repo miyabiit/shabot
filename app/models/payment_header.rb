@@ -1,5 +1,6 @@
 class PaymentHeader < ActiveRecord::Base
 	has_many :payment_parts
+  belongs_to :user, class_name: 'Casein::AdminUser', foreign_key: 'user_id'
 	belongs_to :account
   belongs_to :my_account
   belongs_to :project

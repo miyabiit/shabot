@@ -1,0 +1,13 @@
+taro:
+  login: taro
+  name: テスト 太郎
+  email: taro@example.com
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("taro" + salt) %>
+
+hanako:
+  login: hanako
+  name: テスト 花子
+  email: hanako@example.com
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("hanako" + salt) %>

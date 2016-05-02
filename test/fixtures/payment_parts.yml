@@ -1,0 +1,8 @@
+<% (Date.parse('2015/11/1')..Date.parse('2016/1/31')).each_with_index do |date, idx| %>
+  <% (1..rand(1..2)).each do |part_id| %>
+payable_on_<%= date.strftime('%Y%m%d') %>_<%= part_id %>:
+  payment_header: payable_on_<%= date.strftime('%Y%m%d') %>
+  item: test_<%= rand(1..2) %>
+  amount: <%= rand(10000..10000000) %>
+  <% end %>
+<% end %>
