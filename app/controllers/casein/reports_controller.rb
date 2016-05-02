@@ -15,7 +15,7 @@ module Casein
 		def pdf_list
 			from = (begin Date.parse(params[:from]) rescue Date.parse('1999/1/1') end)
 			to = (begin Date.parse(params[:to]) rescue Date.parse('3000/1/1') end)
-      payment_headers = PaymentHeader.where(payable_on: from...to)
+      payment_headers = PaymentHeader.where(payable_on: from..to)
 			pdf = PaymentList.new(payment_headers)
 			pdf_filename = "payment-project-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
 			send_data pdf.render,
@@ -28,7 +28,7 @@ module Casein
 		def pdf_list2
 			from = (begin Date.parse(params[:from]) rescue Date.parse('1999/1/1') end)
 			to = (begin Date.parse(params[:to]) rescue Date.parse('3000/1/1') end)
-      payment_headers = PaymentHeader.where(payable_on: from...to)
+      payment_headers = PaymentHeader.where(payable_on: from..to)
 			pdf = PaymentList2.new(payment_headers)
 			pdf_filename = "payment-eachday-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
 			send_data pdf.render,
