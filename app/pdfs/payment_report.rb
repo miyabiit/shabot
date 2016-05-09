@@ -70,7 +70,7 @@ class PaymentReport < Prawn::Document
 		cols.each_with_index do |s, n|
 			draw_text s, :size => 12, :at => [245,( (700 - 25 + 7) - (25 * n))]
 		end
-		draw_text '適用・目的・効果', :size => 10, :at => [5,385]
+		draw_text '摘要・目的・効果', :size => 10, :at => [5,385]
 		draw_text '(証憑等添付)', :size => 10, :at => [5,285]
 		#text Account.find(@payment.account_id).name
 
