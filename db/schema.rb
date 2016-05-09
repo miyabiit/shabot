@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20160501045522) do
     t.string   "budget_code",   limit: 255
     t.string   "fee_who_paid",  limit: 255
     t.integer  "my_account_id", limit: 4
-    t.boolean  "planned",       limit: 1
+    t.boolean  "planned",       limit: 1,     default: false
   end
 
   add_index "payment_headers", ["my_account_id"], name: "index_payment_headers_on_my_account_id", using: :btree
