@@ -20,10 +20,10 @@
 </div>
 
 <div class="row">
-  <div class="col-lg-4">
+  <div class="col-lg-5">
     <%= casein_date_select f, f.object, :payable_on, {:casein_label => '支払日'} %>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-5">
     <% projects = Project.all %>
     <%= casein_collection_select f, f.object, :payment_header, :project_id, projects, :id, :name_and_category, {:casein_label => '事業・プロジェクト'} %>
   </div>
