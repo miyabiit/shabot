@@ -148,6 +148,7 @@ ja:
     link: 
       back_to_list: 一覧へ戻る
       add: 追加
+      delete: 削除する
   number:
     currency:
       format:

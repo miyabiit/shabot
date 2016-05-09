@@ -5,4 +5,6 @@ ja:
     attributes:
       payment_header:
         my_account_id: "引落元口座"
-        manual_my_account: "事業・プロジェクトと異なる口座を設定"
+        planned: "計画区分"
+
+

@@ -8,6 +8,7 @@
 			<th><%= casein_sort_link "支店", :bank_branch %></th>
 			<th><%= casein_sort_link "口座種別", :category %></th>
 			<th><%= casein_sort_link "口座番号", :ac_no %></th>
+			<th nowrap>支払</br>予定</th>
 			<th nowrap>支払</br>申請</th>
 			<th>&nbsp;</th>
 		</tr>
@@ -20,6 +21,9 @@
 			<td><%= casein_table_cell_link account.bank_branch, casein_account_path(account) %></td>
 			<td><%= casein_table_cell_link account.category, casein_account_path(account) %></td>
 			<td><%= casein_table_cell_link account.ac_no, casein_account_path(account) %></td>
+			<td class="new">
+				<%= link_to(casein_show_row_icon("plus-sign"), new_casein_planned_payment_header_path(account_id: account.id)) %>
+			</td>
 			<td class="new">
 				<%= link_to(casein_show_row_icon("plus-sign"), new_casein_payment_header_path(account_id: account.id)) %>
 			</td>
