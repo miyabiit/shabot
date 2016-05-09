@@ -4,3 +4,7 @@
  *= require jquery-ui
  *= require ./jquery-autocomplete-custom
  */
+
+table.table th {
+  white-space: nowrap;
+}
