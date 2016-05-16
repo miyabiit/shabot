@@ -12,7 +12,7 @@
     <%= link_to t('helpers.button.cancel'), casein_planned_payment_headers_path, :class => 'btn btn-mini btn-danger' %>
     <%= link_to '明細追加', add_part_casein_planned_payment_header_path, :class => 'btn btn-mini btn-danger' %>
     <%= f.submit t('helpers.submit.submit'), :class => "btn btn-mini btn-primary" %>
-    <%= link_to  'PDF', '#', {:class => 'btn btn-mini btn-primary', :disabled => 'disabled'} %>
+    <%= link_to  'PDF', pdf_casein_payment_header_path, {:class => 'btn btn-mini btn-primary', :disabled => ('disabled' if @payment_header.planned)} %>
   </p>
 
 <% end %>

@@ -12,7 +12,7 @@
     <%= link_to 'Cancel', casein_payment_headers_path, :class => 'btn btn-mini btn-danger' %>
     <%= link_to '明細追加', add_part_casein_payment_header_path, :class => 'btn btn-mini btn-danger' %>
     <%= f.submit "Save changes", :class => "btn btn-mini btn-primary" %>
-    <%= link_to 'PDF', pdf_casein_payment_header_path, {:class => 'btn btn-mini btn-primary', :target => "_blank"} %>
+    <%= link_to 'PDF', pdf_casein_payment_header_path, {:class => 'btn btn-mini btn-primary', :target => "_blank", :disabled => ('disabled' if @payment_header.planned)} %>
   </p>
 
 <% end %>

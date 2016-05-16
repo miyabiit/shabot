@@ -14,13 +14,13 @@ module Casein
   
     def show
       @casein_page_title = 'View payment header'
-      @payment_header = payment_header_search.find params[:id]
+      @payment_header = payment_header_find params[:id]
       render action: :show
     end
 
     def new_by_last
       @casein_page_title = 'New payment header'
-      last_payment_header = payment_header_search.find params[:id]
+      last_payment_header = payment_header_find params[:id]
 			@payment_header = last_payment_header.dup
 			@payment_header.slip_no = SlipNo.get_num
 			if @payment_header.save
@@ -34,7 +34,7 @@ module Casein
 
 
 		def add_part
-      @payment_header = payment_header_search.find(params[:id]) 
+      @payment_header = payment_header_find(params[:id]) 
       @payment_header.payment_parts << PaymentPart.new
       render action: :show
 		end
@@ -66,7 +66,7 @@ module Casein
     def update
       @casein_page_title = 'Update payment header'
       
-      @payment_header = payment_header_search.find params[:id]
+      @payment_header = payment_header_find params[:id]
     
       if @payment_header.update_attributes payment_header_params
         flash[:notice] = 'Payment header has been updated'
@@ -78,7 +78,7 @@ module Casein
     end
  
     def destroy
-      @payment_header = payment_header_search.find params[:id]
+      @payment_header = payment_header_find params[:id]
 
       @payment_header.destroy
       flash[:notice] = 'Payment header has been deleted'
@@ -89,6 +89,10 @@ module Casein
       
       def payment_header_params
         params.require(:payment_header).permit(:user_id, :account_id, :payable_on, :project_id, :org_name, :slip_no, :comment, :budget_code, :fee_who_paid, :my_account_id, :planned)
+      end
+
+      def payment_header_find(param_id)
+        PaymentHeader.onlymine(@session_user).find(param_id)
       end
 
       def payment_header_search
