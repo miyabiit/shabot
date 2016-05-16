@@ -58,7 +58,7 @@ class PaymentReport < Prawn::Document
 		fill_color "0000ff"
 		draw_text @payment.org_name , :size => 12, :at => [5,760]
 		fill_color "000000"
-		draw_text '作成:' + Date.today.strftime("%Y/%m/%d") , :size => 10, :at => [420,760]
+		draw_text '作成:' + @payment.created_at.strftime("%Y/%m/%d") , :size => 10, :at => [420,760]
 		draw_text "支払申請書", :size => 18, :at => [5,730]
 		draw_text "No." + @payment.slip_no.to_s , :size => 12, :at => [5,710]
 
@@ -70,7 +70,7 @@ class PaymentReport < Prawn::Document
 		cols.each_with_index do |s, n|
 			draw_text s, :size => 12, :at => [245,( (700 - 25 + 7) - (25 * n))]
 		end
-		draw_text '適用・目的・効果', :size => 10, :at => [5,385]
+		draw_text '摘要・目的・効果', :size => 10, :at => [5,385]
 		draw_text '(証憑等添付)', :size => 10, :at => [5,285]
 		#text Account.find(@payment.account_id).name
 

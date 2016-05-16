@@ -1,5 +1,6 @@
 <!-- NOTE: the casein:scaffold generator automatically appends new controllers to this file. The SCAFFOLD_INSERT line must NOT be removed -->
 <!-- SCAFFOLD_INSERT -->
+<li id="tab-receipt_headers"><%= link_to ReceiptHeader.model_name.human, casein_receipt_headers_path %></li>
 <% if false %>
 <li id="tab-payment_parts"><%= link_to "Payment parts", casein_payment_parts_path %></li>
 <% end %>
@@ -7,6 +8,7 @@
 <li id="tab-my_accounts"><%= link_to MyAccount.model_name.human, casein_my_accounts_path %></li>
 <% end %>
 <li id="tab-accounts"><%= link_to "お取引先", casein_accounts_path %></li>
+<li id="tab-planned_payment_headers"><%= link_to "支払予定", casein_planned_payment_headers_path %></li>
 <li id="tab-payment_headers"><%= link_to "支払申請書", casein_payment_headers_path %></li>
 <li id="tab-items"><%= link_to "費目", casein_items_path %></li>
 <% if @session_user.is_admin? %>

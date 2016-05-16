@@ -1,0 +1,15 @@
+.autocomplete-combo {
+  position: relative;
+  display: inline-block;
+}
+.autocomplete-combo-toggle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-left: -1px;
+  padding: 0;
+}
+.autocomplete-combo-input {
+  margin: 0;
+  padding: 5px 10px;
+}
