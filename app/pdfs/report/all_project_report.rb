@@ -23,24 +23,24 @@ class Report::AllProjectReport < Report::ReportBase
       render_row [(show_month ? "#{day10_record.date_range.begin.month}月" : ''),
                   (show_date_range ? day10_record.date_range_label : ''),
                   @summary.project_label(project_id),
-                  project_record.receipt.to_s(:delimited), project_record.payment.to_s(:delimited), '', ''], COL_WIDTHS
+                  project_record.receipt, project_record.payment, '', ''], COL_WIDTHS
   end
 
   def render_10days_summary(day10_record)
     hline COL_WIDTHS.take(2).inject(:+), bounds.width
-    render_row ['', '', '', day10_record.receipt.to_s(:delimited), day10_record.payment.to_s(:delimited), day10_record.balance.to_s(:delimited), day10_record.flow.to_s(:delimited)], COL_WIDTHS
+    render_row ['', '', '', day10_record.receipt, day10_record.payment, day10_record.balance, day10_record.flow], COL_WIDTHS
     br
   end
 
   def render_monthly_summary(month_record)
     hline COL_WIDTHS[0], bounds.right
-    render_row ['', '', "#{month_record.date_range.begin.month}月計", month_record.receipt.to_s(:delimited), month_record.payment.to_s(:delimited), month_record.balance.to_s(:delimited), month_record.flow.to_s(:delimited)], COL_WIDTHS
+    render_row ['', '', "#{month_record.date_range.begin.month}月計", month_record.receipt, month_record.payment, month_record.balance, month_record.flow], COL_WIDTHS
     br
     hr
   end
 
   def render_yearly_summary(year_record)
-    render_row ['', '', "#{year_record.date_range.begin.year}年計", year_record.receipt.to_s(:delimited), year_record.payment.to_s(:delimited), year_record.balance.to_s(:delimited), year_record.flow.to_s(:delimited)], COL_WIDTHS
+    render_row ['', '', "#{year_record.date_range.begin.year}年計", year_record.receipt, year_record.payment, year_record.balance, year_record.flow], COL_WIDTHS
   end
 
   def render_header

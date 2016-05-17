@@ -56,7 +56,19 @@ class Report::ReportBase
 
   def render_row(values, col_widths)
     values.each_with_index do |v, idx|
-      text_box v.to_s, size: FONT_SIZE, at: Vector[col_widths.take(idx).inject(0, :+), cursor], width: col_widths[idx], height: ROW_SIZE, valign: :center
+      str = case v
+            when Fixnum
+              v.to_s(:delimited)
+            else
+              v.to_s
+            end
+      align = case v
+              when Fixnum
+                :right
+              else
+                :left
+              end
+      text_box str, size: FONT_SIZE, at: Vector[col_widths.take(idx).inject(0, :+), cursor], width: col_widths[idx], height: ROW_SIZE, valign: :center, align: align
     end
     next_row
     if cursor <= 0
