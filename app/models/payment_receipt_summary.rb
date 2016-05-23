@@ -65,9 +65,6 @@ class PaymentReceiptSummary
   def summarize_by_month(summaries_by_10days)
     flow = 0
     summaries_by_10days.group_by {|s| s.date_range.begin.beginning_of_month.to_date }.map {|date, summaries|
-      if date.month == 1
-        flow = 0
-      end
       balance = summaries.map(&:balance).compact.inject(0, :+)
       flow += balance
       Record.new(((summaries.map{|s| s.date_range.begin}.min)..(summaries.map{|s| s.date_range.end}.max)),
@@ -104,7 +101,6 @@ class PaymentReceiptSummary
     break_by_10days(from, to).each do |date_range|
       if target_month != date_range.begin.beginning_of_month.to_date
         target_month = date_range.begin.beginning_of_month.to_date
-        prev_record = nil
       end
       receipt_query = receipts.where(receipt_on: date_range)
       payment_query = payments.joins(:payment_parts).where(payable_on: date_range)

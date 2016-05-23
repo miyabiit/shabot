@@ -69,7 +69,7 @@ class PaymentReceiptSummaryTest < ActiveSupport::TestCase
           month_s.children[0].tap do |day_s|
             assert_summary_record Date.parse('2015/12/1')..Date.parse('2015/12/10'), day_s
             assert_project_record day_s
-            assert_equal day_s.balance, day_s.flow
+            assert_equal s.children[Date.parse('2015/11/1')].flow + day_s.balance, day_s.flow
           end
 
           month_s.children[1].tap do |day_s|
@@ -92,17 +92,17 @@ class PaymentReceiptSummaryTest < ActiveSupport::TestCase
 
         assert_equal [Date.parse('2016/1/1')], s.children.keys
 
-        s.children[Date.parse('2015/11/1')].tap do |month_s|
+        s.children[Date.parse('2016/1/1')].tap do |month_s|
           month_s = s.children[Date.parse('2016/1/1')]
           assert_summary_record Date.parse('2016/1/1')..Date.parse('2016/1/5'), month_s
-          assert_equal month_s.balance, month_s.flow
+          assert_equal summaries_by_year[0].flow + month_s.balance, month_s.flow
 
           assert_equal [0], month_s.children.keys
 
           month_s.children[0].tap do |day_s|
             assert_summary_record Date.parse('2016/1/1')..Date.parse('2016/1/5'), day_s
             assert_project_record day_s
-            assert_equal day_s.balance, day_s.flow
+            assert_equal summaries_by_year[0].flow + day_s.balance, day_s.flow
           end
         end
       end
