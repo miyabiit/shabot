@@ -1,4 +1,4 @@
-class Report::AllProjectReport < Report::ReportBase
+class Report::PaymentReceipt::AllProjectReport < Report::PaymentReceiptReportBase
   COL_WIDTHS = [20, 60, 140, 70, 70, 70, 70]
 
   def show
@@ -46,21 +46,16 @@ class Report::AllProjectReport < Report::ReportBase
   def render_header
     br
     br
-    text_box '入出金レポート（全プロジェクトサマリ）', size: 16, at: [0, cursor], width: bounds.width, height: 16, align: :center, valign: :center
+    render_title '入出金レポート（全プロジェクトサマリ）'
     br
     br
-    text_box "#{@summary.from.strftime('%Y/%m/%d')} 〜 #{@summary.to.strftime('%Y/%m/%d')}", size: 10, at: [0, cursor], width: bounds.width, height: 10, align: :right, valign: :center
+    render_target_dates
     br
-    text_box "（単位：円）", size: 10, at: [0, cursor], width: bounds.width, height: 10, align: :right, valign: :center
+    render_currency_unit
     br
     br
     hr
-
-    ['', '', 'プロジェクト', '入金', '出金', '収支', 'キャッシュフロー'].each_with_index do |header_title, idx|
-      text_box header_title, size: FONT_SIZE, at: Vector[COL_WIDTHS.take(idx).inject(0, :+), cursor], width: COL_WIDTHS[idx], height: ROW_SIZE, valign: :center
-    end
-    next_row
-
+    render_row ['', '', 'プロジェクト', '入金', '出金', '収支', 'キャッシュフロー'], COL_WIDTHS
     hr
   end
 end

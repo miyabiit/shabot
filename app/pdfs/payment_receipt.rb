@@ -10,9 +10,17 @@ class PaymentReceipt < Prawn::Document
     font Rails.root.to_s + '/' + "vendor/fonts/ipaexg.ttf"
 
     summary = PaymentReceiptSummary.new(from, to)
-    summary.fetch
-    report = summary.get_all_project_report(self)
-    report.show
+    all_project_report = Report::PaymentReceipt::AllProjectReport.new(summary, self)
+    all_project_report.show
+    Project.all.order(:id).each_with_index do |project, project_i|
+      start_new_page
+      project_report = Report::PaymentReceipt::ProjectReport.new(project, summary, self)
+      project_report.show
+
+      start_new_page
+      project_detail_report = Report::PaymentReceipt::ProjectDetailReport.new(project, summary, self)
+      project_detail_report.show
+    end
 
     number_pages "<page> / <total>", at: [bounds.right - 100, bounds.top - 8], size: 8, width: 100, align: :right
   end

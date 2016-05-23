@@ -14,6 +14,7 @@ class PaymentHeader < ActiveRecord::Base
 
   scope :planned_only, -> { where(planned: true) }
   scope :result_only , -> { where(planned: false) }
+  scope :payable_on_is_not_null, -> { where('payment_headers.payable_on IS NOT NULL') }
 
 	def self.search(slip_no = nil)
 		if slip_no

@@ -6,11 +6,9 @@ class PaymentReceiptSummaryTest < ActiveSupport::TestCase
     assert ReceiptHeader.count > 0
   end
 
-  describe "#fetch" do
+  describe "#summaries_by_year" do
     let!(:summary) do
-      summary = PaymentReceiptSummary.new(Date.parse('2015/11/18'), Date.parse('2016/1/5'))
-      summary.fetch
-      summary
+      PaymentReceiptSummary.new(Date.parse('2015/11/18'), Date.parse('2016/1/5'))
     end
     let (:summaries_by_year) { summary.summaries_by_year }
 
@@ -102,6 +100,92 @@ class PaymentReceiptSummaryTest < ActiveSupport::TestCase
           month_s.children[0].tap do |day_s|
             assert_summary_record Date.parse('2016/1/1')..Date.parse('2016/1/5'), day_s
             assert_project_record day_s
+            assert_equal summaries_by_year[0].flow + day_s.balance, day_s.flow
+          end
+        end
+      end
+    end
+  end
+
+  describe "#summaries_project_by_year" do
+    let!(:summary) do
+      PaymentReceiptSummary.new(Date.parse('2015/11/18'), Date.parse('2016/1/5'))
+    end
+    let (:summaries_by_year) { summary.summaries_project_by_year(projects(:test_1)) }
+
+    def assert_summary_record(date_range, s)
+      assert_equal date_range, s.date_range
+      assert_equal ReceiptHeader.where(project_id: projects(:test_1)).where(receipt_on: s.date_range).sum(:amount), s.receipt
+      assert_equal PaymentHeader.where(project_id: projects(:test_1)).joins(:payment_parts).where(payable_on: s.date_range).sum('payment_parts.amount'), s.payment
+      assert_equal s.receipt - s.payment, s.balance
+    end
+
+    it 'summaries_project_by_year is valid result' do
+      assert_equal 2, summaries_by_year.count 
+
+      summaries_by_year[0].tap do |s|
+        assert_summary_record Date.parse('2015/11/18')..Date.parse('2015/12/31'), s
+        assert_equal s.balance, s.flow
+
+        assert_equal 2, s.children.count 
+        assert_equal [Date.parse('2015/11/1'), Date.parse('2015/12/1')], s.children.keys
+        
+        s.children[Date.parse('2015/11/1')].tap do |month_s|
+          assert_summary_record Date.parse('2015/11/18')..Date.parse('2015/11/30'), month_s
+          assert_equal month_s.balance, month_s.flow
+
+          assert_equal [1, 2], month_s.children.keys
+
+          month_s.children[1].tap do |day_s|
+            assert_summary_record Date.parse('2015/11/18')..Date.parse('2015/11/20'), day_s
+            assert_equal day_s.balance, day_s.flow
+          end
+
+          month_s.children[2].tap do |day_s|
+            assert_summary_record Date.parse('2015/11/21')..Date.parse('2015/11/30'), day_s
+            assert_equal month_s.children[1].flow + day_s.balance, day_s.flow
+          end
+        end
+
+        s.children[Date.parse('2015/12/1')].tap do |month_s|
+          month_s = s.children[Date.parse('2015/12/1')]
+          assert_summary_record Date.parse('2015/12/1')..Date.parse('2015/12/31'), month_s
+          assert_equal s.children[Date.parse('2015/11/1')].flow + month_s.balance, month_s.flow
+
+          assert_equal [0, 1, 2], month_s.children.keys
+
+          month_s.children[0].tap do |day_s|
+            assert_summary_record Date.parse('2015/12/1')..Date.parse('2015/12/10'), day_s
+            assert_equal s.children[Date.parse('2015/11/1')].flow + day_s.balance, day_s.flow
+          end
+
+          month_s.children[1].tap do |day_s|
+            assert_summary_record Date.parse('2015/12/11')..Date.parse('2015/12/20'), day_s
+            assert_equal month_s.children[0].flow + day_s.balance, day_s.flow
+          end
+
+          month_s.children[2].tap do |day_s|
+            assert_summary_record Date.parse('2015/12/21')..Date.parse('2015/12/31'), day_s
+            assert_equal month_s.children[1].flow + day_s.balance, day_s.flow
+          end
+        end
+      end
+
+      summaries_by_year[1].tap do |s|
+        assert_summary_record Date.parse('2016/1/1')..Date.parse('2016/1/5'), s
+        assert_equal summaries_by_year[0].flow + s.balance, s.flow
+
+        assert_equal [Date.parse('2016/1/1')], s.children.keys
+
+        s.children[Date.parse('2016/1/1')].tap do |month_s|
+          month_s = s.children[Date.parse('2016/1/1')]
+          assert_summary_record Date.parse('2016/1/1')..Date.parse('2016/1/5'), month_s
+          assert_equal summaries_by_year[0].flow + month_s.balance, month_s.flow
+
+          assert_equal [0], month_s.children.keys
+
+          month_s.children[0].tap do |day_s|
+            assert_summary_record Date.parse('2016/1/1')..Date.parse('2016/1/5'), day_s
             assert_equal summaries_by_year[0].flow + day_s.balance, day_s.flow
           end
         end

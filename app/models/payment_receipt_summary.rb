@@ -21,44 +21,46 @@ class PaymentReceiptSummary
 
   attr_accessor :data
 
-  attr_reader :from, :to, :summaries_by_year
+  attr_reader :from, :to
 
   def initialize(from, to)
     @from = from
     @to = to
-    @summaries_by_year = []
-    @projects = {}
-  end
 
-  # 指定された日付範囲で集計を実行する
-  def fetch
-    return if to < from
+    @receipts = ReceiptHeader.receipt_on_is_not_null
+    @payments = PaymentHeader.payable_on_is_not_null
+    @projects = Hash[Project.all.map{|p| [p.id, p]}]
 
-    receipts = ReceiptHeader.where('receipt_headers.receipt_on IS NOT NULL')
-    payments = PaymentHeader.where('payment_headers.payable_on IS NOT NULL')
-
-    from_min = [receipts.minimum(:receipt_on), payments.minimum(:payable_on)].compact.min.try(:beginning_of_month).try(:to_date)
-    to_max = [receipts.maximum(:receipt_on), payments.maximum(:payable_on)].compact.max.try(:end_of_month).try(:to_date)
+    from_min = [@receipts.minimum(:receipt_on), @payments.minimum(:payable_on)].compact.min.try(:beginning_of_month).try(:to_date)
+    to_max = [@receipts.maximum(:receipt_on), @payments.maximum(:payable_on)].compact.max.try(:end_of_month).try(:to_date)
 
     return if !from_min || !to_max # zero records
 
     @from = from_min if from < from_min
     @to   = to_max if to > to_max
-
-    summaries_by_10days = summarize_by_10days(from, to, receipts, payments)
-    summaries_by_month = summarize_by_month(summaries_by_10days)
-    @summaries_by_year = summarize_by_year(summaries_by_month)
-    @projects = Hash[Project.all.map{|p| [p.id, p]}]
-  end
-
-  def get_all_project_report(pdf)
-    Report::AllProjectReport.new(self, pdf)
   end
 
   def project_label(project_id)
     if project = @projects[project_id]
       project.name_and_category
     end
+  end
+
+  def summaries_by_year
+    return [] if @to < @from
+    summaries_by_10days = summarize_by_10days(@from, @to, @receipts, @payments)
+    summaries_by_month = summarize_by_month(summaries_by_10days)
+    summarize_by_year(summaries_by_month)
+  end
+
+  def summaries_project_by_year(project_id)
+    summarize_by_year(summaries_project_by_month(project_id))
+  end
+
+  def summaries_project_by_month(project_id)
+    return [] if @to < @from
+    summaries_by_10days = summarize_by_10days(@from, @to, @receipts.where(project_id: project_id), @payments.where(project_id: project_id), true)
+    summarize_by_month(summaries_by_10days)
   end
 
   # 10日単位の集計から月単位の集計を行う
@@ -94,7 +96,7 @@ class PaymentReceiptSummary
   end
 
   # 10日単位で集計を行う
-  def summarize_by_10days(from, to, receipts, payments)
+  def summarize_by_10days(from, to, receipts, payments, skip_project_record=false)
     summaries = []
     target_month = from.prev_month.to_date
     prev_record = nil
@@ -110,20 +112,22 @@ class PaymentReceiptSummary
       flow = (prev_record.try(:flow) || 0) + balance
 
       project_records = {}
-      receipt_query.group(:project_id).sum(:amount).each do |k, v|
-        project_records[k] = Record.new(date_range, v, 0, v, v)
-      end
-      payment_query.group(:project_id).sum('payment_parts.amount').each do |k, v|
-        record = (project_records[k] ||= Record.new(date_range, 0, v, -v, -v))
-        record.payment = v
-        record.balance = record.receipt - record.payment
-        record.flow = (prev_record.try(:children).try(:[], k).try(:flow) || 0) + record.balance
+      unless skip_project_record
+        receipt_query.group(:project_id).sum(:amount).each do |k, v|
+          project_records[k] = Record.new(date_range, v, 0, v, v)
+        end
+        payment_query.group(:project_id).sum('payment_parts.amount').each do |k, v|
+          record = (project_records[k] ||= Record.new(date_range, 0, v, -v, -v))
+          record.payment = v
+          record.balance = record.receipt - record.payment
+          record.flow = (prev_record.try(:children).try(:[], k).try(:flow) || 0) + record.balance
+        end
       end
       if receipt_amount > 0 || payment_amount > 0
         record = Record.new(date_range, receipt_amount, payment_amount, balance, flow, Hash[project_records.sort])
         summaries << record
+        prev_record = record
       end
-      prev_record = record
     end
     summaries
   end

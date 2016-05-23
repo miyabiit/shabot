@@ -8,4 +8,6 @@ class ReceiptHeader < ActiveRecord::Base
   validates :amount, numericality: {only_integer: true, greater_than_or_equal_to: 0}
 
   scope :onlymine, -> (user) { user.is_admin? ? all : where(user_id: user) }
+  scope :receipt_on_is_not_null, -> { where('receipt_headers.receipt_on IS NOT NULL') }
+
 end

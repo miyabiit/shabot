@@ -5,11 +5,10 @@ class Report::ReportBase
   FONT_SIZE = 8
   BR_SIZE = 12
 
-  attr_reader :summary, :pdf
+  attr_reader :pdf
   def_delegators :@pdf, :text, :stroke_horizontal_line,:move_down, :cursor, :bounds
 
-  def initialize(summary, pdf)
-    @summary = summary
+  def initialize(pdf)
     @pdf = pdf
   end
 
