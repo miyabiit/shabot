@@ -1,7 +1,8 @@
 module Casein
   class PaymentBaseController < Casein::CaseinController
+    include TargetModelFetching
+
     def index
-      @casein_page_title = 'Payment headers'
       if params[:search]
         @payment_headers = payment_header_search.search(params[:search]).order(sort_order(:user_id)).paginate :page => params[:page]
       elsif params[:account_name]
@@ -13,7 +14,6 @@ module Casein
     end
   
     def show
-      @casein_page_title = 'View payment header'
       @payment_header = payment_header_find params[:id]
       render action: :show
     end
@@ -41,7 +41,6 @@ module Casein
     end
   
     def new
-      @casein_page_title = 'Add a new payment header'
       @account = Account.find(params[:account_id]);
       @payment_header = build_payment_header(
         :user_id => current_user.id,
@@ -65,8 +64,6 @@ module Casein
     end
   
     def update
-      @casein_page_title = 'Update payment header'
-      
       @payment_header = payment_header_find params[:id]
     
       if @payment_header.update_attributes payment_header_params

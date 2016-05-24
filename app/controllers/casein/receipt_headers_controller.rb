@@ -2,28 +2,26 @@
 
 module Casein
   class ReceiptHeadersController < Casein::CaseinController
+    include TargetModelFetching
+    target_model :receipt_header
   
     ## optional filters for defining usage according to Casein::AdminUser access_levels
     # before_filter :needs_admin, :except => [:action1, :action2]
     # before_filter :needs_admin_or_current_user, :only => [:action1, :action2]
   
     def index
-      @casein_page_title = I18n.t('views.receipt_header.index.title')
   		@receipt_headers = receipt_header_search.order(sort_order(:user_id)).paginate :page => params[:page]
     end
   
     def show
-      @casein_page_title = I18n.t('views.receipt_header.show.title')
       @receipt_header = receipt_header_search.find params[:id]
     end
   
     def new
-      @casein_page_title = I18n.t('views.receipt_header.new.title')
     	@receipt_header = ReceiptHeader.new
     end
 
     def copy
-      @casein_page_title = I18n.t('views.receipt_header.copy.title')
 
     	src_receipt_header = receipt_header_search.find(params[:id])
 			@receipt_header = src_receipt_header.dup

@@ -2,23 +2,22 @@
 
 module Casein
   class MyAccountsController < Casein::CaseinController
+    include TargetModelFetching
+    target_model :my_account
   
     ## optional filters for defining usage according to Casein::AdminUser access_levels
     # before_filter :needs_admin, :except => [:action1, :action2]
     # before_filter :needs_admin_or_current_user, :only => [:action1, :action2]
   
     def index
-      @casein_page_title = 'My accounts'
   		@my_accounts = MyAccount.order(sort_order(:bank)).paginate :page => params[:page]
     end
   
     def show
-      @casein_page_title = 'View my account'
       @my_account = MyAccount.find params[:id]
     end
   
     def new
-      @casein_page_title = 'Add a new my account'
     	@my_account = MyAccount.new
     end
 
@@ -35,7 +34,6 @@ module Casein
     end
   
     def update
-      @casein_page_title = 'Update my account'
       
       @my_account = MyAccount.find params[:id]
     

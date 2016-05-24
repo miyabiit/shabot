@@ -1,0 +1,8 @@
+ja:
+  activerecord:
+    models:
+      payment_part: "出金明細"
+    attributes:
+      payment_part:
+        item_id: "費目"
+        amount: "金額"

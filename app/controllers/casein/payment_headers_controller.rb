@@ -2,6 +2,8 @@
 
 module Casein
   class PaymentHeadersController < PaymentBaseController
+    target_model :payment_header
+
 		def pdf
       payment_header = payment_header_search.find params[:id]
 			pdf = PaymentReport.new(payment_header)

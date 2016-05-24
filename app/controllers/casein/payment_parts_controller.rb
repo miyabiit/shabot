@@ -2,6 +2,8 @@
 
 module Casein
   class PaymentPartsController < Casein::CaseinController
+    include TargetModelFetching
+    target_model :payment_part
   
     ## optional filters for defining usage according to Casein::AdminUser access_levels
     # before_filter :needs_admin, :except => [:action1, :action2]
