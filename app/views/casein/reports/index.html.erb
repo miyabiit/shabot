@@ -1,9 +1,13 @@
 <h2>Reports</h2>
-<% Report::ReportList.each do |name, filename, path| %>
-  <form class="form-inline" action="<%= path %>">
+<% Report::ReportList.each do |name, report_id, path| %>
+  <form id="<%= report_id %>" class="form-inline" action="<%= path %>">
     <label style="display: block; width: 30pm;"><%= name %></label>
     <input type="text" class="input-medium" placeholder="from yyyy/mm/dd" name="from" data-provide="datepicker">
     <input type="text" class="input" placeholder="to yyyy/mm/dd" name="to" data-provide="datepicker">
     <button type="submit" class="btn">PDF</button>
+    <% if report_id == 'payment-receipt' -%>
+      <%= link_to '入金明細CSV', csv_receipt_casein_reports_path, 'data-form-id' => report_id, :class => 'btn btn-default' %>
+      <%= link_to '出金明細CSV', csv_payment_casein_reports_path, 'data-form-id' => report_id, :class => 'btn btn-default' %>
+    <% end -%>
   </form>
 <% end %>

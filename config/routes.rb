@@ -34,6 +34,8 @@ Rails.application.routes.draw do
         get 'pdf_list2'
         get 'pdf_monthly'
         get 'pdf_payment_receipt'
+        get 'csv_payment'
+        get 'csv_receipt'
       end
     end
   end

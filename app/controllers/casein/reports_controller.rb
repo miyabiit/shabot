@@ -50,6 +50,24 @@ module Casein
         type:      "application/pdf",
         disposition:  "attachment"
     end
+
+    def csv_receipt
+      from, to = parse_from_to
+      csv = ReceiptCSV.new(from, to)
+      send_data csv.generate,
+        filename:  "receipt-#{from.strftime("%y%m%d")}-#{to.strftime("%y%m%d")}.csv",
+        type:      "text/csv; charset=shift_jis",
+        disposition:  "attachment"
+    end
+
+    def csv_payment
+      from, to = parse_from_to
+      csv = PaymentCSV.new(from, to)
+      send_data csv.generate,
+        filename:  "payment-#{from.strftime("%y%m%d")}-#{to.strftime("%y%m%d")}.csv",
+        type:      "text/csv; charset=shift_jis",
+        disposition:  "attachment"
+    end
   
     private
 
