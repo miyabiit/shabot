@@ -34,10 +34,10 @@ module Casein
       @receipt_header.user = @session_user
     
       if @receipt_header.save
-        flash[:notice] = 'Receipt header created'
+        flash[:notice] = I18n.t('messages.create_model', model_name: model.model_name.human)
         redirect_to casein_receipt_headers_path
       else
-        flash.now[:warning] = 'There were problems when trying to create a new receipt header'
+        flash.now[:warning] = I18n.t('messages.failed_to_create', model_name: model.model_name.human)
         render :action => :new
       end
     end
@@ -49,10 +49,10 @@ module Casein
       @receipt_header.user = @session_user
     
       if @receipt_header.update_attributes receipt_header_params
-        flash[:notice] = 'Receipt header has been updated'
+        flash[:notice] = I18n.t('messages.update_model', model_name: model.model_name.human)
         redirect_to casein_receipt_headers_path
       else
-        flash.now[:warning] = 'There were problems when trying to update this receipt header'
+        flash.now[:warning] = I18n.t('messages.failed_to_update', model_name: model.model_name.human)
         render :action => :show
       end
     end
@@ -61,7 +61,7 @@ module Casein
       @receipt_header = receipt_header_search.find params[:id]
 
       @receipt_header.destroy
-      flash[:notice] = 'Receipt header has been deleted'
+      flash[:notice] = I18n.t('messages.destroy_model', model_name: model.model_name.human)
       redirect_to casein_receipt_headers_path
     end
   

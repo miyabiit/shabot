@@ -28,10 +28,10 @@ module Casein
       @payment_part = PaymentPart.new payment_part_params
     
       if @payment_part.save
-        flash[:notice] = 'Payment part created'
+        flash[:notice] = I18n.t('messages.create_model', model_name: model.model_name.human)
         redirect_to casein_payment_parts_path
       else
-        flash.now[:warning] = 'There were problems when trying to create a new payment part'
+        flash.now[:warning] = I18n.t('messages.failed_to_create', model_name: model.model_name.human)
         render :action => :new
       end
     end
@@ -42,11 +42,11 @@ module Casein
       @payment_part = PaymentPart.find params[:id]
     
       if @payment_part.update_attributes payment_part_params
-        flash[:notice] = 'Payment part has been updated'
+        flash[:notice] = I18n.t('messages.update_model', model_name: model.model_name.human)
 				@payment_header = PaymentHeader.find @payment_part.payment_header_id
         redirect_to_payment_header(@payment_header)
       else
-        flash.now[:warning] = 'There were problems when trying to update this payment part'
+        flash.now[:warning] = I18n.t('messages.failed_to_update', model_name: model.model_name.human)
 				@payment_header = PaymentHeader.find @payment_part.payment_header_id
         redirect_to_payment_header(@payment_header)
       end
@@ -57,7 +57,7 @@ module Casein
 			@payment_header = PaymentHeader.find @payment_part.payment_header_id
 
       @payment_part.destroy
-      flash[:notice] = 'Payment part has been deleted'
+      flash[:notice] = I18n.t('messages.destroy_model', model_name: model.model_name.human)
       redirect_to_payment_header(@payment_header)
     end
   

@@ -25,10 +25,10 @@ module Casein
       @my_account = MyAccount.new my_account_params
     
       if @my_account.save
-        flash[:notice] = 'My account created'
+        flash[:notice] = I18n.t('messages.create_model', model_name: model.model_name.human)
         redirect_to casein_my_accounts_path
       else
-        flash.now[:warning] = 'There were problems when trying to create a new my account'
+        flash.now[:warning] = I18n.t('messages.failed_to_create', model_name: model.model_name.human)
         render :action => :new
       end
     end
@@ -38,10 +38,10 @@ module Casein
       @my_account = MyAccount.find params[:id]
     
       if @my_account.update_attributes my_account_params
-        flash[:notice] = 'My account has been updated'
+        flash[:notice] = I18n.t('messages.update_model', model_name: model.model_name.human)
         redirect_to casein_my_accounts_path
       else
-        flash.now[:warning] = 'There were problems when trying to update this my account'
+        flash.now[:warning] = I18n.t('messages.failed_to_update', model_name: model.model_name.human)
         render :action => :show
       end
     end
@@ -50,7 +50,7 @@ module Casein
       @my_account = MyAccount.find params[:id]
 
       @my_account.destroy
-      flash[:notice] = 'My account has been deleted'
+      flash[:notice] = I18n.t('messages.destroy_model', model_name: model.model_name.human)
       redirect_to casein_my_accounts_path
     end
   

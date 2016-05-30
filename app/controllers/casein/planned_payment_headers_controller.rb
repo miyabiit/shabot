@@ -36,5 +36,9 @@ module Casein
           @casein_page_title = "支払予定更新"
         end
       end
+
+      def model_human_name
+        '支払予定'
+      end
   end
 end

@@ -25,10 +25,10 @@ module Casein
       @project = Project.new project_params
     
       if @project.save
-        flash[:notice] = 'Project created'
+        flash[:notice] = I18n.t('messages.create_model', model_name: model.model_name.human)
         redirect_to casein_projects_path
       else
-        flash.now[:warning] = 'There were problems when trying to create a new project'
+        flash.now[:warning] = I18n.t('messages.failed_to_create', model_name: model.model_name.human)
         render :action => :new
       end
     end
@@ -37,10 +37,10 @@ module Casein
       @project = Project.find params[:id]
     
       if @project.update_attributes project_params
-        flash[:notice] = 'Project has been updated'
+        flash[:notice] = I18n.t('messages.update_model', model_name: model.model_name.human)
         redirect_to casein_projects_path
       else
-        flash.now[:warning] = 'There were problems when trying to update this project'
+        flash.now[:warning] = I18n.t('messages.failed_to_update', model_name: model.model_name.human)
         render :action => :show
       end
     end
@@ -49,7 +49,7 @@ module Casein
       @project = Project.find params[:id]
 
       @project.destroy
-      flash[:notice] = 'Project has been deleted'
+      flash[:notice] = I18n.t('messages.destroy_model', model_name: model.model_name.human)
       redirect_to casein_projects_path
     end
   
