@@ -31,4 +31,8 @@ module TargetModelFetching
       end
     end
   end
+
+  def model
+    self.class._target_model
+  end
 end
