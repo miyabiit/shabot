@@ -1,0 +1,6 @@
+<% (1..2).each do |id| %>
+test_<%= id %>:
+  name: 費目<%= id %>
+  group: グループ<%= id %>
+<% end %>
+

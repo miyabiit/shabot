@@ -1,5 +1,6 @@
 class PaymentHeader < ActiveRecord::Base
 	has_many :payment_parts
+  belongs_to :user, class_name: 'Casein::AdminUser', foreign_key: 'user_id'
 	belongs_to :account
   belongs_to :my_account
   belongs_to :project
@@ -13,6 +14,7 @@ class PaymentHeader < ActiveRecord::Base
 
   scope :planned_only, -> { where(planned: true) }
   scope :result_only , -> { where(planned: false) }
+  scope :payable_on_is_not_null, -> { where('payment_headers.payable_on IS NOT NULL') }
 
 	def self.search(slip_no = nil)
 		if slip_no

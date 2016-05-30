@@ -1,0 +1,7 @@
+<% (1..2).each do |id| %>
+test_<%= id %>:
+  name: テスト事業<%= id %>
+  category: <%= Gimei.address.city.kanji %>
+  my_account: test_1
+<% end %>
+

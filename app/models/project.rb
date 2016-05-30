@@ -3,6 +3,8 @@ class Project < ActiveRecord::Base
 	validates :name , uniqueness: { scope: [:category] }
 
   belongs_to :my_account
+
+  scope :order_for_select, -> { order(:name, :category) }
   
 	def self.search(search)
 		if search

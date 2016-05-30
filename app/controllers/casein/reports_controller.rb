@@ -3,101 +3,78 @@
 module Casein
   class ReportsController < Casein::CaseinController
   
-    ## optional filters for defining usage according to Casein::AdminUser access_levels
-    # before_filter :needs_admin, :except => [:action1, :action2]
-    # before_filter :needs_admin_or_current_user, :only => [:action1, :action2]
-  
     def index
       @casein_page_title = 'Reports'
-  		@reports = Report.order(sort_order(:name)).paginate :page => params[:page]
     end
   
-		def pdf_list
-			from = (begin Date.parse(params[:from]) rescue Date.parse('1999/1/1') end)
-			to = (begin Date.parse(params[:to]) rescue Date.parse('3000/1/1') end)
+    def pdf_list
+      from, to = parse_from_to
       payment_headers = PaymentHeader.where(payable_on: from..to)
-			pdf = PaymentList.new(payment_headers)
-			pdf_filename = "payment-project-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
-			send_data pdf.render,
-				filename:	pdf_filename,
-				type:			"application/pdf",
-				# disposition:	"inline"
-				disposition:	"attachment"
-		end
+      pdf = PaymentList.new(payment_headers)
+      pdf_filename = "payment-project-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
+      send_data pdf.render,
+        filename:  pdf_filename,
+        type:      "application/pdf",
+        # disposition:  "inline"
+        disposition:  "attachment"
+    end
 
-		def pdf_list2
-			from = (begin Date.parse(params[:from]) rescue Date.parse('1999/1/1') end)
-			to = (begin Date.parse(params[:to]) rescue Date.parse('3000/1/1') end)
+    def pdf_list2
+      from, to = parse_from_to
       payment_headers = PaymentHeader.where(payable_on: from..to)
-			pdf = PaymentList2.new(payment_headers)
-			pdf_filename = "payment-eachday-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
-			send_data pdf.render,
-				filename:	pdf_filename,
-				type:			"application/pdf",
-				# disposition:	"inline"
-				disposition:	"attachment"
-		end
+      pdf = PaymentList2.new(payment_headers)
+      pdf_filename = "payment-eachday-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
+      send_data pdf.render,
+        filename:  pdf_filename,
+        type:      "application/pdf",
+        # disposition:  "inline"
+        disposition:  "attachment"
+    end
 
-		def pdf_monthly
-			from = (begin Date.parse(params[:from]) rescue Date.parse('1999/1/1') end)
-			to = (begin Date.parse(params[:to]) rescue Date.parse('3000/1/1') end)
+    def pdf_monthly
+      from, to = parse_from_to
       payment_headers = PaymentHeader.where(payable_on: from...to)
-			pdf = PaymentMonthly.new(payment_headers)
-			send_data pdf.render,
-				filename:	"payment-monthly.pdf",
-				type:			"application/pdf",
-				# disposition:	"inline"
-				disposition:	"attachment"
-		end
-
-    def show
-      @casein_page_title = 'View report'
-      @report = Report.find params[:id]
-    end
-  
-    def new
-      @casein_page_title = 'Add a new report'
-    	@report = Report.new
+      pdf = PaymentMonthly.new(payment_headers)
+      send_data pdf.render,
+        filename:  "payment-monthly.pdf",
+        type:      "application/pdf",
+        # disposition:  "inline"
+        disposition:  "attachment"
     end
 
-    def create
-      @report = Report.new report_params
-    
-      if @report.save
-        flash[:notice] = 'Report created'
-        redirect_to casein_reports_path
-      else
-        flash.now[:warning] = 'There were problems when trying to create a new report'
-        render :action => :new
-      end
+    def pdf_payment_receipt
+      from, to = parse_from_to
+      pdf = PaymentReceipt.new(from, to)
+      send_data pdf.render,
+        filename:  "payment-receipt-#{from.strftime("%y%m%d")}-#{to.strftime("%y%m%d")}.pdf",
+        type:      "application/pdf",
+        disposition:  "attachment"
     end
-  
-    def update
-      @casein_page_title = 'Update report'
-      
-      @report = Report.find params[:id]
-    
-      if @report.update_attributes report_params
-        flash[:notice] = 'Report has been updated'
-        redirect_to casein_reports_path
-      else
-        flash.now[:warning] = 'There were problems when trying to update this report'
-        render :action => :show
-      end
-    end
- 
-    def destroy
-      @report = Report.find params[:id]
 
-      @report.destroy
-      flash[:notice] = 'Report has been deleted'
-      redirect_to casein_reports_path
+    def csv_receipt
+      from, to = parse_from_to
+      csv = ReceiptCSV.new(from, to)
+      send_data csv.generate,
+        filename:  "receipt-#{from.strftime("%y%m%d")}-#{to.strftime("%y%m%d")}.csv",
+        type:      "text/csv; charset=shift_jis",
+        disposition:  "attachment"
+    end
+
+    def csv_payment
+      from, to = parse_from_to
+      csv = PaymentCSV.new(from, to)
+      send_data csv.generate,
+        filename:  "payment-#{from.strftime("%y%m%d")}-#{to.strftime("%y%m%d")}.csv",
+        type:      "text/csv; charset=shift_jis",
+        disposition:  "attachment"
     end
   
     private
-      
-      def report_params
-        params.require(:report).permit(:name, :filename)
+
+      def parse_from_to
+        from = (begin Date.parse(params[:from]) rescue Date.parse('1999/1/1') end)
+        to = (begin Date.parse(params[:to]) rescue Date.parse('3000/1/1') end)
+        [from, to]
       end
 
   end

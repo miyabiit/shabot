@@ -1,0 +1,9 @@
+<% (1..2).each do |id| %>
+test_<%= id %>:
+  name: テスト会社<%= id %>
+  bank: テスト銀行<%= id %>
+  bank_branch: テスト支店<%= id %>
+  category: 普通
+  ac_no: <%= (1..16).map{|i| rand(0..9).to_s}.join %>
+<% end %>
+

@@ -2,8 +2,6 @@
 
 one:
   now_val: 1
-  next_val: 1
 
 two:
   now_val: 1
-  next_val: 1
