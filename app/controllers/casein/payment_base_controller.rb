@@ -23,6 +23,7 @@ module Casein
       last_payment_header = payment_header_find params[:id]
 			@payment_header = last_payment_header.dup
 			@payment_header.slip_no = SlipNo.get_num
+      @payment_header.user_id = current_user.id
 			if @payment_header.save
 				last_payment_header.payment_parts.each do |part|
 					new_part = part.dup
