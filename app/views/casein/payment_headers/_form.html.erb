@@ -24,7 +24,7 @@
     <%= casein_date_select f, f.object, :payable_on, {:casein_label => '支払日'} %>
   </div>
   <div class="col-lg-5">
-    <% projects = Project.all %>
+    <% projects = Project.all.order_for_select %>
     <%= casein_collection_select f, f.object, :payment_header, :project_id, projects, :id, :name_and_category, {:casein_label => '事業・プロジェクト'} %>
   </div>
   <div class="col-lg-2">
