@@ -7,8 +7,8 @@
 	<%= render :partial => 'casein/payment_parts/form', :locals => { :f => f } %>
 	
 	<p class="submits">
-		<%= link_to 'Cancel', casein_payment_parts_path, :class => 'btn btn-mini btn-danger' %>
-		<%= f.submit "Add new payment part", :class => "btn btn-mini btn-primary" %>
+		<%= link_to t('helpers.button.cancel'), casein_payment_parts_path, :class => 'btn btn-mini btn-danger' %>
+		<%= f.submit t('helpers.submit.add'), :class => "btn btn-mini btn-primary" %>
 	</p>
 
 <% end %>

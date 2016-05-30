@@ -9,9 +9,9 @@
   <%= render :partial => 'casein/payment_headers/form', :locals => { :f => f } %>
   
   <p class="submits">
-    <%= link_to 'Cancel', casein_payment_headers_path, :class => 'btn btn-mini btn-danger' %>
+    <%= link_to t('helpers.button.cancel'), casein_payment_headers_path, :class => 'btn btn-mini btn-danger' %>
     <%= link_to '明細追加', add_part_casein_payment_header_path, :class => 'btn btn-mini btn-danger' %>
-    <%= f.submit "Save changes", :class => "btn btn-mini btn-primary" %>
+    <%= f.submit t('helpers.submit.submit'), :class => "btn btn-mini btn-primary" %>
     <%= link_to 'PDF', pdf_casein_payment_header_path, {:class => 'btn btn-mini btn-primary', :target => "_blank", :disabled => ('disabled' if @payment_header.planned)} %>
   </p>
 
@@ -31,9 +31,9 @@
   </br>
   </br>
   <p class="submits">
-    <%= link_to 'Delete', casein_payment_part_path(payment_part), :method => :delete, :class => 'btn btn-mini btn-danger', 
+    <%= link_to t('helpers.link.delete'), casein_payment_part_path(payment_part), :method => :delete, :class => 'btn btn-mini btn-danger', 
       :data => { :confirm => t("messages.destroy_confirmation", model_name: '明細') } %>
-    <%= f.submit "Save", :class => "btn btn-mini btn-primary" %>
+    <%= f.submit t('helpers.submit.submit'), :class => "btn btn-mini btn-primary" %>
   </p>
   </div>
 </div>
