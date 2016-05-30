@@ -1,5 +1,6 @@
 class Account < ActiveRecord::Base
   extend Enumerize
+  include Enums::AccountEnum
 
 	has_many :payment_headers
   
@@ -9,8 +10,6 @@ class Account < ActiveRecord::Base
 	validates :bank_branch, length: { maximum: 30 }
 	validates :category, length: { maximum: 10 }
 	validates :ac_no, length: { maximum: 20 }
-
-  enumerize :category, in: %w(普通 当座 ー)
 
 	def self.search(search)
 		if search
