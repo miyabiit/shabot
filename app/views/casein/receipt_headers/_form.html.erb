@@ -7,7 +7,7 @@
     <%= casein_collection_select_i18n f, :account_id, Account.all, label_method: :name, include_blank: true %>
   </div>
   <div class="col-lg-6">
-    <%= casein_collection_select_i18n f, :project_id, Project.all, label_method: :name_and_category, include_blank: true %>
+    <%= casein_collection_select_i18n f, :project_id, Project.order_for_select, label_method: :name_and_category, include_blank: true %>
   </div>
 </div>
 
