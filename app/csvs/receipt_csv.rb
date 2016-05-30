@@ -17,6 +17,6 @@ class ReceiptCSV
       receipts.find_each do |r|
         csv << [r.receipt_on, r.try(:project).try(:name_and_category), r.try(:item).try(:name), r.amount, r.try(:user).try(:name), r.try(:account).try(:name), r.try(:my_account).try(:bank) || p.try(:project).try(:my_account).try(:bank), r.comment]
       end
-    }.encode(Encoding::SJIS)
+    }.to_cp932
   end
 end
