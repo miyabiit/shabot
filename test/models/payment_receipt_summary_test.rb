@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class PaymentReceiptSummaryTest < ActiveSupport::TestCase
-  it do
-    assert PaymentHeader.count > 0
-    assert ReceiptHeader.count > 0
-  end
 
   describe "#summaries_by_year" do
     let!(:summary) do
@@ -30,24 +26,27 @@ class PaymentReceiptSummaryTest < ActiveSupport::TestCase
 
     it 'summaries_by_year is valid result' do
       assert_equal 2, summaries_by_year.count 
+        
+      before_date_range = (Date.parse('1999/1/1')...Date.parse('2015/11/18'))
+      initial_flow = ReceiptHeader.where(receipt_on: before_date_range).sum(:amount) - PaymentHeader.joins(:payment_parts).where(payable_on: before_date_range).sum('payment_parts.amount')
 
       summaries_by_year[0].tap do |s|
         assert_summary_record Date.parse('2015/11/18')..Date.parse('2015/12/31'), s
-        assert_equal s.balance, s.flow
+        assert_equal s.balance + initial_flow, s.flow
 
         assert_equal 2, s.children.count 
         assert_equal [Date.parse('2015/11/1'), Date.parse('2015/12/1')], s.children.keys
         
         s.children[Date.parse('2015/11/1')].tap do |month_s|
           assert_summary_record Date.parse('2015/11/18')..Date.parse('2015/11/30'), month_s
-          assert_equal month_s.balance, month_s.flow
+          assert_equal month_s.balance + initial_flow, month_s.flow
 
           assert_equal [1, 2], month_s.children.keys
 
           month_s.children[1].tap do |day_s|
             assert_summary_record Date.parse('2015/11/18')..Date.parse('2015/11/20'), day_s
             assert_project_record day_s
-            assert_equal day_s.balance, day_s.flow
+            assert_equal day_s.balance + initial_flow, day_s.flow
           end
 
           month_s.children[2].tap do |day_s|
@@ -123,22 +122,25 @@ class PaymentReceiptSummaryTest < ActiveSupport::TestCase
     it 'summaries_project_by_year is valid result' do
       assert_equal 2, summaries_by_year.count 
 
+      before_date_range = (Date.parse('1999/1/1')...Date.parse('2015/11/18'))
+      initial_flow = ReceiptHeader.where(project_id: projects(:test_1)).where(receipt_on: before_date_range).sum(:amount) - PaymentHeader.where(project_id: projects(:test_1)).joins(:payment_parts).where(payable_on: before_date_range).sum('payment_parts.amount')
+
       summaries_by_year[0].tap do |s|
         assert_summary_record Date.parse('2015/11/18')..Date.parse('2015/12/31'), s
-        assert_equal s.balance, s.flow
+        assert_equal s.balance + initial_flow, s.flow
 
         assert_equal 2, s.children.count 
         assert_equal [Date.parse('2015/11/1'), Date.parse('2015/12/1')], s.children.keys
         
         s.children[Date.parse('2015/11/1')].tap do |month_s|
           assert_summary_record Date.parse('2015/11/18')..Date.parse('2015/11/30'), month_s
-          assert_equal month_s.balance, month_s.flow
+          assert_equal month_s.balance + initial_flow, month_s.flow
 
           assert_equal [1, 2], month_s.children.keys
 
           month_s.children[1].tap do |day_s|
             assert_summary_record Date.parse('2015/11/18')..Date.parse('2015/11/20'), day_s
-            assert_equal day_s.balance, day_s.flow
+            assert_equal day_s.balance + initial_flow, day_s.flow
           end
 
           month_s.children[2].tap do |day_s|
