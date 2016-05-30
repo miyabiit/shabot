@@ -48,24 +48,33 @@ class PaymentReceiptSummary
 
   def summaries_by_year
     return [] if @to < @from
-    summaries_by_10days = summarize_by_10days(@from, @to, @receipts, @payments)
-    summaries_by_month = summarize_by_month(summaries_by_10days)
-    summarize_by_year(summaries_by_month)
+    inital_flow = cashflow_to(@from, @receipts, @payments)
+    summaries_by_10days = summarize_by_10days(@from, @to, @receipts, @payments, inital_flow)
+    summaries_by_month = summarize_by_month(summaries_by_10days, inital_flow)
+    summarize_by_year(summaries_by_month, inital_flow)
   end
 
   def summaries_project_by_year(project_id)
-    summarize_by_year(summaries_project_by_month(project_id))
+    receipts = @receipts.where(project_id: project_id)
+    payments = @payments.where(project_id: project_id)
+    inital_flow = cashflow_to(@from, receipts, payments)
+    summarize_by_year(summaries_project_by_month(project_id, inital_flow), inital_flow)
   end
 
-  def summaries_project_by_month(project_id)
+  def summaries_project_by_month(project_id, inital_flow = nil)
     return [] if @to < @from
-    summaries_by_10days = summarize_by_10days(@from, @to, @receipts.where(project_id: project_id), @payments.where(project_id: project_id), true)
-    summarize_by_month(summaries_by_10days)
+    receipts = @receipts.where(project_id: project_id)
+    payments = @payments.where(project_id: project_id)
+    unless inital_flow
+      inital_flow = cashflow_to(@from, receipts, payments)
+    end
+    summaries_by_10days = summarize_by_10days(@from, @to, receipts, payments, inital_flow, true)
+    summarize_by_month(summaries_by_10days, inital_flow)
   end
 
   # 10日単位の集計から月単位の集計を行う
-  def summarize_by_month(summaries_by_10days)
-    flow = 0
+  def summarize_by_month(summaries_by_10days, inital_flow)
+    flow = inital_flow
     summaries_by_10days.group_by {|s| s.date_range.begin.beginning_of_month.to_date }.map {|date, summaries|
       balance = summaries.map(&:balance).compact.inject(0, :+)
       flow += balance
@@ -80,8 +89,8 @@ class PaymentReceiptSummary
   end
 
   # 月単位の集計から年単位の集計を行う
-  def summarize_by_year(summaries_by_month)
-    flow = 0
+  def summarize_by_year(summaries_by_month, inital_flow)
+    flow = inital_flow
     summaries_by_month.group_by {|s| s.date_range.begin.beginning_of_year.to_date }.map {|date, summaries|
       balance = summaries.map(&:balance).compact.inject(0, :+)
       flow += balance
@@ -96,7 +105,7 @@ class PaymentReceiptSummary
   end
 
   # 10日単位で集計を行う
-  def summarize_by_10days(from, to, receipts, payments, skip_project_record=false)
+  def summarize_by_10days(from, to, receipts, payments, inital_flow, skip_project_record=false)
     summaries = []
     target_month = from.prev_month.to_date
     prev_record = nil
@@ -109,7 +118,7 @@ class PaymentReceiptSummary
       receipt_amount = receipt_query.sum(:amount)
       payment_amount = payment_query.sum('payment_parts.amount')
       balance = receipt_amount - payment_amount
-      flow = (prev_record.try(:flow) || 0) + balance
+      flow = (prev_record.try(:flow) || inital_flow) + balance
 
       project_records = {}
       unless skip_project_record
@@ -150,5 +159,13 @@ class PaymentReceiptSummary
       target_month = target_month.next_month
     end
     terms
+  end
+
+  def cashflow_to(date, receipts, payments)
+    receipt_query = receipts.where('receipt_headers.receipt_on < ?', date)
+    payment_query = payments.joins(:payment_parts).where('payment_headers.payable_on < ?', date)
+    receipt_amount = (receipt_query.sum(:amount) || 0)
+    payment_amount = (payment_query.sum('payment_parts.amount') || 0)
+    receipt_amount - payment_amount
   end
 end
