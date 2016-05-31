@@ -13,8 +13,8 @@ module Casein
     end
  
     def new
-    	@casein_admin_user = Casein::AdminUser.new
-    	@casein_admin_user.time_zone = Rails.configuration.time_zone
+      @casein_admin_user = Casein::AdminUser.new
+      @casein_admin_user.time_zone = Rails.configuration.time_zone
     end
   
     def create
@@ -33,8 +33,8 @@ module Casein
     end
   
     def show
-    	@casein_admin_user = Casein::AdminUser.find params[:id]
-    	@casein_page_title = @casein_admin_user.name + " > 詳細"
+      @casein_admin_user = Casein::AdminUser.find params[:id]
+      @casein_page_title = @casein_admin_user.name + " > 詳細"
     end
  
     def update

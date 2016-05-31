@@ -10,7 +10,7 @@ module Casein
     # before_filter :needs_admin_or_current_user, :only => [:action1, :action2]
   
     def index
-  		@receipt_headers = receipt_header_search.order(sort_order(:user_id)).paginate :page => params[:page]
+      @receipt_headers = receipt_header_search.order(sort_order(:user_id)).paginate :page => params[:page]
     end
   
     def show
@@ -18,13 +18,13 @@ module Casein
     end
   
     def new
-    	@receipt_header = ReceiptHeader.new
+      @receipt_header = ReceiptHeader.new
     end
 
     def copy
 
-    	src_receipt_header = receipt_header_search.find(params[:id])
-			@receipt_header = src_receipt_header.dup
+      src_receipt_header = receipt_header_search.find(params[:id])
+      @receipt_header = src_receipt_header.dup
 
       render :new
     end

@@ -1,8 +1,8 @@
 class CreateReports < ActiveRecord::Migration
   def change
     create_table :reports do |t|
-			t.string :name
-			t.string :filename
+      t.string :name
+      t.string :filename
 
       t.timestamps null: false
     end

@@ -3,13 +3,13 @@
 <h2>引落元口座の追加</h2>
 
 <%= form_for @my_account, :url => casein_my_accounts_path do |f| %>
-	
-	<%= render :partial => 'casein/my_accounts/form', :locals => { :f => f } %>
-	
-	<p class="submits">
-		<%= link_to t("helpers.button.cancel"), casein_my_accounts_path, :class => 'btn btn-mini btn-danger' %>
-		<%= f.submit t("helpers.submit.add"), :class => "btn btn-mini btn-primary" %>
-	</p>
+  
+  <%= render :partial => 'casein/my_accounts/form', :locals => { :f => f } %>
+  
+  <p class="submits">
+    <%= link_to t("helpers.button.cancel"), casein_my_accounts_path, :class => 'btn btn-mini btn-danger' %>
+    <%= f.submit t("helpers.submit.add"), :class => "btn btn-mini btn-primary" %>
+  </p>
 
 <% end %>
 

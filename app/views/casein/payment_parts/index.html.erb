@@ -5,11 +5,11 @@
 <%= render :partial => 'casein/payment_parts/table', :locals => { :payment_parts => @payment_parts } %>
 
 <div class="text-center">
-	<%= will_paginate @payment_parts %>
+  <%= will_paginate @payment_parts %>
 </div>
 
 <%= content_for :sidebar do %>
 
-	<li><%= link_to "#{casein_show_icon "plus-sign"}Add a new payment part".html_safe, new_casein_payment_part_path %></li>
+  <li><%= link_to "#{casein_show_icon "plus-sign"}Add a new payment part".html_safe, new_casein_payment_part_path %></li>
 
 <% end %>

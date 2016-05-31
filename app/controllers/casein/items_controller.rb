@@ -10,7 +10,7 @@ module Casein
     # before_filter :needs_admin_or_current_user, :only => [:action1, :action2]
   
     def index
-  		@items = Item.search(params[:search]).order(sort_order(:name)).paginate :page => params[:page]
+      @items = Item.search(params[:search]).order(sort_order(:name)).paginate :page => params[:page]
     end
   
     def show
@@ -18,7 +18,7 @@ module Casein
     end
   
     def new
-    	@item = Item.new
+      @item = Item.new
     end
 
     def create

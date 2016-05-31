@@ -10,7 +10,7 @@ module Casein
     # before_filter :needs_admin_or_current_user, :only => [:action1, :action2]
   
     def index
-  		@accounts =  Account.search(params[:search]).order(sort_order(:name)).paginate :page => params[:page]
+      @accounts =  Account.search(params[:search]).order(sort_order(:name)).paginate :page => params[:page]
     end
   
     def show
@@ -18,7 +18,7 @@ module Casein
     end
   
     def new
-    	@account = Account.new
+      @account = Account.new
     end
 
     def create
@@ -38,11 +38,11 @@ module Casein
     
       if @account.update_attributes account_params
         flash[:notice] = I18n.t('messages.update_model', model_name: model.model_name.human)
-				if params[:new_slip]
-					redirect_to new_casein_payment_header_path(account_id: @account.id)
-				else
-        	redirect_to casein_accounts_path
-				end
+        if params[:new_slip]
+          redirect_to new_casein_payment_header_path(account_id: @account.id)
+        else
+          redirect_to casein_accounts_path
+        end
       else
         flash.now[:warning] = I18n.t('messages.failed_to_update', model_name: model.model_name.human)
         render :action => :show

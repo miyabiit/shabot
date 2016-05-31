@@ -2,21 +2,21 @@
 
 <h2>お取引先<%= casein_pagination_details @accounts %></h2>
 <%= form_tag casein_accounts_path, :method => 'get' do %>
-	<p>
-		お取引先	
-		<%= text_field_tag :search, params[:search] %>
-		<%= submit_tag "検索", :name => nil %>
-	</p>
+  <p>
+    お取引先  
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "検索", :name => nil %>
+  </p>
 <% end %>
 
 <%= render :partial => 'casein/accounts/table', :locals => { :accounts => @accounts } %>
 
 <div class="text-center">
-	<%= will_paginate @accounts %>
+  <%= will_paginate @accounts %>
 </div>
 
 <%= content_for :sidebar do %>
 
-	<li><%= link_to "#{casein_show_icon "plus-sign"}追加 取引先口座".html_safe, new_casein_account_path %></li>
+  <li><%= link_to "#{casein_show_icon "plus-sign"}追加 取引先口座".html_safe, new_casein_account_path %></li>
 
 <% end %>

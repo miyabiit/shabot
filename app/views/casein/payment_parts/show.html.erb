@@ -4,15 +4,15 @@
 
 <%= form_for @payment_part, :url => casein_payment_part_path(@payment_part) do |f| %>
 
-	<%= render :partial => 'casein/payment_parts/form', :locals => { :f => f } %>
-	
-	<p class="submits">
-	  	<%= link_to t('helpers.button.cancel'), casein_payment_parts_path, :class => 'btn btn-mini btn-danger' %>
-		<%= f.submit t('helpers.submit.submit'), :class => "btn btn-mini btn-primary" %>
-	</p>
+  <%= render :partial => 'casein/payment_parts/form', :locals => { :f => f } %>
+  
+  <p class="submits">
+      <%= link_to t('helpers.button.cancel'), casein_payment_parts_path, :class => 'btn btn-mini btn-danger' %>
+    <%= f.submit t('helpers.submit.submit'), :class => "btn btn-mini btn-primary" %>
+  </p>
 
 <% end %>
 
 <%= content_for :sidebar do %>
-	<li><%= link_to "#{casein_show_icon "th-list"}Back to list".html_safe, casein_payment_headers_path %></li>
+  <li><%= link_to "#{casein_show_icon "th-list"}Back to list".html_safe, casein_payment_headers_path %></li>
 <% end %>

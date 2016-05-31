@@ -19,7 +19,7 @@
       <td align="right"><%= casein_table_cell_link number_with_delimiter(receipt_header.amount), casein_receipt_header_path(receipt_header) %></td>
       <td><%= casein_table_cell_link truncate(receipt_header.project.try(:name_and_category), length: 17), casein_receipt_header_path(receipt_header) %></td>
       <td><%= casein_table_cell_link truncate(receipt_header.comment, length: 13), casein_receipt_header_path(receipt_header) %></td>
-			<td class="new">
+      <td class="new">
         <%= link_to(casein_show_row_icon("plus-sign"), copy_casein_receipt_header_path(receipt_header)) %>
       </td>
       <td class="delete">

@@ -11,7 +11,7 @@ module Casein
   
     def index
       @casein_page_title = 'Payment parts'
-  		@payment_parts = PaymentPart.order(sort_order(:payment_header_id)).paginate :page => params[:page]
+      @payment_parts = PaymentPart.order(sort_order(:payment_header_id)).paginate :page => params[:page]
     end
   
     def show
@@ -21,7 +21,7 @@ module Casein
   
     def new
       @casein_page_title = 'Add a new payment part'
-    	@payment_part = PaymentPart.new
+      @payment_part = PaymentPart.new
     end
 
     def create
@@ -43,18 +43,18 @@ module Casein
     
       if @payment_part.update_attributes payment_part_params
         flash[:notice] = I18n.t('messages.update_model', model_name: model.model_name.human)
-				@payment_header = PaymentHeader.find @payment_part.payment_header_id
+        @payment_header = PaymentHeader.find @payment_part.payment_header_id
         redirect_to_payment_header(@payment_header)
       else
         flash.now[:warning] = I18n.t('messages.failed_to_update', model_name: model.model_name.human)
-				@payment_header = PaymentHeader.find @payment_part.payment_header_id
+        @payment_header = PaymentHeader.find @payment_part.payment_header_id
         redirect_to_payment_header(@payment_header)
       end
     end
  
     def destroy
       @payment_part = PaymentPart.find params[:id]
-			@payment_header = PaymentHeader.find @payment_part.payment_header_id
+      @payment_header = PaymentHeader.find @payment_part.payment_header_id
 
       @payment_part.destroy
       flash[:notice] = I18n.t('messages.destroy_model', model_name: model.model_name.human)

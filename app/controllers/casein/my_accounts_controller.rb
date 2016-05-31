@@ -10,7 +10,7 @@ module Casein
     # before_filter :needs_admin_or_current_user, :only => [:action1, :action2]
   
     def index
-  		@my_accounts = MyAccount.order(sort_order(:bank)).paginate :page => params[:page]
+      @my_accounts = MyAccount.order(sort_order(:bank)).paginate :page => params[:page]
     end
   
     def show
@@ -18,7 +18,7 @@ module Casein
     end
   
     def new
-    	@my_account = MyAccount.new
+      @my_account = MyAccount.new
     end
 
     def create

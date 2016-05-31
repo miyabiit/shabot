@@ -2,21 +2,21 @@
 
 <h2>費目<%= casein_pagination_details @items %></h2>
 <%= form_tag casein_items_path, :method => 'get' do %>
-	<p>
-		費目			
-		<%= text_field_tag :search, params[:search] %>
-		<%= submit_tag "検索", :name => nil %>
-	</p>
+  <p>
+    費目      
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "検索", :name => nil %>
+  </p>
 <% end %>
 
 <%= render :partial => 'casein/items/table', :locals => { :items => @items } %>
 
 <div class="text-center">
-	<%= will_paginate @items %>
+  <%= will_paginate @items %>
 </div>
 
 <%= content_for :sidebar do %>
 
-	<li><%= link_to "#{casein_show_icon "plus-sign"}追加 費目".html_safe, new_casein_item_path %></li>
+  <li><%= link_to "#{casein_show_icon "plus-sign"}追加 費目".html_safe, new_casein_item_path %></li>
 
 <% end %>

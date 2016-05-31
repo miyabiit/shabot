@@ -3,16 +3,16 @@
 <h2>新規 費目</h2>
 
 <%= form_for @item, :url => casein_items_path do |f| %>
-	
-	<%= render :partial => 'casein/items/form', :locals => { :f => f } %>
-	
-	<p class="submits">
-		<%= link_to t('helpers.button.cancel'), casein_items_path, :class => 'btn btn-mini btn-danger' %>
-		<%= f.submit t('helpers.submit.add'), :class => "btn btn-mini btn-primary" %>
-	</p>
+  
+  <%= render :partial => 'casein/items/form', :locals => { :f => f } %>
+  
+  <p class="submits">
+    <%= link_to t('helpers.button.cancel'), casein_items_path, :class => 'btn btn-mini btn-danger' %>
+    <%= f.submit t('helpers.submit.add'), :class => "btn btn-mini btn-primary" %>
+  </p>
 
 <% end %>
 
 <%= content_for :sidebar do %>
-	<li><%= link_to "#{casein_show_icon "th-list"}一覧へ".html_safe, casein_items_path %></li>
+  <li><%= link_to "#{casein_show_icon "th-list"}一覧へ".html_safe, casein_items_path %></li>
 <% end %>

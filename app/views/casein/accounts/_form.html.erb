@@ -2,28 +2,28 @@
 
 
 <div class="row">
-	<div class="col-lg-6">
-		<%= casein_text_field f, f.object, :name, {:casein_label => '取引先'} %>
-	</div>
-	<div class="col-lg-6">
-		<%= casein_text_field f, f.object, :bank, {:casein_label => '銀行'} %>
-	</div>
+  <div class="col-lg-6">
+    <%= casein_text_field f, f.object, :name, {:casein_label => '取引先'} %>
+  </div>
+  <div class="col-lg-6">
+    <%= casein_text_field f, f.object, :bank, {:casein_label => '銀行'} %>
+  </div>
 </div>
 
 <div class="row">
-	<div class="col-lg-6">
-		<%= casein_text_field f, f.object, :bank_branch, {:casein_label => '支店'} %>
-	</div>
-	<div class="col-lg-6">
-		<%= casein_select f, f.object, :category, Account.category.options, {:casein_label => '種別'} %>
-	</div>
+  <div class="col-lg-6">
+    <%= casein_text_field f, f.object, :bank_branch, {:casein_label => '支店'} %>
+  </div>
+  <div class="col-lg-6">
+    <%= casein_select f, f.object, :category, Account.category.options, {:casein_label => '種別'} %>
+  </div>
 </div>
 
 <div class="row">
-	<div class="col-lg-6">
-		<%= casein_text_field f, f.object, :ac_no, {:casein_label => '口座番号'} %>
-	</div>
-	<div class="col-lg-6">
-		
-	</div>
+  <div class="col-lg-6">
+    <%= casein_text_field f, f.object, :ac_no, {:casein_label => '口座番号'} %>
+  </div>
+  <div class="col-lg-6">
+    
+  </div>
 </div>
