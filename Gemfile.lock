@@ -236,9 +236,9 @@ DEPENDENCIES
   casein (~> 5.1.1)
   coffee-rails (~> 4.1.0)
   dotenv-rails
+  enumerize
   ffaker
   gimei
-  enumerize
   jbuilder (~> 2.0)
   jquery-rails
   jquery-ui-rails
