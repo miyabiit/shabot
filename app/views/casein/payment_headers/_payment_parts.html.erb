@@ -1,0 +1,19 @@
+<script>
+$(function(){
+  $('#payment_parts').on('cocoon:after-insert', function(e, insertedItem) {
+    $(insertedItem).find(".money").maskMoney({
+      thousands:',',
+      allowZero: true,
+      precision: '0'
+    })
+  });
+});
+</script>
+<div id="payment_parts">
+  <%= f.fields_for :payment_parts do |part_f| %>
+    <%= render 'casein/payment_headers/payment_part_fields', f: part_f %>
+  <% end %>
+  <div class="pull-right">
+    <%= link_to_add_association '明細追加', f, :payment_parts, partial: 'casein/payment_headers/payment_part_fields', class: 'btn btn-mini btn-danger'  %>
+  </div>
+</div>

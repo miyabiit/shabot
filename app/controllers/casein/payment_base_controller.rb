@@ -33,13 +33,6 @@ module Casein
       render action: :show
     end
 
-
-    def add_part
-      @payment_header = payment_header_find(params[:id]) 
-      @payment_header.payment_parts << PaymentPart.new
-      render action: :show
-    end
-  
     def new
       @account = Account.find(params[:account_id]);
       @payment_header = build_payment_header(
@@ -86,7 +79,7 @@ module Casein
     private
       
       def payment_header_params
-        params.require(:payment_header).permit(:user_id, :account_id, :payable_on, :project_id, :org_name, :slip_no, :comment, :budget_code, :fee_who_paid, :my_account_id, :planned)
+        params.require(:payment_header).permit(:user_id, :account_id, :payable_on, :project_id, :org_name, :slip_no, :comment, :budget_code, :fee_who_paid, :my_account_id, :planned, payment_parts_attributes: [:id, :item_id, :amount, :_destroy])
       end
 
       def payment_header_find(param_id)

@@ -1,0 +1,27 @@
+<div class="nested-fields">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="form-group">
+        <%= f.label :item_id, class: 'control-label'%>
+        <div class="well">
+          <%= f.collection_select :item_id, Item.all, :id, :name, {}, {class: 'form-control'} %>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="form-group">
+        <%= f.label :amount, class: 'control-label' %>
+        <div class="well">
+          <%= f.text_field :amount, class: 'form-control money' %>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1">
+      <div style="height: 99px">
+        <br/>
+        <br/>
+        <%= link_to_remove_association '削除', f, class: 'btn btn-danger' %>
+      </div>
+    </div>
+  </div>
+</div>

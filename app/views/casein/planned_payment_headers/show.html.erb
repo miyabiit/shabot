@@ -10,34 +10,11 @@
   
   <p class="submits">
     <%= link_to t('helpers.button.cancel'), casein_planned_payment_headers_path, :class => 'btn btn-mini btn-danger' %>
-    <%= link_to '明細追加', add_part_casein_planned_payment_header_path, :class => 'btn btn-mini btn-danger' %>
     <%= f.submit t('helpers.submit.submit'), :class => "btn btn-mini btn-primary" %>
     <%= link_to  'PDF', pdf_casein_payment_header_path, {:class => 'btn btn-mini btn-primary', :target => "_blank", :disabled => ('disabled' if @payment_header.planned)} %>
   </p>
 
-<% end %>
-
-<% @payment_header.payment_parts.each do |payment_part| %>
-<%= form_for payment_part, :url => casein_payment_part_path(payment_part) do |f| %>
-<div class="row">
-  <div class="col-lg-6">
-    <% items = Item.all %>
-    <%= casein_collection_select f, f.object, :payment_part, :item_id, items, :id, :name, {:selected => f.object.item_id, :casein_label => '費目' } %>
-  </div>
-  <div class="col-lg-3">
-    <%= casein_text_field f, f.object, :amount , {:casein_label => '金額', :class => 'money'} %>
-  </div>
-  <div class="col-lg-3">
-  </br>
-  </br>
-  <p class="submits">
-    <%= link_to t('helpers.link.delete'), casein_payment_part_path(payment_part), :method => :delete, :class => 'btn btn-mini btn-danger', 
-      :data => { :confirm => t("messages.destroy_confirmation", model_name: '明細') } %>
-    <%= f.submit t('helpers.submit.submit'), :class => "btn btn-mini btn-primary" %>
-  </p>
-  </div>
-</div>
-<% end %>
+  <%= render partial: 'casein/payment_headers/payment_parts', locals: {f: f} %>
 <% end %>
 
 <%= content_for :sidebar do %>
