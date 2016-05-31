@@ -2,23 +2,22 @@
 
 module Casein
   class AccountsController < Casein::CaseinController
-  
+    include TargetModelFetching
+    target_model :account
+
     ## optional filters for defining usage according to Casein::AdminUser access_levels
     # before_filter :needs_admin, :except => [:action1, :action2]
     # before_filter :needs_admin_or_current_user, :only => [:action1, :action2]
   
     def index
-      @casein_page_title = 'お取引先'
   		@accounts =  Account.search(params[:search]).order(sort_order(:name)).paginate :page => params[:page]
     end
   
     def show
-      @casein_page_title = 'View account'
       @account = Account.find params[:id]
     end
   
     def new
-      @casein_page_title = 'Add a new account'
     	@account = Account.new
     end
 
@@ -26,28 +25,26 @@ module Casein
       @account = Account.new account_params
     
       if @account.save
-        flash[:notice] = 'Account created'
+        flash[:notice] = I18n.t('messages.create_model', model_name: model.model_name.human)
         redirect_to casein_accounts_path
       else
-        flash.now[:warning] = 'There were problems when trying to create a new account'
+        flash.now[:warning] = I18n.t('messages.failed_to_create', model_name: model.model_name.human)
         render :action => :new
       end
     end
   
     def update
-      @casein_page_title = 'Update account'
-      
       @account = Account.find params[:id]
     
       if @account.update_attributes account_params
-        flash[:notice] = 'Account has been updated'
+        flash[:notice] = I18n.t('messages.update_model', model_name: model.model_name.human)
 				if params[:new_slip]
 					redirect_to new_casein_payment_header_path(account_id: @account.id)
 				else
         	redirect_to casein_accounts_path
 				end
       else
-        flash.now[:warning] = 'There were problems when trying to update this account'
+        flash.now[:warning] = I18n.t('messages.failed_to_update', model_name: model.model_name.human)
         render :action => :show
       end
     end
@@ -56,7 +53,7 @@ module Casein
       @account = Account.find params[:id]
 
       @account.destroy
-      flash[:notice] = 'Account has been deleted'
+      flash[:notice] = I18n.t('messages.destroy_model', model_name: model.model_name.human)
       redirect_to casein_accounts_path
     end
   

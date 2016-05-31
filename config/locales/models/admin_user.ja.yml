@@ -1,0 +1,14 @@
+ja:
+  activerecord:
+    models:
+      casein/admin_user: "ユーザー"
+    attributes:
+      casein/admin_user:
+        login: "ユーザーID"
+        name: "ユーザー名"
+        emall: "Eメール"
+        access_level: "権限"
+        time_zone: "タイムゾーン"
+        password: "パスワード"
+        password_confirmation: "パスワード(確認)"
+

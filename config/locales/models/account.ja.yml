@@ -1,0 +1,11 @@
+ja:
+  activerecord:
+    models:
+      account: "お取引先"
+    attributes:
+      account:
+        name: "取引先"
+        bank: "銀行"
+        bank_branch: "支店"
+        category: "種別"
+        ac_no: "口座番号"

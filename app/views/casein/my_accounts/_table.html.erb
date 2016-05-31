@@ -18,7 +18,7 @@
 			<td><%= casein_table_cell_link my_account.category, casein_my_account_path(my_account) %></td>
 			<td><%= casein_table_cell_link my_account.ac_no, casein_my_account_path(my_account) %></td>
 			<td class="delete">
-				<%= link_to(casein_show_row_icon("trash"), casein_my_account_path(my_account), :method => :delete, :data => { :confirm => "Are you sure you want to delete this my account?" }) %>
+				<%= link_to(casein_show_row_icon("trash"), casein_my_account_path(my_account), :method => :delete, :data => { :confirm => t("messages.destroy_confirmation", model_name: controller.model.model_name.human) }) %>
 			</td>
 		</tr>
 	<% end %>
