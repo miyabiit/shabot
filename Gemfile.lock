@@ -75,6 +75,7 @@ GEM
       sass-rails
       scrypt (= 1.2.1)
       will_paginate (= 3.0.7)
+    cocoon (1.2.9)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.1.x)
@@ -88,6 +89,8 @@ GEM
     dotenv-rails (2.1.0)
       dotenv (= 2.1.0)
       railties (>= 4.0, < 5.1)
+    enumerize (1.1.1)
+      activesupport (>= 3.2)
     erubis (2.7.0)
     execjs (2.6.0)
     ffaker (2.2.0)
@@ -232,8 +235,10 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rbenv
   casein (~> 5.1.1)
+  cocoon
   coffee-rails (~> 4.1.0)
   dotenv-rails
+  enumerize
   ffaker
   gimei
   jbuilder (~> 2.0)

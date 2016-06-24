@@ -7,7 +7,7 @@
     <%= casein_hidden_field f, f.object, :account_id  %>
     <%= casein_hidden_field f, f.object, :slip_no  %>
     <%= 'No. ' + f.object.slip_no.to_s  %>
-    <%= casein_select f, f.object, :org_name, PaymentHeader::ORG_NAMES, {:casein_label => '請求元法人'} %>
+    <%= casein_select f, f.object, :org_name, PaymentHeader.org_name.options, {:casein_label => '請求元法人'} %>
   </div>
   <div class="col-lg-4">
     <%= '請求先 ' + Account.find(f.object.account_id).name %>
@@ -15,7 +15,7 @@
   </div>
   <div class="col-lg-4">
     <%= '_' %>
-    <%= casein_select f, f.object, :fee_who_paid, PaymentHeader::WHO_PAY, {:casein_label => '振込手数料'} %>
+    <%= casein_select f, f.object, :fee_who_paid, PaymentHeader.fee_who_paid.options, {:casein_label => '振込手数料'} %>
   </div>
 </div>
 

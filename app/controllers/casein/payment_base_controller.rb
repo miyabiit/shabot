@@ -1,7 +1,8 @@
 module Casein
   class PaymentBaseController < Casein::CaseinController
+    include TargetModelFetching
+
     def index
-      @casein_page_title = 'Payment headers'
       if params[:search]
         @payment_headers = payment_header_search.search(params[:search]).order(sort_order(:user_id)).paginate :page => params[:page]
       elsif params[:account_name]
@@ -13,7 +14,6 @@ module Casein
     end
   
     def show
-      @casein_page_title = 'View payment header'
       @payment_header = payment_header_find params[:id]
       render action: :show
     end
@@ -33,15 +33,7 @@ module Casein
       render action: :show
     end
 
-
-    def add_part
-      @payment_header = payment_header_find(params[:id]) 
-      @payment_header.payment_parts << PaymentPart.new
-      render action: :show
-    end
-  
     def new
-      @casein_page_title = 'Add a new payment header'
       @account = Account.find(params[:account_id]);
       @payment_header = build_payment_header(
         :user_id => current_user.id,
@@ -56,24 +48,22 @@ module Casein
       @payment_header.payment_parts.push PaymentPart.new
     
       if @payment_header.save
-        flash[:notice] = 'Payment header created'
+        flash[:notice] = I18n.t('messages.create_model', model_name: model_human_name)
         redirect_to_payment_show(@payment_header)
       else
-        flash.now[:warning] = 'There were problems when trying to create a new payment header'
+        flash.now[:warning] = I18n.t('messages.failed_to_create', model_name: model_human_name)
         render action: :new
       end
     end
   
     def update
-      @casein_page_title = 'Update payment header'
-      
       @payment_header = payment_header_find params[:id]
     
       if @payment_header.update_attributes payment_header_params
-        flash[:notice] = 'Payment header has been updated'
+        flash[:notice] = I18n.t('messages.update_model', model_name: model_human_name)
         render action: :show
       else
-        flash.now[:warning] = 'There were problems when trying to update this payment header'
+        flash.now[:warning] = I18n.t('messages.failed_to_update', model_name: model_human_name)
         render action: :show
       end
     end
@@ -82,14 +72,14 @@ module Casein
       @payment_header = payment_header_find params[:id]
 
       @payment_header.destroy
-      flash[:notice] = 'Payment header has been deleted'
+      flash[:notice] = I18n.t('messages.destroy_model', model_name: model_human_name)
       redirect_to_payment_index
     end
   
     private
       
       def payment_header_params
-        params.require(:payment_header).permit(:user_id, :account_id, :payable_on, :project_id, :org_name, :slip_no, :comment, :budget_code, :fee_who_paid, :my_account_id, :planned)
+        params.require(:payment_header).permit(:user_id, :account_id, :payable_on, :project_id, :org_name, :slip_no, :comment, :budget_code, :fee_who_paid, :my_account_id, :planned, payment_parts_attributes: [:id, :item_id, :amount, :_destroy])
       end
 
       def payment_header_find(param_id)
@@ -114,6 +104,10 @@ module Casein
         else
           redirect_to casein_payment_header_path(payment_header)
         end
+      end
+
+      def model_human_name
+        '支払申請書'
       end
   end
 end

@@ -4,17 +4,17 @@
 
 <%= form_for @account, :url => casein_account_path(@account) do |f| %>
 
-	<%= render :partial => 'casein/accounts/form', :locals => { :f => f } %>
-	
-	<p class="submits">
-	  <%= link_to 'Cancel', casein_accounts_path, :class => 'btn btn-mini btn-danger' %>
-		<%= f.submit "Save", :class => "btn btn-mini btn-primary" %>
-		<%= f.submit "Save & 新伝票", :name => "new_slip", :class => "btn btn-mini btn-primary" %>
-		<%= link_to '新伝票(のみ)', new_casein_payment_header_path(account_id: @account.id), :class => "btn btn-mini btn-primary" %>
-	</p>
+  <%= render :partial => 'casein/accounts/form', :locals => { :f => f } %>
+  
+  <p class="submits">
+    <%= link_to t('helpers.button.cancel'), casein_accounts_path, :class => 'btn btn-mini btn-danger' %>
+    <%= f.submit t('helpers.submit.submit'), :class => "btn btn-mini btn-primary" %>
+    <%= f.submit "保存 & 新伝票", :name => "new_slip", :class => "btn btn-mini btn-primary" %>
+    <%= link_to '新伝票(のみ)', new_casein_payment_header_path(account_id: @account.id), :class => "btn btn-mini btn-primary" %>
+  </p>
 
 <% end %>
 
 <%= content_for :sidebar do %>
-	<li><%= link_to "#{casein_show_icon "th-list"}一覧へ".html_safe, casein_accounts_path %></li>
+  <li><%= link_to "#{casein_show_icon "th-list"}一覧へ".html_safe, casein_accounts_path %></li>
 <% end %>

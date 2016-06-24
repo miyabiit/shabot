@@ -2,19 +2,19 @@ require 'securerandom'
 
 module Casein
   class AdminUsersController < Casein::CaseinController
+    include TargetModelFetching
+    target_model 'casein/admin_user'
 
     before_filter :needs_admin, :except => [:show, :destroy, :update, :update_password]
     before_filter :needs_admin_or_current_user, :only => [:show, :destroy, :update, :update_password]
  
     def index
-      @casein_page_title = "Users"
       @users = Casein::AdminUser.order(sort_order(:login)).paginate :page => params[:page]
     end
  
     def new
-      @casein_page_title = "Add a new user"
-    	@casein_admin_user = Casein::AdminUser.new
-    	@casein_admin_user.time_zone = Rails.configuration.time_zone
+      @casein_admin_user = Casein::AdminUser.new
+      @casein_admin_user.time_zone = Rails.configuration.time_zone
     end
   
     def create
@@ -33,13 +33,13 @@ module Casein
     end
   
     def show
-    	@casein_admin_user = Casein::AdminUser.find params[:id]
-    	@casein_page_title = @casein_admin_user.name + " > View user"
+      @casein_admin_user = Casein::AdminUser.find params[:id]
+      @casein_page_title = @casein_admin_user.name + " > 詳細"
     end
  
     def update
       @casein_admin_user = Casein::AdminUser.find params[:id]
-      @casein_page_title = @casein_admin_user.name + " > Update user"
+      @casein_page_title = @casein_admin_user.name + " > 更新"
 
       if @casein_admin_user.update_attributes casein_admin_user_params
         flash[:notice] = @casein_admin_user.name + " has been updated"
@@ -58,7 +58,7 @@ module Casein
  
     def update_password
       @casein_admin_user = Casein::AdminUser.find params[:id]
-      @casein_page_title = @casein_admin_user.name + " > Update password"
+      @casein_page_title = @casein_admin_user.name + " > パスワード更新"
        
       if @casein_admin_user.valid_password? params[:form_current_password]
         if params[:casein_admin_user][:password].blank? && params[:casein_admin_user][:password_confirmation].blank?
@@ -77,7 +77,7 @@ module Casein
  
     def reset_password
       @casein_admin_user = Casein::AdminUser.find params[:id]
-      @casein_page_title = @casein_admin_user.name + " > Reset password"
+      @casein_page_title = @casein_admin_user.name + " > パスワード初期化"
        
       if params[:generate_random_password].blank? && params[:casein_admin_user][:password].blank? && params[:casein_admin_user][:password_confirmation].blank?
         flash[:warning] = "New password cannot be blank"
@@ -119,6 +119,5 @@ module Casein
       def casein_admin_user_params
         params.require(:casein_admin_user).permit(:login, :name, :email, :time_zone, :access_level, :password, :password_confirmation, :member_code, :section)
       end
- 
   end
 end

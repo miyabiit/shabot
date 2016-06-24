@@ -2,48 +2,45 @@
 
 module Casein
   class ProjectsController < Casein::CaseinController
+    include TargetModelFetching
+    target_model :project
   
     ## optional filters for defining usage according to Casein::AdminUser access_levels
     # before_filter :needs_admin, :except => [:action1, :action2]
     # before_filter :needs_admin_or_current_user, :only => [:action1, :action2]
   
     def index
-      @casein_page_title = 'Projects'
-  		@projects = Project.search(params[:search]).order(sort_order(:name)).paginate :page => params[:page]
+      @projects = Project.search(params[:search]).order(sort_order(:name)).paginate :page => params[:page]
     end
   
     def show
-      @casein_page_title = 'View project'
       @project = Project.find params[:id]
     end
   
     def new
-      @casein_page_title = 'Add a new project'
-    	@project = Project.new
+      @project = Project.new
     end
 
     def create
       @project = Project.new project_params
     
       if @project.save
-        flash[:notice] = 'Project created'
+        flash[:notice] = I18n.t('messages.create_model', model_name: model.model_name.human)
         redirect_to casein_projects_path
       else
-        flash.now[:warning] = 'There were problems when trying to create a new project'
+        flash.now[:warning] = I18n.t('messages.failed_to_create', model_name: model.model_name.human)
         render :action => :new
       end
     end
   
     def update
-      @casein_page_title = 'Update project'
-      
       @project = Project.find params[:id]
     
       if @project.update_attributes project_params
-        flash[:notice] = 'Project has been updated'
+        flash[:notice] = I18n.t('messages.update_model', model_name: model.model_name.human)
         redirect_to casein_projects_path
       else
-        flash.now[:warning] = 'There were problems when trying to update this project'
+        flash.now[:warning] = I18n.t('messages.failed_to_update', model_name: model.model_name.human)
         render :action => :show
       end
     end
@@ -52,7 +49,7 @@ module Casein
       @project = Project.find params[:id]
 
       @project.destroy
-      flash[:notice] = 'Project has been deleted'
+      flash[:notice] = I18n.t('messages.destroy_model', model_name: model.model_name.human)
       redirect_to casein_projects_path
     end
   

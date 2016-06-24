@@ -2,31 +2,29 @@
 
 module Casein
   class ReceiptHeadersController < Casein::CaseinController
+    include TargetModelFetching
+    target_model :receipt_header
   
     ## optional filters for defining usage according to Casein::AdminUser access_levels
     # before_filter :needs_admin, :except => [:action1, :action2]
     # before_filter :needs_admin_or_current_user, :only => [:action1, :action2]
   
     def index
-      @casein_page_title = I18n.t('views.receipt_header.index.title')
-  		@receipt_headers = receipt_header_search.order(sort_order(:user_id)).paginate :page => params[:page]
+      @receipt_headers = receipt_header_search.order(sort_order(:user_id)).paginate :page => params[:page]
     end
   
     def show
-      @casein_page_title = I18n.t('views.receipt_header.show.title')
       @receipt_header = receipt_header_search.find params[:id]
     end
   
     def new
-      @casein_page_title = I18n.t('views.receipt_header.new.title')
-    	@receipt_header = ReceiptHeader.new
+      @receipt_header = ReceiptHeader.new
     end
 
     def copy
-      @casein_page_title = I18n.t('views.receipt_header.copy.title')
 
-    	src_receipt_header = receipt_header_search.find(params[:id])
-			@receipt_header = src_receipt_header.dup
+      src_receipt_header = receipt_header_search.find(params[:id])
+      @receipt_header = src_receipt_header.dup
 
       render :new
     end
@@ -36,10 +34,10 @@ module Casein
       @receipt_header.user = @session_user
     
       if @receipt_header.save
-        flash[:notice] = 'Receipt header created'
+        flash[:notice] = I18n.t('messages.create_model', model_name: model.model_name.human)
         redirect_to casein_receipt_headers_path
       else
-        flash.now[:warning] = 'There were problems when trying to create a new receipt header'
+        flash.now[:warning] = I18n.t('messages.failed_to_create', model_name: model.model_name.human)
         render :action => :new
       end
     end
@@ -51,10 +49,10 @@ module Casein
       @receipt_header.user = @session_user
     
       if @receipt_header.update_attributes receipt_header_params
-        flash[:notice] = 'Receipt header has been updated'
+        flash[:notice] = I18n.t('messages.update_model', model_name: model.model_name.human)
         redirect_to casein_receipt_headers_path
       else
-        flash.now[:warning] = 'There were problems when trying to update this receipt header'
+        flash.now[:warning] = I18n.t('messages.failed_to_update', model_name: model.model_name.human)
         render :action => :show
       end
     end
@@ -63,7 +61,7 @@ module Casein
       @receipt_header = receipt_header_search.find params[:id]
 
       @receipt_header.destroy
-      flash[:notice] = 'Receipt header has been deleted'
+      flash[:notice] = I18n.t('messages.destroy_model', model_name: model.model_name.human)
       redirect_to casein_receipt_headers_path
     end
   

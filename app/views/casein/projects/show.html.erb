@@ -4,15 +4,15 @@
 
 <%= form_for @project, :url => casein_project_path(@project) do |f| %>
 
-	<%= render :partial => 'casein/projects/form', :locals => { :f => f } %>
-	
-	<p class="submits">
-	  	<%= link_to 'Cancel', casein_projects_path, :class => 'btn btn-mini btn-danger' %>
-		<%= f.submit "Save changes", :class => "btn btn-mini btn-primary" %>
-	</p>
+  <%= render :partial => 'casein/projects/form', :locals => { :f => f } %>
+  
+  <p class="submits">
+      <%= link_to t('helpers.button.cancel'), casein_projects_path, :class => 'btn btn-mini btn-danger' %>
+    <%= f.submit t('helpers.submit.submit'), :class => "btn btn-mini btn-primary" %>
+  </p>
 
 <% end %>
 
 <%= content_for :sidebar do %>
-	<li><%= link_to "#{casein_show_icon "th-list"}一覧へ".html_safe, casein_projects_path %></li>
+  <li><%= link_to "#{casein_show_icon "th-list"}一覧へ".html_safe, casein_projects_path %></li>
 <% end %>

@@ -30,6 +30,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # load enviroments from .env
 gem 'dotenv-rails'
 
+gem 'cocoon'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -75,3 +77,5 @@ gem 'prawn-table'
 gem 'quiet_assets'
 
 gem 'therubyracer'
+
+gem 'enumerize'

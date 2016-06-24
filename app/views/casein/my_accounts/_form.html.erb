@@ -2,19 +2,19 @@
 
 
 <div class="row">
-	<div class="col-lg-6">
-		<%= casein_text_field_i18n f, :bank %>
-	</div>
-	<div class="col-lg-6">
-		<%= casein_text_field_i18n f, :bank_branch %>
-	</div>
+  <div class="col-lg-6">
+    <%= casein_text_field_i18n f, :bank %>
+  </div>
+  <div class="col-lg-6">
+    <%= casein_text_field_i18n f, :bank_branch %>
+  </div>
 </div>
 
 <div class="row">
-	<div class="col-lg-6">
-		<%= casein_select_i18n f, :category, Account::CAT_NAMES %>
-	</div>
-	<div class="col-lg-6">
-		<%= casein_text_field_i18n f, :ac_no %>
-	</div>
+  <div class="col-lg-6">
+    <%= casein_select_i18n f, :category, Account.category.options %>
+  </div>
+  <div class="col-lg-6">
+    <%= casein_text_field_i18n f, :ac_no %>
+  </div>
 </div>

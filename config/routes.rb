@@ -9,22 +9,17 @@ Rails.application.routes.draw do
     end
 
     resources :my_accounts
-    #resources :reports
-    resources :payment_parts
-    #resources :payment_headers
     resources :accounts
     resources :items
     resources :projects
     resources :payment_headers do
       member do
-        get 'add_part'
         get 'pdf'
         get 'new_by_last'
       end
     end
     resources :planned_payment_headers do
       member do
-        get 'add_part'
         get 'new_by_last'
       end
     end
