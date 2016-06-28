@@ -4,6 +4,7 @@ $ ->
   $(".money").maskMoney({
     thousands:',',
     allowZero: true,
+    allowNegative: true,
     precision: '0'
   })
   $(".money").each(->

@@ -5,7 +5,7 @@ class ReceiptHeader < ActiveRecord::Base
   belongs_to :item
   belongs_to :my_account
 
-  validates :amount, numericality: {only_integer: true, greater_than_or_equal_to: 0}
+  validates :amount, numericality: {only_integer: true}
 
   scope :onlymine, -> (user) { user.is_admin? ? all : where(user_id: user) }
   scope :receipt_on_is_not_null, -> { where('receipt_headers.receipt_on IS NOT NULL') }
