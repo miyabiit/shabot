@@ -1,11 +1,7 @@
 <script>
 $(function(){
   $('#payment_parts').on('cocoon:after-insert', function(e, insertedItem) {
-    $(insertedItem).find(".money").maskMoney({
-      thousands:',',
-      allowZero: true,
-      precision: '0'
-    })
+    $(insertedItem).find(".money").formatMoney()
   });
 });
 </script>
