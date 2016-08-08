@@ -53,7 +53,7 @@ class Report::ReportBase
     raise 'Must be implement "render_header" method!'
   end
 
-  def render_row(values, col_widths)
+  def render_row(values, col_widths, options={})
     values.each_with_index do |v, idx|
       str = case v
             when Fixnum
@@ -67,7 +67,10 @@ class Report::ReportBase
               else
                 :left
               end
-      text_box str, size: FONT_SIZE, at: Vector[col_widths.take(idx).inject(0, :+), cursor], width: col_widths[idx], height: ROW_SIZE, valign: :center, align: align
+      padding_left = options[:padding_left]   || options[:padding_horizontal] || 0
+      padding_right = options[:padding_right] || options[:padding_horizontal] || 0
+
+      text_box str, size: FONT_SIZE, at: Vector[col_widths.take(idx).inject(0, :+) + padding_left, cursor], width: col_widths[idx]-(padding_left+padding_right), height: ROW_SIZE, valign: :center, align: align
     end
     next_row
     if cursor <= 0

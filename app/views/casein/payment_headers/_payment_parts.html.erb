@@ -6,6 +6,16 @@ $(function(){
 });
 </script>
 <div id="payment_parts">
+  <div class="row">
+    <div class="col-lg-11">
+      <div class="pull-right">
+        <div class="well">
+          <label>合計金額:</label> 
+          <%= number_with_delimiter(f.object.payment_parts.sum(:amount)) %> 円
+        </div>
+      </div>
+    </div>
+  </div>
   <%= f.fields_for :payment_parts do |part_f| %>
     <%= render 'casein/payment_headers/payment_part_fields', f: part_f %>
   <% end %>

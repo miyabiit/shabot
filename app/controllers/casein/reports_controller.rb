@@ -7,10 +7,10 @@ module Casein
       @casein_page_title = 'Reports'
     end
   
-    def pdf_list
+    def pdf_each_project
       from, to = parse_from_to
       payment_headers = PaymentHeader.where(payable_on: from..to)
-      pdf = PaymentList.new(payment_headers)
+      pdf = EachProjectPaymentList.new(payment_headers)
       pdf_filename = "payment-project-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
       send_data pdf.render,
         filename:  pdf_filename,
@@ -19,10 +19,10 @@ module Casein
         disposition:  "attachment"
     end
 
-    def pdf_list2
+    def pdf_each_day
       from, to = parse_from_to
       payment_headers = PaymentHeader.where(payable_on: from..to)
-      pdf = PaymentList2.new(payment_headers)
+      pdf = EachDayPaymentList.new(payment_headers)
       pdf_filename = "payment-eachday-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
       send_data pdf.render,
         filename:  pdf_filename,
