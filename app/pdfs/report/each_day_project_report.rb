@@ -1,5 +1,5 @@
 class Report::EachDayProjectReport < Report::ReportBase
-  COL_WIDTHS = [25, 70, 100, 55, 115, 85, 70]
+  COL_WIDTHS = [25, 15, 55, 100, 55, 115, 85, 70]
 
   def initialize(pdf, title, payments, break_by)
     super(pdf)
@@ -38,6 +38,7 @@ class Report::EachDayProjectReport < Report::ReportBase
       amount = payment.payment_parts.sum(:amount)
       render_row [
         line_no.to_s,
+        payment.planned ? '' : '＊',
         payment.payable_on,
         payment.project&.name,
         payment.project&.category,
@@ -71,7 +72,7 @@ class Report::EachDayProjectReport < Report::ReportBase
     render_target_date
     @pdf.move_down 16
     hr
-    render_row ['No.', '支払日', 'PROJECT', '', '取引先', '金額', '伝票番号'], COL_WIDTHS, padding_horizontal: 3
+    render_row ['No.', '', '支払日', 'PROJECT', '', '取引先', '金額', '伝票番号'], COL_WIDTHS, padding_horizontal: 3
     hr
     br
   end
@@ -86,6 +87,6 @@ class Report::EachDayProjectReport < Report::ReportBase
 
   def render_amount(amount)
     hr
-    render_row ['', '', '', '', '', amount, ''], COL_WIDTHS, padding_horizontal: 3
+    render_row ['', '', '', '', '', '', amount, ''], COL_WIDTHS, padding_horizontal: 3
   end
 end
