@@ -25,8 +25,8 @@ Rails.application.routes.draw do
     end
     resources :reports do
       collection do
-        get 'pdf_list'
-        get 'pdf_list2'
+        get 'pdf_each_project'
+        get 'pdf_each_day'
         get 'pdf_monthly'
         get 'pdf_payment_receipt'
         get 'csv_payment'
