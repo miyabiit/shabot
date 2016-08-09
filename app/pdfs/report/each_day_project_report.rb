@@ -33,6 +33,7 @@ class Report::EachDayProjectReport < Report::ReportBase
         render_amount(month_amount)
         @current_month = month
         month_amount = 0
+        sub_amount = 0
         next_page
       end
       amount = payment.payment_parts.sum(:amount)
