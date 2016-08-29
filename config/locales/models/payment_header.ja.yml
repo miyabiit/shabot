@@ -6,5 +6,6 @@ ja:
       payment_header:
         my_account_id: "引落元口座"
         planned: "計画区分"
+        processed: "処理済"
 
 

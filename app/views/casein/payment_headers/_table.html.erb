@@ -32,7 +32,9 @@
         <%= link_to(casein_show_row_icon("retweet"), new_by_last_payment_path(payment_header)) %>
       </td>
       <td class="delete">
-        <%= link_to(casein_show_row_icon("trash"), payment_path(payment_header), :method => :delete, :data => { :confirm => t("messages.destroy_confirmation", model_name: payment_header.planned ? '支払予定' : '支払申請書') }) %>
+        <% unless payment_header.processed? -%>
+          <%= link_to(casein_show_row_icon("trash"), payment_path(payment_header), :method => :delete, :data => { :confirm => t("messages.destroy_confirmation", model_name: payment_header.planned ? '支払予定' : '支払申請書') }) %>
+        <% end -%>
       </td>
     </tr>
   <% end %>
