@@ -14,5 +14,6 @@
 <li id="tab-items"><%= link_to "費目", casein_items_path %></li>
 <% if @session_user.is_admin? %>
 <li id="tab-projects"><%= link_to "事業・プロジェクト登録", casein_projects_path %></li>
+<li id="tab-bank_account_balances"><%= link_to "残高Simulator", casein_bank_account_balances_path %></li>
 <% end %>
 <li id="tab-reports"><%= link_to "Reports", casein_reports_path %></li>
