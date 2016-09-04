@@ -23,6 +23,13 @@ Rails.application.routes.draw do
         get 'new_by_last'
       end
     end
+
+    resources :not_processed_payment_headers, only: [:index] do
+      collection do
+        patch :update_all, as: :update_all
+      end
+    end
+
     resources :reports do
       collection do
         get 'pdf_each_project'

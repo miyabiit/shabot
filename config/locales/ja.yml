@@ -214,3 +214,4 @@ ja:
     destroy_model: '%{model_name}を削除しました'
     failed_to_create: "%{model_name}の作成に失敗しました" 
     failed_to_update: "%{model_name}の更新に失敗しました" 
+    failed_to_destroy: "%{model_name}の削除に失敗しました" 

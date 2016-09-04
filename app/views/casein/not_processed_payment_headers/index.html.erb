@@ -1,0 +1,45 @@
+<h2>未払一覧<%= casein_pagination_details @payment_headers %></h2>
+<div class="row">
+<%= form_tag casein_not_processed_payment_headers_path, :method => 'get' do %>
+  <div class="col-lg-4">
+    伝票No
+    <%= text_field_tag :slip_no, params[:slip_no] %>
+  </div>
+  <div class="col-lg-4">
+    日付
+    <%= text_field_tag :from, params[:from], placeholder: 'yyyy/mm/dd', "data-provide" => "datepicker" %>
+    〜
+    <%= text_field_tag :to, params[:to], placeholder: 'yyyy/mm/dd', "data-provide" => "datepicker" %>
+  </div>
+  <div class="col-lg-2">
+    <%= submit_tag "検索", :name => nil %>
+  </div>
+<% end %>
+</div>
+
+<%= form_tag update_all_casein_not_processed_payment_headers_path, :method => 'patch' do %>
+  <%= hidden_field_tag :slip_no, params[:slip_no] %>
+  <%= hidden_field_tag :from, params[:from] %>
+  <%= hidden_field_tag :to, params[:to] %>
+
+<div class="row">
+  <div class="col-lg-offset-10 col-lg-2">
+    <div class="pull-right">
+      <%= submit_tag "確定", name: nil, class: 'btn btn-primary'  %>
+    </div>
+  </div>
+</div>
+
+<br/>
+
+<%= render :partial => 'table', :locals => { :payment_headers => @payment_headers } %>
+
+<div class="text-center">
+  <%= will_paginate @payment_headers %>
+</div>
+
+<% end %>
+
+<%= content_for :sidebar do %>
+
+<% end %>

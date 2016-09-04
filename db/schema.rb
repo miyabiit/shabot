@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160501045522) do
+ActiveRecord::Schema.define(version: 20160829035058) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -78,22 +78,26 @@ ActiveRecord::Schema.define(version: 20160501045522) do
   add_index "number_masters", ["type"], name: "index_number_masters_on_type", using: :btree
 
   create_table "payment_headers", force: :cascade do |t|
-    t.integer  "user_id",       limit: 4
-    t.integer  "account_id",    limit: 4
+    t.integer  "user_id",         limit: 4
+    t.integer  "account_id",      limit: 4
     t.date     "payable_on"
-    t.integer  "project_id",    limit: 4
+    t.integer  "project_id",      limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "org_name",      limit: 255
-    t.string   "slip_no",       limit: 255
-    t.text     "comment",       limit: 65535
-    t.string   "budget_code",   limit: 255
-    t.string   "fee_who_paid",  limit: 255
-    t.integer  "my_account_id", limit: 4
-    t.boolean  "planned",       limit: 1,     default: false
+    t.string   "org_name",        limit: 255
+    t.string   "slip_no",         limit: 255
+    t.text     "comment",         limit: 65535
+    t.string   "budget_code",     limit: 255
+    t.string   "fee_who_paid",    limit: 255
+    t.integer  "my_account_id",   limit: 4
+    t.boolean  "planned",                       default: false
+    t.boolean  "processed",                     default: false
+    t.integer  "process_user_id", limit: 4
+    t.date     "process_date"
   end
 
   add_index "payment_headers", ["my_account_id"], name: "index_payment_headers_on_my_account_id", using: :btree
+  add_index "payment_headers", ["process_user_id"], name: "index_payment_headers_on_process_user_id", using: :btree
 
   create_table "payment_parts", force: :cascade do |t|
     t.integer  "payment_header_id", limit: 4
@@ -138,4 +142,5 @@ ActiveRecord::Schema.define(version: 20160501045522) do
     t.datetime "updated_at",             null: false
   end
 
+  add_foreign_key "receipt_headers", "accounts", name: "fk_receipt_headers"
 end

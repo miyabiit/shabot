@@ -51,7 +51,8 @@ module Casein
         flash[:notice] = I18n.t('messages.create_model', model_name: model_human_name)
         redirect_to_payment_show(@payment_header)
       else
-        flash.now[:warning] = I18n.t('messages.failed_to_create', model_name: model_human_name)
+        flash.discard(:notice)
+        flash.now[:warning] = create_error_message(@payment_header)
         render action: :new
       end
     end
@@ -63,7 +64,8 @@ module Casein
         flash[:notice] = I18n.t('messages.update_model', model_name: model_human_name)
         render action: :show
       else
-        flash.now[:warning] = I18n.t('messages.failed_to_update', model_name: model_human_name)
+        flash.discard(:notice)
+        flash.now[:warning] = create_error_message(@payment_header)
         render action: :show
       end
     end
@@ -71,8 +73,13 @@ module Casein
     def destroy
       @payment_header = payment_header_find params[:id]
 
-      @payment_header.destroy
-      flash[:notice] = I18n.t('messages.destroy_model', model_name: model_human_name)
+      if @payment_header.processed?
+        flash.discard(:notice)
+        flash[:warning] = '処理済の支払い申請は削除できません'
+      else
+        @payment_header.destroy
+        flash[:notice] = I18n.t('messages.destroy_model', model_name: model_human_name)
+      end
       redirect_to_payment_index
     end
   
@@ -104,6 +111,12 @@ module Casein
         else
           redirect_to casein_payment_header_path(payment_header)
         end
+      end
+
+      def create_error_message(payment_header, action=nil)
+        action ||= payment_header.new_record? ? 'create' : 'update'
+        (I18n.t("messages.failed_to_#{action}", model_name: model_human_name) + ' <br> ' +
+           payment_header.errors.full_messages.map{|msg| "・#{msg}"}.join('<br>')).html_safe
       end
 
       def model_human_name
