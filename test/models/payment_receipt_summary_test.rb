@@ -218,6 +218,12 @@ class PaymentReceiptSummaryTest < ActiveSupport::TestCase
       assert_equal [
         (Date.parse('2016/1/11')..Date.parse('2016/1/15'))
       ], result
+      # first day is end of month
+      result = summary.break_by_10days(Date.parse('2016/1/31'), Date.parse('2016/2/10'))
+      assert_equal [
+        (Date.parse('2016/1/31')..Date.parse('2016/1/31')),
+        (Date.parse('2016/2/1')..Date.parse('2016/2/10'))
+      ], result
     end
   end
 
