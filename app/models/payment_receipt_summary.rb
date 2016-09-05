@@ -150,7 +150,7 @@ class PaymentReceiptSummary
     while target_month <= to.beginning_of_month
       [0, 10, 20].each do |break_day_num|
         break_day = target_month.since((break_day_num-1).days).to_date
-        if terms.last.include?(break_day) && break_day != terms.last.end && break_day != terms.last.begin
+        if terms.last.include?(break_day) && break_day != terms.last.end
           last = terms.pop
           terms << (last.begin .. break_day)
           terms << ((break_day.since(1.day).to_date) .. (last.end.to_date))
