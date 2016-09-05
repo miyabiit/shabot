@@ -17,16 +17,16 @@
   </div>
 </div>
 <table class="table table-striped">
-	<thead>
-		<tr>
+  <thead>
+    <tr>
       <% %i(my_account_id current_amount estimated_on current_month_amount two_month_amount three_month_amount).each do |attr_name| -%>
         <th><%= BankAccountBalance.human_attribute_name(attr_name) %></th>
       <% end -%>
-		</tr>
-	</thead>
+    </tr>
+  </thead>
 
-	<% @bank_account_balances.each do |bank_account_balance| %>
-		<tr>
+  <% @bank_account_balances.each do |bank_account_balance| %>
+    <tr>
       <%= hidden_field_tag 'bank_account_balances[][my_account_id]', bank_account_balance.my_account_id %>
       <td>
         <span class="casein-like">
@@ -58,6 +58,6 @@
           <%= number_with_delimiter bank_account_balance.three_month_amount %>
         </span>
       </td>
-		</tr>
-	<% end %>
+    </tr>
+  <% end %>
 </table>
