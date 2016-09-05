@@ -59,6 +59,12 @@ class PaymentHeader < ActiveRecord::Base
     end
   end
 
+  def clear_processed
+    self.processed = false
+    self.process_user_id = nil
+    self.process_date = nil
+  end
+
   # FIXME: decorator等で処理
   def my_bank_label
     my_account_model = self.my_account || self.project.try(:my_account)
