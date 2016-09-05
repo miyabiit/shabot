@@ -72,8 +72,19 @@ module Casein
     def pdf_not_processed_payment
       from, to = parse_from_to
       payment_headers = PaymentHeader.where(processed: false, payable_on: from...to)
-      pdf = ProcessPaymentList.new(payment_headers, params[:from], params[:to])
+      pdf = ProcessPaymentList.new(payment_headers, '未払申請一覧', params[:from], params[:to])
       pdf_filename = "not-processed-payment-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
+      send_data pdf.render,
+        filename:  pdf_filename,
+        type:      "application/pdf",
+        disposition:  "attachment"
+    end
+
+    def pdf_processed_payment
+      from, to = parse_from_to
+      payment_headers = PaymentHeader.where(processed: true, payable_on: from...to)
+      pdf = ProcessPaymentList.new(payment_headers, '支払処理済申請一覧', params[:from], params[:to])
+      pdf_filename = "processed-payment-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
       send_data pdf.render,
         filename:  pdf_filename,
         type:      "application/pdf",

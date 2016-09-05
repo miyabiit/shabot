@@ -5,5 +5,6 @@ module Report
     # ['月別出金予定・実績','payment-monthly', '/casein/reports/pdf_monthly'],
     ['入出金レポート','payment-receipt', '/casein/reports/pdf_payment_receipt'],
     ['未払申請一覧','not-processed-payment', '/casein/reports/pdf_not_processed_payment'],
+    ['支払処理済申請一覧','processed-payment', '/casein/reports/pdf_processed_payment'],
   ]
 end
