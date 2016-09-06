@@ -8,3 +8,10 @@ receipt_on_<%= date.strftime('%Y%m%d') %>:
   my_account: test_<%= rand(1..2) %>
   amount: <%= rand(10000..10000000) %>
 <% end %>
+no_my_account:
+  receipt_on: '2016-2-1'
+  user: taro 
+  account: test_1
+  project: test_1
+  item: test_1
+  amount: 99999

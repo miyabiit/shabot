@@ -48,10 +48,17 @@ class BankAccountBalanceTest < ActiveSupport::TestCase
   describe "#calculate_all" do
     it '全口座の金額計算が行われること' do
       BankAccountBalance.calculate_all([
-        { my_account_id: my_accounts(:test_1) },
-        { my_account_id: my_accounts(:test_2) }
+        { my_account_id: my_accounts(:test_1).id },
+        { my_account_id: my_accounts(:test_2).id }
       ], nil)
       assert_equal MyAccount.count, BankAccountBalance.count
+    end
+
+    it '入金口座/出金口座が未設定でもプロジェクトの口座を利用して計算すること' do
+      BankAccountBalance.calculate_all([
+        { my_account_id: my_accounts(:test_1).id }
+      ], '2016-2-1', Date.new(2016,2,1))
+      assert_equal 11111, BankAccountBalance.where(my_account: my_accounts(:test_1)).first.estimate_date_amount
     end
   end
 end

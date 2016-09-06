@@ -44,6 +44,15 @@ class PaymentHeader < ActiveRecord::Base
       where(user_id: user.id)
     end
   }
+  scope :left_join_projects, -> {
+    joins("LEFT OUTER JOIN projects ON projects.id = payment_headers.project_id")
+  }
+  scope :with_my_account_id, -> (my_account_id) {
+    sql = <<-SQL
+payment_headers.my_account_id = :my_account_id OR (payment_headers.my_account_id IS NULL AND projects.my_account_id = :my_account_id)
+    SQL
+    where(sql, my_account_id: my_account_id)
+  }
 
   def total
     payment_parts.sum(:amount)

@@ -38,12 +38,10 @@ class BankAccountBalance < ActiveRecord::Base
   end
 
   def calculate_receipt_and_payment_amount(amount, date_range, reverse=false)
-    receipt_header = ReceiptHeader.where(my_account_id: my_account_id)
-    payment_header = PaymentHeader.where(my_account_id: my_account_id)
+    receipt_header = ReceiptHeader.left_join_projects.with_my_account_id(my_account_id)
+    payment_header = PaymentHeader.left_join_projects.with_my_account_id(my_account_id)
     receipt_sum = receipt_header.where(receipt_on: date_range).sum(:amount)
-    payment_sum = payment_header.joins(:payment_parts).where(my_account_id: my_account_id)
-                                          .where(payable_on: date_range)
-                                          .sum('payment_parts.amount')
+    payment_sum = payment_header.joins(:payment_parts).where(payable_on: date_range).sum('payment_parts.amount')
     if reverse
       amount -= receipt_sum - payment_sum
     else
@@ -53,8 +51,7 @@ class BankAccountBalance < ActiveRecord::Base
   end
 
   class <<self
-    def calculate_all(bank_account_balances_params, estimated_on)
-      today = Date.today
+    def calculate_all(bank_account_balances_params, estimated_on, today=Date.today)
       BankAccountBalance.transaction do
         BankAccountBalance.delete_all
         bank_account_balances_params.each do |param|

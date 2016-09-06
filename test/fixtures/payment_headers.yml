@@ -7,3 +7,10 @@ payable_on_<%= date.strftime('%Y%m%d') %>:
   my_account: test_<%= rand(1..2) %>
   planned: <%= rand(0..1) > 0 ? 'true' : 'false' %>
 <% end %>
+no_my_account:
+  payable_on: '2016-2-1'
+  user: taro 
+  account: test_1
+  project: test_1
+  planned: false
+
