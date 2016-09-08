@@ -48,7 +48,8 @@ module Casein
       {
         slip_no: params[:slip_no].presence,
         from: params[:from].presence,
-        to: params[:to].presence
+        to: params[:to].presence,
+        processed: params[:processed].presence
       }.compact
     end
   end

@@ -11,6 +11,14 @@
     〜
     <%= text_field_tag :to, params[:to], placeholder: 'yyyy/mm/dd', "data-provide" => "datepicker" %>
   </div>
+  <% if current_user.is_admin? -%>
+    <div class="col-lg-2">
+      <label>
+        <%= check_box_tag :processed, '1', params[:processed] == '1' %>
+        処理済検索
+      </label>
+    </div>
+  <% end -%>
   <div class="col-lg-2">
     <%= submit_tag "検索", :name => nil %>
   </div>
@@ -21,6 +29,7 @@
   <%= hidden_field_tag :slip_no, params[:slip_no] %>
   <%= hidden_field_tag :from, params[:from] %>
   <%= hidden_field_tag :to, params[:to] %>
+  <%= hidden_field_tag :processed, params[:processed] %>
 
 <div class="row">
   <div class="col-lg-offset-10 col-lg-2">
