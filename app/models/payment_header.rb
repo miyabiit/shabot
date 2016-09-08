@@ -61,7 +61,7 @@ payment_headers.my_account_id = :my_account_id OR (payment_headers.my_account_id
   # 処理済時に処理済フラグの属性以外を更新不可にする
   def validate_on_processed
     if processed?
-      if (changed? || payment_parts.any?{|p| p.changed? || p.marked_for_destruction?}) && !processed_changed? # TODO: nested attributesでも大丈夫か？
+      if (changed? || payment_parts.any?{|p| p.changed? || p.marked_for_destruction?}) && !processed_changed?
         errors.add :base, '処理済の支払い申請は変更できません'
         return false
       end

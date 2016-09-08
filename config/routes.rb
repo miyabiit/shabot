@@ -44,6 +44,8 @@ Rails.application.routes.draw do
         get 'pdf_payment_receipt'
         get 'csv_payment'
         get 'csv_receipt'
+        get 'pdf_not_processed_payment'
+        get 'pdf_processed_payment'
       end
     end
   end
