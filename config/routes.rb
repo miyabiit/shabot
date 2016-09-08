@@ -2,6 +2,12 @@ Rails.application.routes.draw do
 
   #Casein routes
   namespace :casein do
+    resources :bank_account_balances, only: :index do
+      collection do
+        patch :update_all
+      end
+    end
+
     resources :receipt_headers do
       member do
         get 'copy'

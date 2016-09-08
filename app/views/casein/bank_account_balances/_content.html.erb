@@ -1,0 +1,63 @@
+<h2>
+  口座別資金繰残高Simulator
+  <% if @last_updated_at -%>
+  <div class="pull-right">
+    <small>
+      最終実行時刻: <%= l(@last_updated_at) %>
+    </small>
+  </div>
+  <% end -%>
+</h2>
+<div class="row">
+  <div class="col-lg-offset-8 col-lg-3 well">
+    推定日 <%= text_field_tag 'estimated_on', @estimated_on && l(@estimated_on), placeholder: "yyyy/mm/dd", 'data-provide' => "datepicker" %>
+  </div>
+  <div class="col-lg-1">
+    <%= submit_tag '実行', class: 'btn btn-primary pull-right' %>
+  </div>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <% %i(my_account_id current_amount estimated_on current_month_amount two_month_amount three_month_amount).each do |attr_name| -%>
+        <th><%= BankAccountBalance.human_attribute_name(attr_name) %></th>
+      <% end -%>
+    </tr>
+  </thead>
+
+  <% @bank_account_balances.each do |bank_account_balance| %>
+    <tr>
+      <%= hidden_field_tag 'bank_account_balances[][my_account_id]', bank_account_balance.my_account_id %>
+      <td>
+        <span class="casein-like">
+          <%= bank_account_balance.my_account&.bank_long_label %>
+        </span>
+      </td>
+      <td>
+        <div class="casein-like">
+          <%= text_field_tag 'bank_account_balances[][current_amount]', bank_account_balance.current_amount, class: 'money' %>
+        </div>
+      </td>
+      <td>
+        <span class="casein-like">
+          <%= number_with_delimiter bank_account_balance.estimate_date_amount %>
+        </span>
+      </td>
+      <td>
+        <span class="casein-like">
+          <%= number_with_delimiter bank_account_balance.current_month_amount %>
+        </span>
+      </td>
+      <td>
+        <span class="casein-like">
+          <%= number_with_delimiter bank_account_balance.two_month_amount %>
+        </span>
+      </td>
+      <td>
+        <span class="casein-like">
+          <%= number_with_delimiter bank_account_balance.three_month_amount %>
+        </span>
+      </td>
+    </tr>
+  <% end %>
+</table>

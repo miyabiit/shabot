@@ -7,8 +7,14 @@ class MyAccount < ActiveRecord::Base
   validates :category, length: { maximum: 10 }
   validates :ac_no, length: { maximum: 20 }, presence: true
 
+  has_many :bank_account_balances
+
   # FXME decorator 等に移動
   def bank_label
     "#{bank} #{bank_branch}"
+  end
+
+  def bank_long_label
+    "#{bank} #{bank_branch} #{category} #{ac_no}"
   end
 end

@@ -1,0 +1,13 @@
+ja:
+  activerecord:
+    models:
+      bank_account_balance: 口座別資金繰残高Simulator
+    attributes:
+      bank_account_balance:
+        my_account: 口座
+        my_account_id: 口座
+        current_amount: 現在残高
+        estimated_on: 推定日
+        current_month_amount: 当月末
+        two_month_amount: 翌月末
+        three_month_amount: 翌々月末

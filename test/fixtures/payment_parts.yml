@@ -6,3 +6,7 @@ payable_on_<%= date.strftime('%Y%m%d') %>_<%= part_id %>:
   amount: <%= rand(10000..10000000) %>
   <% end %>
 <% end %>
+no_my_account_part:
+  payment_header: no_my_account
+  item: test_1
+  amount: 88888

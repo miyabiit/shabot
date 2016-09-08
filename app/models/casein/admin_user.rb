@@ -48,7 +48,9 @@ module Casein
     end
     
     def check_time_zone
-      self.time_zone = Rails.configuration.time_zone unless self.time_zone
+      # ユーザー毎のtime_zone設定を無効化 
+      #self.time_zone = Rails.configuration.time_zone unless self.time_zone
+      self.time_zone = Rails.configuration.time_zone
     end
   
     def is_admin?
