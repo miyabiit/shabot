@@ -7,5 +7,6 @@ ja:
         my_account_id: "引落元口座"
         planned: "計画区分"
         processed: "処理済"
+        no_monthly_report: "月別一覧出力対象外"
 
 

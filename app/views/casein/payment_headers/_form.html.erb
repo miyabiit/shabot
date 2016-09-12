@@ -38,12 +38,12 @@
 </div>
 
 <div class="row">
-  <% if @session_user.is_admin? -%>
-  <div class="col-lg-6">
+  <% if current_user.is_admin? -%>
+  <div class="col-lg-5">
     <%= casein_collection_select_i18n f, :my_account_id, MyAccount.all, label_method: :bank_label, include_blank: "(事業・プロジェクトと同じ口座)" %>
   </div>
-  <% end-%>
-  <div class="col-lg-6">
+  <% end -%>
+  <div class="col-lg-5">
     <div class="form-group">
       <%= f.label '状態', {class: 'control-label'} %>
       <div class="well" style="height: 74px">
@@ -56,6 +56,16 @@
       </div>
     </div>
   </div>
+  <% if current_user.is_admin? -%>
+  <div class="col-lg-2">
+    <div class="form-group">
+      <%= f.label :no_monthly_report, {class: 'control-label'} %>
+      <div class="well" style="height: 74px">
+        <%= f.check_box :no_monthly_report %>&nbsp; <%= f.label :no_monthly_report, '対象外', {class: 'control-label'} %>
+      </div>
+    </div>
+  </div>
+  <% end -%>
 </div>
 
 <div class="row">

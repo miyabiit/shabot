@@ -9,7 +9,7 @@ module Casein
   
     def pdf_each_project
       from, to = parse_from_to
-      payment_headers = PaymentHeader.where(payable_on: from..to)
+      payment_headers = PaymentHeader.where(payable_on: from..to).where(no_monthly_report: false)
       pdf = EachProjectPaymentList.new(payment_headers)
       pdf_filename = "payment-project-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
       send_data pdf.render,
@@ -21,7 +21,7 @@ module Casein
 
     def pdf_each_day
       from, to = parse_from_to
-      payment_headers = PaymentHeader.where(payable_on: from..to)
+      payment_headers = PaymentHeader.where(payable_on: from..to).where(no_monthly_report: false)
       pdf = EachDayPaymentList.new(payment_headers)
       pdf_filename = "payment-eachday-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
       send_data pdf.render,
