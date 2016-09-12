@@ -31,17 +31,6 @@ module Casein
         disposition:  "attachment"
     end
 
-    def pdf_monthly
-      from, to = parse_from_to
-      payment_headers = PaymentHeader.where(payable_on: from...to)
-      pdf = PaymentMonthly.new(payment_headers)
-      send_data pdf.render,
-        filename:  "payment-monthly.pdf",
-        type:      "application/pdf",
-        # disposition:  "inline"
-        disposition:  "attachment"
-    end
-
     def pdf_payment_receipt
       from, to = parse_from_to
       pdf = PaymentReceipt.new(from, to)

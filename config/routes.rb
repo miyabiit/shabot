@@ -40,7 +40,6 @@ Rails.application.routes.draw do
       collection do
         get 'pdf_each_project'
         get 'pdf_each_day'
-        get 'pdf_monthly'
         get 'pdf_payment_receipt'
         get 'csv_payment'
         get 'csv_receipt'
