@@ -11,6 +11,7 @@
   <p class="submits">
     <%= link_to t("helpers.button.cancel"), casein_receipt_headers_path, :class => 'btn btn-mini btn-danger' %>
     <%= f.submit t("helpers.submit.submit"), :class => "btn btn-mini btn-primary" %>
+    <%= link_to 'PDF', pdf_casein_receipt_header_path, class: 'btn btn-mini btn-primary', target: "_blank" %>
   </p>
 
 <% end %>

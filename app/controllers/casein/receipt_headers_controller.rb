@@ -35,7 +35,7 @@ module Casein
     
       if @receipt_header.save
         flash[:notice] = I18n.t('messages.create_model', model_name: model.model_name.human)
-        redirect_to casein_receipt_headers_path
+        redirect_to casein_receipt_header_path(@receipt_header)
       else
         flash.now[:warning] = I18n.t('messages.failed_to_create', model_name: model.model_name.human)
         render :action => :new
@@ -50,7 +50,7 @@ module Casein
     
       if @receipt_header.update_attributes receipt_header_params
         flash[:notice] = I18n.t('messages.update_model', model_name: model.model_name.human)
-        redirect_to casein_receipt_headers_path
+        redirect_to casein_receipt_header_path(@receipt_header)
       else
         flash.now[:warning] = I18n.t('messages.failed_to_update', model_name: model.model_name.human)
         render :action => :show
@@ -63,6 +63,15 @@ module Casein
       @receipt_header.destroy
       flash[:notice] = I18n.t('messages.destroy_model', model_name: model.model_name.human)
       redirect_to casein_receipt_headers_path
+    end
+
+    def pdf
+      receipt_header = receipt_header_search.find params[:id]
+      pdf = ReceiptReportPDF.new(receipt_header)
+      send_data pdf.render,
+        filename:  "receipt.pdf",
+        type:      "application/pdf",
+        disposition:  "inline"
     end
   
     private

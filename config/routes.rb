@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :receipt_headers do
       member do
         get 'copy'
+        get 'pdf'
       end
     end
 
