@@ -50,7 +50,7 @@
         <strong>
           <%= f.object.processed? ? '処理済' : '未払' %>
           <% if f.object.processed? -%>
-          (<%= f.object.process_date && l(f.object.process_date) %> <%= f.object.process_user&.name %>)
+          (<%= [(f.object.process_date && l(f.object.process_date)), f.object.process_user&.name].compact.join(' ') %>)
           <% end -%>
         </strong>
       </div>
