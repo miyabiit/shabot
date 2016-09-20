@@ -22,6 +22,17 @@ module Casein
       get_bank_account_balances
     end
 
+    def pdf
+      bank_acount_balances = BankAccountBalance.all
+      first_record = bank_acount_balances.first
+      pdf = BankAccountBalancePDF.new(bank_acount_balances)
+      pdf_filename = "bank-account-balance-" + first_record.created_at&.strftime("%y%m%d") + "-" + first_record.estimated_on&.strftime("%y%m%d") + '.pdf'
+      send_data pdf.render,
+        filename:  pdf_filename,
+        type:      "application/pdf",
+        disposition:  "attachment"
+    end
+
     private
 
     def get_bank_account_balances
