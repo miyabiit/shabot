@@ -57,7 +57,7 @@ class Report::ReceiptReport < Report::ReportBase
     float do
       move_down 180
       bounding_box([0, cursor], width: bounds.width, height: 180) do
-        text "〒102-0093 東京都千代田区平河町2-14-7コハセビル4F", size: 10, align: :right
+        text "〒102-0093 東京都千代田区平河町2-14-7YUKEN平河町ビル4F", size: 10, align: :right
         move_down 2
         text "株式会社シャロンテック", size: 14, align: :right
         move_down 2
@@ -93,9 +93,10 @@ class Report::ReceiptReport < Report::ReportBase
       move_down 14
       
       table [
-        [make_cell('内 訳', align: :center, width: bounds.width - 120), make_cell('金 額', align: :center, width: 120)],
+        [make_cell('費 目', align: :center, width: 130), make_cell('明 細', align: :center, width: bounds.width - 250), make_cell('金 額', align: :center, width: 120)],
         [
-          make_cell([@receipt.comment, @receipt.item&.name].compact.join('　'), align: :left, height: 200),
+          make_cell(@receipt.item&.name, align: :left, height: 200),
+          make_cell(@receipt.comment, align: :left),
           make_cell(@receipt.amount&.to_s(:delimited), align: :right)
         ]
       ]
