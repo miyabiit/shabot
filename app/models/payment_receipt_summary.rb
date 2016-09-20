@@ -123,9 +123,11 @@ class PaymentReceiptSummary
       project_records = {}
       unless skip_project_record
         receipt_query.group(:project_id).sum(:amount).each do |k, v|
+          next if k.nil?
           project_records[k] = Record.new(date_range, v, 0, v, v)
         end
         payment_query.group(:project_id).sum('payment_parts.amount').each do |k, v|
+          next if k.nil?
           record = (project_records[k] ||= Record.new(date_range, 0, v, -v, -v))
           record.payment = v
           record.balance = record.receipt - record.payment
