@@ -4,6 +4,7 @@ class Report::BankAccountBalanceReport < Report::ReportBase
   def initialize(pdf, bank_account_balances)
     super(pdf)
 
+    @pdf.line_width = 0.5
     @bank_account_balances = bank_account_balances
     @current_bank_balance = bank_account_balances.first
   end
