@@ -3,13 +3,11 @@ module Casein
     include TargetModelFetching
 
     def index
-      if params[:search]
-        @payment_headers = payment_header_search.search(params[:search]).order(sort_order(:user_id)).paginate :page => params[:page]
-      elsif params[:account_name]
-        @payment_headers = payment_header_search.search_account(params[:account_name]).order(sort_order(:user_id)).paginate :page => params[:page]
-      else
-        @payment_headers = payment_header_search.order(sort_order(:user_id)).paginate :page => params[:page]
-      end
+      query = payment_header_search
+      query = query.search(params[:search]) if params[:search].present?
+      query = query.search_account(params[:account_name]) if params[:account_name].present?
+      query = query.where(payable_on: Range.new(*parse_from_to)) if params[:from].present? || params[:to].present?
+      @payment_headers = query.order(sort_order(:user_id)).paginate :page => params[:page]
       render action: :index
     end
   
@@ -122,6 +120,12 @@ module Casein
 
       def model_human_name
         '支払申請書'
+      end
+
+      def parse_from_to
+        from = (Date.parse(params[:from]) rescue Date.parse('1999/1/1'))
+        to = (Date.parse(params[:to]) rescue Date.parse('3000/1/1'))
+        [from, to]
       end
   end
 end
