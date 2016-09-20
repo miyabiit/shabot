@@ -1,5 +1,5 @@
 class Report::BankAccountBalanceReport < Report::ReportBase
-  COL_WIDTHS = [80, 120, 80, 240]
+  COL_WIDTHS = [15, 80, 120, 80, 225]
 
   def initialize(pdf, bank_account_balances)
     super(pdf)
@@ -61,11 +61,11 @@ class Report::BankAccountBalanceReport < Report::ReportBase
     sum = 0
     @current_bank_balance.receipt_headers.where(receipt_on: date_range).order(:receipt_on).each do |receipt|
       amount = receipt.amount
-      render_row [receipt.receipt_on&.strftime('%Y/%m/%d'), receipt.account&.name, amount, receipt.comment], COL_WIDTHS, padding_horizontal: 3
+      render_row ["", receipt.receipt_on&.strftime('%Y/%m/%d'), receipt.account&.name, amount, receipt.comment], COL_WIDTHS, padding_horizontal: 3
       sum += amount
     end
     hr
-    render_row ["", "", sum, ""], COL_WIDTHS, padding_horizontal: 3
+    render_row ["", "", "", sum, ""], COL_WIDTHS, padding_horizontal: 3
   end
 
   def render_payments
@@ -74,11 +74,11 @@ class Report::BankAccountBalanceReport < Report::ReportBase
     sum = 0
     @current_bank_balance.payment_headers.where(payable_on: date_range).order(:payable_on).each do |payment|
       amount = payment.total
-      render_row [payment.payable_on&.strftime('%Y/%m/%d'), payment.account&.name, amount, payment.comment], COL_WIDTHS, padding_horizontal: 3
+      render_row [('＊' unless payment.planned?), payment.payable_on&.strftime('%Y/%m/%d'), payment.account&.name, amount, payment.comment], COL_WIDTHS, padding_horizontal: 3
       sum += amount
     end
     hr
-    render_row ["", "", sum, ""], COL_WIDTHS, padding_horizontal: 3
+    render_row ["", "", "", sum, ""], COL_WIDTHS, padding_horizontal: 3
   end
 
   def render_table_header(title, cols)
@@ -87,7 +87,7 @@ class Report::BankAccountBalanceReport < Report::ReportBase
     move_down 14
     next_page if cursor <= 0
     hr
-    render_row cols, COL_WIDTHS, padding_horizontal: 3
+    render_row cols.unshift(''), COL_WIDTHS, padding_horizontal: 3
     hr
   end
 
