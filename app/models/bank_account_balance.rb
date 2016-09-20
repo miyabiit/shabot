@@ -46,12 +46,12 @@ class BankAccountBalance < ActiveRecord::Base
   end 
 
   def payment_headers
-    PaymentHeader.left_join_projects.with_my_account_id(my_account_id).joins(:payment_parts)
+    PaymentHeader.left_join_projects.with_my_account_id(my_account_id)
   end 
 
   def calculate_receipt_and_payment_amount(amount, date_range, reverse=false)
     receipt_sum = receipt_headers.where(receipt_on: date_range).sum(:amount)
-    payment_sum = payment_headers.where(payable_on: date_range).sum('payment_parts.amount')
+    payment_sum = payment_headers.joins(:payment_parts).where(payable_on: date_range).sum('payment_parts.amount')
     if reverse
       amount -= receipt_sum - payment_sum
     else
