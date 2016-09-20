@@ -6,7 +6,7 @@ class Report::ReportBase
   BR_SIZE = 12
 
   attr_reader :pdf
-  def_delegators :@pdf, :text, :stroke_horizontal_line,:move_down, :cursor, :bounds
+  def_delegators :@pdf, :text, :stroke_horizontal_line,:move_down, :cursor, :bounds, :float, :bounding_box, :stroke_bounds, :make_cell, :make_table, :table, :stroke_rectangle
 
   def initialize(pdf)
     @pdf = pdf
