@@ -10,15 +10,9 @@ class BankAccountBalance < ActiveRecord::Base
 
     # 推定日
     if self.estimated_on.present?
-      if self.today <= self.estimated_on
-        self.estimate_date_amount = calculate_receipt_and_payment_amount(
-          self.current_amount, self.today .. self.estimated_on
-        )
-      else
-        self.estimate_date_amount = calculate_receipt_and_payment_amount(
-          self.current_amount, self.estimated_on .. (self.today - 1), true
-        )
-      end
+      self.estimate_date_amount = calculate_receipt_and_payment_amount(
+        self.current_amount, self.estimated_on_date_range, (self.today > self.estimated_on)
+      )
     end
 
     # 今月末
@@ -37,11 +31,27 @@ class BankAccountBalance < ActiveRecord::Base
     )
   end
 
+  def estimated_on_date_range
+    if self.estimated_on.present?
+      if self.today <= self.estimated_on
+        self.today .. self.estimated_on
+      else
+        self.estimated_on .. (self.today - 1)
+      end
+    end
+  end
+
+  def receipt_headers
+    ReceiptHeader.left_join_projects.with_my_account_id(my_account_id)
+  end 
+
+  def payment_headers
+    PaymentHeader.left_join_projects.with_my_account_id(my_account_id)
+  end 
+
   def calculate_receipt_and_payment_amount(amount, date_range, reverse=false)
-    receipt_header = ReceiptHeader.left_join_projects.with_my_account_id(my_account_id)
-    payment_header = PaymentHeader.left_join_projects.with_my_account_id(my_account_id)
-    receipt_sum = receipt_header.where(receipt_on: date_range).sum(:amount)
-    payment_sum = payment_header.joins(:payment_parts).where(payable_on: date_range).sum('payment_parts.amount')
+    receipt_sum = receipt_headers.where(receipt_on: date_range).sum(:amount)
+    payment_sum = payment_headers.joins(:payment_parts).where(payable_on: date_range).sum('payment_parts.amount')
     if reverse
       amount -= receipt_sum - payment_sum
     else

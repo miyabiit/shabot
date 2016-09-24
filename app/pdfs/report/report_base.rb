@@ -30,10 +30,12 @@ class Report::ReportBase
 
   def hr
     @pdf.stroke_horizontal_rule
+    next_page if cursor <= 0
   end
 
   def br
     @pdf.move_down BR_SIZE
+    next_page if cursor <= 0
   end
 
   def hline(_begin, _end)

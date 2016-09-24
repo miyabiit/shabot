@@ -9,11 +9,14 @@
   <% end -%>
 </h2>
 <div class="row">
-  <div class="col-lg-offset-8 col-lg-3 well">
+  <div class="col-lg-offset-7 col-lg-3 well">
     推定日 <%= text_field_tag 'estimated_on', @estimated_on && l(@estimated_on), placeholder: "yyyy/mm/dd", 'data-provide' => "datepicker" %>
   </div>
-  <div class="col-lg-1">
-    <%= submit_tag '実行', class: 'btn btn-primary pull-right' %>
+  <div class="col-lg-2">
+    <div class="pull-right">
+      <%= submit_tag '実行', class: 'btn btn-primary' %>
+      <%= link_to 'PDF', pdf_casein_bank_account_balances_path, class: 'btn btn-primary' %>
+    </div>
   </div>
 </div>
 <table class="table table-striped">

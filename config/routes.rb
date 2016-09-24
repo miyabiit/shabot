@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :bank_account_balances, only: :index do
       collection do
         patch :update_all
+        get :pdf
       end
     end
 
