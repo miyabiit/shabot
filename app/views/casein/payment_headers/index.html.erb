@@ -2,30 +2,28 @@
 
 <h2>支払申請書<%= casein_pagination_details @payment_headers %></h2>
 <div class="row">
-<div class="col-lg-4">
 <%= form_tag casein_payment_headers_path, :method => 'get' do %>
+  <div class="col-lg-3">
     伝票No
     <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag "検索", :name => nil %>
-<% end %>
-</div>
-<div class="col-lg-4">
-<%= form_tag casein_payment_headers_path, :method => 'get' do %>
+  </div>
+  <div class="col-lg-3">
     取引先名
     <%= text_field_tag :account_name, params[:account_name] %>
+  </div>
+  <div class="col-lg-5">
+    日付
+    <%= text_field_tag :from, params[:from], placeholder: 'yyyy/mm/dd', "data-provide" => "datepicker" %>
+    〜
+    <%= text_field_tag :to, params[:to], placeholder: 'yyyy/mm/dd', "data-provide" => "datepicker" %>
+  </div>
+  <div class="col-lg-1">
     <%= submit_tag "検索", :name => nil %>
+  </div>
 <% end %>
-</div>
-</div>
 
 <%= render :partial => 'casein/payment_headers/table', :locals => { :payment_headers => @payment_headers } %>
 
 <div class="text-center">
   <%= will_paginate @payment_headers %>
 </div>
-
-<%= content_for :sidebar do %>
-
-  <!-- <li><%= link_to "#{casein_show_icon "plus-sign"}Add a new payment header".html_safe, new_casein_payment_header_path %></li> -->
-
-<% end %>

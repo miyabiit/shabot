@@ -39,8 +39,8 @@ module Casein
     end
 
     def parse_from_to
-      from = (begin Date.parse(params[:from]) rescue Date.parse('1999/1/1') end)
-      to = (begin Date.parse(params[:to]) rescue Date.parse('3000/1/1') end)
+      from = (Date.parse(params[:from]) rescue Date.parse('1999/1/1'))
+      to = (Date.parse(params[:to]) rescue Date.parse('3000/1/1'))
       [from, to]
     end
 
