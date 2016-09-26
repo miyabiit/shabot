@@ -70,6 +70,7 @@ class Report::EachDayProjectReport < Report::ReportBase
     render_create_date
     br
     br
+    float { text_box '＊: 実績', size: 8, at: [0, cursor], width: bounds.width, height: 10, align: :right, valign: :bottom }
     render_target_date
     @pdf.move_down 16
     hr

@@ -75,9 +75,17 @@ class Report::PaymentReceipt::ProjectDetailReport < Report::PaymentReceiptReport
     render_detail_category category_name
     br
     br
+    render_comment
     hr
     render_row column_names, COL_WIDTHS
     hr
+  end
+
+  def render_comment
+    if @report_type == :payment
+      text_box '＊: 実績', size: 8, at: [0, cursor], width: bounds.width, height: 8, align: :right
+      br
+    end
   end
 
   def category_name

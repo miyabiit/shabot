@@ -70,7 +70,7 @@ class Report::BankAccountBalanceReport < Report::ReportBase
   end
 
   def render_payments
-    render_table_header "出金明細", %W(支払日 取引先 金額 摘要・目的・効果)
+    render_table_header "出金明細", %W(支払日 取引先 金額 摘要・目的・効果), "＊: 実績"
     date_range = @current_bank_balance.estimated_on_date_range
     sum = 0
     @current_bank_balance.payment_headers.where(payable_on: date_range).order(:payable_on).each do |payment|
@@ -82,7 +82,10 @@ class Report::BankAccountBalanceReport < Report::ReportBase
     render_row ["", "", "", sum, ""], COL_WIDTHS, padding_horizontal: 3
   end
 
-  def render_table_header(title, cols)
+  def render_table_header(title, cols, comment=nil)
+    if comment.present?
+      float { text_box comment, size: 8, at: [0, cursor], width: bounds.width, height: 10, align: :right, valign: :bottom }
+    end
     text_box title, size: 10, at: [0, cursor], width: bounds.width, height: 10, align: :left, valign: :center
     next_page if cursor <= 0
     move_down 14

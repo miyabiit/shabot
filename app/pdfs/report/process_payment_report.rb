@@ -42,6 +42,8 @@ class Report::ProcessPaymentReport < Report::ReportBase
     render_target_dates
     br
     @pdf.move_down 16
+    text_box '＊: 実績', size: 8, at: [0, cursor], width: bounds.width, height: 8, align: :right
+    br
     hr
     render_row ['', '作成者', '伝票No', '支払先', '支払日', '支払金額', 'プロジェクト', '', '摘要・目的・効果'], COL_WIDTHS, padding_horizontal: 3
     hr
