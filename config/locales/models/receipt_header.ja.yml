@@ -12,4 +12,5 @@ ja:
         item_id: "費目"
         amount: "金額"
         my_account_id: "入金口座"
+        id: "伝票No"
 
