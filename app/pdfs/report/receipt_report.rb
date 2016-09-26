@@ -14,6 +14,7 @@ class Report::ReceiptReport < Report::ReportBase
 
   def show
     render_account_info
+    render_slip_no
     render_create_date
     render_title
     render_company
@@ -35,6 +36,13 @@ class Report::ReceiptReport < Report::ReportBase
           text "　#{@account_user_name}", size: 12
         end
       end
+    end
+  end
+
+  def render_slip_no
+    float do
+      move_down 78
+      text_box "No. #{@receipt.id}", size: 12, at: [0, cursor], width: bounds.width, height: 12, align: :right, valign: :center
     end
   end
 
@@ -104,7 +112,7 @@ class Report::ReceiptReport < Report::ReportBase
       move_down 10
 
       float do
-        text_box '振込先', at: [0, cursor], align: :left, valign: :center, width: 80, height: 20
+        text_box '入金口座', at: [0, cursor], align: :left, valign: :center, width: 80, height: 20
         my_account = @receipt.my_account || @receipt.project&.my_account
         text_box "#{my_account&.bank_long_label}", at: [80, cursor], align: :left, valign: :center, width: bounds.width - 100, height: 20
       end
@@ -112,7 +120,7 @@ class Report::ReceiptReport < Report::ReportBase
       move_down 20
 
       float do
-        text_box '支払期日', at: [0, cursor], align: :left, valign: :center, width: 80, height: 20
+        text_box '入金日', at: [0, cursor], align: :left, valign: :center, width: 80, height: 20
         text_box "#{Wareki.to_wareki(@receipt.receipt_on)}", at: [80, cursor], align: :left, valign: :center, width: bounds.width - 100, height: 20
       end
       
