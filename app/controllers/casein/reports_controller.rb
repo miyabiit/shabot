@@ -7,7 +7,7 @@ module Casein
       @casein_page_title = 'Reports'
     end
   
-    def pdf_each_project
+    def pdf_each_project_payment
       from, to = parse_from_to
       payment_headers = PaymentHeader.where(payable_on: from..to).where(no_monthly_report: false)
       pdf = EachProjectPaymentList.new(payment_headers)
@@ -15,11 +15,21 @@ module Casein
       send_data pdf.render,
         filename:  pdf_filename,
         type:      "application/pdf",
-        # disposition:  "inline"
         disposition:  "attachment"
     end
 
-    def pdf_each_day
+    def pdf_each_project_receipt
+      from, to = parse_from_to
+      receipt_headers = ReceiptHeader.where(receipt_on: from..to)
+      pdf = EachProjectReceiptList.new(receipt_headers)
+      pdf_filename = "receipt-project-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
+      send_data pdf.render,
+        filename:  pdf_filename,
+        type:      "application/pdf",
+        disposition:  "attachment"
+    end
+
+    def pdf_each_day_payment
       from, to = parse_from_to
       payment_headers = PaymentHeader.where(payable_on: from..to).where(no_monthly_report: false)
       pdf = EachDayPaymentList.new(payment_headers)
@@ -27,7 +37,17 @@ module Casein
       send_data pdf.render,
         filename:  pdf_filename,
         type:      "application/pdf",
-        # disposition:  "inline"
+        disposition:  "attachment"
+    end
+
+    def pdf_each_day_receipt
+      from, to = parse_from_to
+      receipt_headers = ReceiptHeader.where(receipt_on: from..to)
+      pdf = EachDayReceiptList.new(receipt_headers)
+      pdf_filename = "receipt-eachday-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
+      send_data pdf.render,
+        filename:  pdf_filename,
+        type:      "application/pdf",
         disposition:  "attachment"
     end
 

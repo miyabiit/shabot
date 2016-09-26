@@ -1,12 +1,12 @@
-class Report::EachDayProjectReport < Report::ReportBase
-  COL_WIDTHS = [25, 15, 55, 100, 55, 115, 85, 70]
+class Report::EachDayProjectReceiptReport < Report::ReportBase
+  COL_WIDTHS = [25, 55, 100, 55, 115, 85, 70]
 
-  def initialize(pdf, title, payments, break_by)
+  def initialize(pdf, title, receipts, break_by)
     super(pdf)
 
     @title = title
-    @payments = payments
-    @current_month = @payments.first&.payable_on&.beginning_of_month
+    @receipts = receipts
+    @current_month = @receipts.first&.receipt_on&.beginning_of_month
     @break_by = break_by 
     
     @pdf.line_width = 0.5
@@ -17,18 +17,18 @@ class Report::EachDayProjectReport < Report::ReportBase
 
     month_amount = 0
     sub_amount = 0
-    prev_payment = nil
+    prev_receipt = nil
     line_no = 1
-    @payments.each do |payment|
-      if prev_payment
-        if @break_by.call(prev_payment) != @break_by.call(payment)
+    @receipts.each do |receipt|
+      if prev_receipt
+        if @break_by.call(prev_receipt) != @break_by.call(receipt)
           render_amount(sub_amount)
           br
           sub_amount = 0
         end
       end
 
-      month = payment.payable_on&.beginning_of_month
+      month = receipt.receipt_on&.beginning_of_month
       if month && month != @current_month
         render_amount(month_amount)
         @current_month = month
@@ -36,21 +36,20 @@ class Report::EachDayProjectReport < Report::ReportBase
         sub_amount = 0
         next_page
       end
-      amount = payment.payment_parts.sum(:amount)
+      amount = receipt.amount
       render_row [
         line_no.to_s,
-        payment.planned ? '' : '＊',
-        payment.payable_on,
-        payment.project&.name,
-        payment.project&.category,
-        payment.account&.name,
+        receipt.receipt_on,
+        receipt.project&.name,
+        receipt.project&.category,
+        receipt.account&.name,
         amount,
-        payment.slip_no,
+        receipt.id,
       ], COL_WIDTHS, padding_horizontal: 3
 
       sub_amount += amount
       month_amount += amount
-      prev_payment = payment
+      prev_receipt = receipt
       line_no += 1
     end
 
@@ -70,11 +69,10 @@ class Report::EachDayProjectReport < Report::ReportBase
     render_create_date
     br
     br
-    float { text_box '＊: 実績', size: 8, at: [0, cursor], width: bounds.width, height: 10, align: :right, valign: :bottom }
     render_target_date
     @pdf.move_down 16
     hr
-    render_row ['No.', '', '支払日', 'PROJECT', '', '取引先', '金額', '伝票番号'], COL_WIDTHS, padding_horizontal: 3
+    render_row ['No.', '入金予定日', 'PROJECT', '', '入金元', '金額', '伝票番号'], COL_WIDTHS, padding_horizontal: 3
     hr
     br
   end
@@ -89,6 +87,6 @@ class Report::EachDayProjectReport < Report::ReportBase
 
   def render_amount(amount)
     hr
-    render_row ['', '', '', '', '', '', amount, ''], COL_WIDTHS, padding_horizontal: 3
+    render_row ['', '', '', '', '', amount, ''], COL_WIDTHS, padding_horizontal: 3
   end
 end
