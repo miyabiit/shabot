@@ -40,8 +40,10 @@ Rails.application.routes.draw do
 
     resources :reports do
       collection do
-        get 'pdf_each_project'
-        get 'pdf_each_day'
+        get 'pdf_each_project_payment'
+        get 'pdf_each_project_receipt'
+        get 'pdf_each_day_payment'
+        get 'pdf_each_day_receipt'
         get 'pdf_payment_receipt'
         get 'csv_payment'
         get 'csv_receipt'
