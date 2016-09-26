@@ -3,7 +3,7 @@
 <table class="table table-striped table-hover table-condensed">
   <thead>
     <tr>
-      <% %W(user_id account_id receipt_on amount project_id comment).each do |attr_name| -%>
+      <% %W(user_id id account_id receipt_on amount project_id comment).each do |attr_name| -%>
         <th><%= casein_sort_link ReceiptHeader.human_attribute_name(attr_name), attr_name %></th>
       <% end -%>
       <th nowrap>入金<br/>予定</th>
@@ -14,6 +14,7 @@
   <% receipt_headers.each do |receipt_header| %>
     <tr>
       <td><%= casein_table_cell_link receipt_header.user.try(:name), casein_receipt_header_path(receipt_header) %></td>
+      <td><%= casein_table_cell_link receipt_header.id, casein_receipt_header_path(receipt_header) %></td>
       <td><%= casein_table_cell_link truncate(receipt_header.account.try(:name), length: 20), casein_receipt_header_path(receipt_header) %></td>
       <td><%= casein_table_cell_link receipt_header.receipt_on, casein_receipt_header_path(receipt_header) %></td>
       <td align="right"><%= casein_table_cell_link number_with_delimiter(receipt_header.amount), casein_receipt_header_path(receipt_header) %></td>

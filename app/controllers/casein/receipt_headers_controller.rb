@@ -10,7 +10,11 @@ module Casein
     # before_filter :needs_admin_or_current_user, :only => [:action1, :action2]
   
     def index
-      @receipt_headers = receipt_header_search.order(sort_order(:user_id)).paginate :page => params[:page]
+      query = receipt_header_search
+      query = query.where(id: params[:slip_no]) if params[:slip_no].present?
+      query = query.joins(:account).like_search('accounts.name', params[:account_name]) if params[:account_name].present?
+      query = query.where(receipt_on: Range.new(*parse_from_to)) if params[:from].present? || params[:to].present?
+      @receipt_headers = query.order(sort_order(:user_id)).paginate :page => params[:page]
     end
   
     def show
@@ -82,6 +86,12 @@ module Casein
 
       def receipt_header_search
         ReceiptHeader.onlymine(@session_user)
+      end
+
+      def parse_from_to
+        from = (Date.parse(params[:from]) rescue Date.parse('1999/1/1'))
+        to = (Date.parse(params[:to]) rescue Date.parse('3000/1/1'))
+        [from, to]
       end
 
   end
