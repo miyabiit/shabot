@@ -1,3 +1,11 @@
+<script type="text/javascript">
+$(function() {
+  $('#based_on').datepicker({
+      todayBtn: "linked",
+      todayHighlight: true
+  });
+})
+</script>
 <h2>
   口座別資金繰残高Simulator
   <% if @last_updated_at -%>
@@ -9,8 +17,11 @@
   <% end -%>
 </h2>
 <div class="row">
-  <div class="col-lg-offset-7 col-lg-3 well">
-    推定日 <%= text_field_tag 'estimated_on', @estimated_on && l(@estimated_on), placeholder: "yyyy/mm/dd", 'data-provide' => "datepicker" %>
+  <div class="col-lg-offset-5 col-lg-5 well">
+    起算日 <%= text_field_tag 'based_on', @based_on && l(@based_on), id: 'based_on', placeholder: "yyyy/mm/dd" %>
+    <div class="pull-right">
+      推定日 <%= text_field_tag 'estimated_on', @estimated_on && l(@estimated_on), placeholder: "yyyy/mm/dd", 'data-provide' => "datepicker" %>
+    </div>
   </div>
   <div class="col-lg-2">
     <div class="pull-right">

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912014012) do
+ActiveRecord::Schema.define(version: 20160927012740) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20160912014012) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "estimate_date_amount", limit: 8
+    t.date     "based_on"
   end
 
   create_table "casein_admin_users", force: :cascade do |t|
