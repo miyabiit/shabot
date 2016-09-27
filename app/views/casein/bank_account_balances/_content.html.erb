@@ -33,7 +33,8 @@ $(function() {
 <table class="table table-striped">
   <thead>
     <tr>
-      <% %i(my_account_id current_amount estimated_on current_month_amount two_month_amount three_month_amount).each do |attr_name| -%>
+      <th><%= casein_sort_link BankAccountBalance.human_attribute_name(:my_account_id), :bank_long_name %></th>
+      <% %i(current_amount estimated_on current_month_amount two_month_amount three_month_amount).each do |attr_name| -%>
         <th><%= BankAccountBalance.human_attribute_name(attr_name) %></th>
       <% end -%>
     </tr>

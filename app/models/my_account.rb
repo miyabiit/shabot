@@ -9,6 +9,8 @@ class MyAccount < ActiveRecord::Base
 
   has_many :bank_account_balances
 
+  scope :bank_name_order, -> (direction) { order("bank #{direction}, bank_branch #{direction}, category #{direction}, ac_no #{direction}") }
+
   # FXME decorator 等に移動
   def bank_label
     "#{bank} #{bank_branch}"
