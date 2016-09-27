@@ -33,4 +33,15 @@ module ApplicationHelper
     end
     casein_check_box(form, form.object, method, options)
   end
+
+  # NOTE: casein_sort_linkではajax更新時にリンクアドレスが変わってしまうので、明示的にパスを渡して回避する
+  def sort_link(title, column, path)
+    icon_to_show_html = "<div class='table-header-icon'>&nbsp;</div>".html_safe
+    if params[:c].to_s == column.to_s
+      icon_to_show = params[:d] == 'down' ? 'chevron-up' : 'chevron-down'
+      icon_to_show_html = "<div class='table-header-icon glyphicon glyphicon-#{icon_to_show}'></div>".html_safe
+    end
+    sort_dir = params[:d] == 'down' ? 'up' : 'down'
+    link_to(title, path + (path.include?('?') ? '&' : '?') + {:c => column, :d => sort_dir}.to_query) + icon_to_show_html
+  end
 end
