@@ -43,8 +43,8 @@ module Casein
                   else
                     'asc'
                   end
-      @bank_account_balances = MyAccount.all.bank_name_order(direction).map{|my_account|
-        my_account.bank_account_balances.first || BankAccountBalance.new(my_account: my_account, estimated_on: @estimated_on)
+      @bank_account_balances = MyAccount.all.includes(:bank_account_balance).bank_name_order(direction).map{|my_account|
+        my_account.bank_account_balance || BankAccountBalance.new(my_account: my_account, estimated_on: @estimated_on)
       }
     end
   end
