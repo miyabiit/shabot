@@ -79,3 +79,4 @@ gem 'quiet_assets'
 gem 'therubyracer'
 
 gem 'enumerize'
+gem 'active_attr'

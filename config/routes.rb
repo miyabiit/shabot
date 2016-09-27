@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   #Casein routes
   namespace :casein do
+    resources :bank_transfers, only: [:new, :create]
+
     resources :bank_account_balances, only: :index do
       collection do
         patch :update_all

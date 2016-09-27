@@ -1,0 +1,17 @@
+ja:
+  activemodel:
+    models:
+      bank_transfer_form: 資金移動
+    attributes:
+      bank_transfer_form:
+        src_account_id: 移動元法人
+        dst_account_id: 移動先法人
+        src_my_account_id: 移動元口座
+        dst_my_account_id: 移動先口座
+        src_item_id: 移動元費目
+        dst_item_id: 移動先費目
+        target_date: 実行日
+        project_id: 事業・プロジェクト
+        amount: 金額
+        comment: 摘要・目的・効果
+
