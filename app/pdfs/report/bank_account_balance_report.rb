@@ -14,7 +14,6 @@ class Report::BankAccountBalanceReport < Report::ReportBase
 
     @bank_account_balances.select(&:estimated_on?).each_with_index do |bank_account_balance, i|
       @current_bank_balance = bank_account_balance
-      @current_bank_balance.today = @current_bank_balance.created_at.to_date
 
       next_page if i != 0
 
@@ -52,7 +51,7 @@ class Report::BankAccountBalanceReport < Report::ReportBase
 
   def render_remains
     col_sizes = [80, 120, 80]
-    render_row [@current_bank_balance.created_at&.strftime('%Y/%m/%d'), '残高', @current_bank_balance.current_amount], col_sizes
+    render_row [@current_bank_balance.based_on&.strftime('%Y/%m/%d'), '残高', @current_bank_balance.current_amount], col_sizes
     render_row [@current_bank_balance.estimated_on&.strftime('%Y/%m/%d'), '予想残高', @current_bank_balance.estimate_date_amount], col_sizes
   end
 

@@ -8,15 +8,17 @@ module Casein
     before_filter :needs_admin
   
     def index
+      @based_on = BankAccountBalance.first&.based_on
       @estimated_on = BankAccountBalance.first&.estimated_on
       @last_updated_at = BankAccountBalance.first&.updated_at
       get_bank_account_balances
     end
   
     def update_all
+      @based_on = Date.parse(params[:based_on]) rescue Date.today
       @estimated_on = Date.parse(params[:estimated_on]) rescue nil
       if bank_account_balances_params = params[:bank_account_balances]
-        BankAccountBalance.calculate_all(bank_account_balances_params, @estimated_on)
+        BankAccountBalance.calculate_all(bank_account_balances_params, @estimated_on, @based_on)
       end
       @last_updated_at = BankAccountBalance.first&.updated_at
       get_bank_account_balances
