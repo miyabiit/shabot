@@ -7,7 +7,9 @@ class MyAccount < ActiveRecord::Base
   validates :category, length: { maximum: 10 }
   validates :ac_no, length: { maximum: 20 }, presence: true
 
-  has_many :bank_account_balances
+  has_one :bank_account_balance
+
+  scope :bank_name_order, -> (direction) { order("bank #{direction}, bank_branch #{direction}, category #{direction}, ac_no #{direction}") }
 
   # FXME decorator 等に移動
   def bank_label
