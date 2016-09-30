@@ -21,10 +21,10 @@
       <td><%= casein_table_cell_link truncate(receipt_header.project.try(:name_and_category), length: 17), casein_receipt_header_path(receipt_header) %></td>
       <td><%= casein_table_cell_link truncate(receipt_header.comment, length: 13), casein_receipt_header_path(receipt_header) %></td>
       <td class="new">
-        <%= link_to(casein_show_row_icon("plus-sign"), copy_casein_receipt_header_path(receipt_header)) %>
+        <%= table_row_add_icon_link_to copy_casein_receipt_header_path(receipt_header) %>
       </td>
       <td class="delete">
-        <%= link_to(casein_show_row_icon("trash"), casein_receipt_header_path(receipt_header), :method => :delete, :data => { :confirm => t("messages.destroy_confirmation", model_name: controller.model.model_name.human) }) %>
+        <%= table_row_trash_icon_link_to casein_receipt_header_path(receipt_header), :method => :delete, :data => { :confirm => t("messages.destroy_confirmation", model_name: controller.model.model_name.human) } %>
       </td>
     </tr>
   <% end %>
