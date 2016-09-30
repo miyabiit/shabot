@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927012740) do
+ActiveRecord::Schema.define(version: 20160930070447) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20160927012740) do
     t.string   "ac_no",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "my_group",                default: false
   end
 
   create_table "bank_account_balances", force: :cascade do |t|
@@ -156,5 +157,4 @@ ActiveRecord::Schema.define(version: 20160927012740) do
     t.datetime "updated_at",             null: false
   end
 
-  add_foreign_key "receipt_headers", "accounts", name: "fk_receipt_headers"
 end
