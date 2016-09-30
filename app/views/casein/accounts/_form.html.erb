@@ -24,6 +24,11 @@
     <%= casein_text_field f, f.object, :ac_no, {:casein_label => '口座番号'} %>
   </div>
   <div class="col-lg-6">
-    
+    <div class="form-group">
+      <%= f.label :my_group, {class: 'control-label'} %>
+      <div class="well" style="height: 74px">
+        <%= f.check_box :my_group %>&nbsp; <%= f.label :my_group, 'ON', {class: 'control-label'} %>
+      </div>
+    </div>
   </div>
 </div>

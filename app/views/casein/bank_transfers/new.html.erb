@@ -7,7 +7,7 @@
 
   <div class="row">
     <div class="col-md-5">
-      <%= casein_collection_select_i18n f, :src_account_id, Account.all, label_method: :name %>
+      <%= casein_collection_select_i18n f, :src_account_id, Account.only_my_group, label_method: :name %>
     </div>
     <div class="col-md-2">
       <div class="text-center">
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="col-md-5">
-      <%= casein_collection_select_i18n f, :dst_account_id, Account.all, label_method: :name %>
+      <%= casein_collection_select_i18n f, :dst_account_id, Account.only_my_group, label_method: :name %>
     </div>
   </div>
   <div class="row">

@@ -16,7 +16,7 @@ class BankTransferForm
 
   attribute :user_id, type: Integer
 
-  validates :amount, presence: true, numericality: {only_integer: true}
+  validates :src_account_id, :dst_account_id, :target_date, :src_my_account_id, :dst_my_account_id, :src_item_id, :dst_item_id, :project_id, :amount, presence: true
 
   def set_default_values
     self.target_date = Date.today
