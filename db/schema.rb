@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20160930070447) do
     t.string   "ac_no",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "org_name",    limit: 255
   end
 
   create_table "number_masters", force: :cascade do |t|

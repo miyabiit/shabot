@@ -57,7 +57,7 @@ module Casein
     private
       
       def my_account_params
-        params.require(:my_account).permit(:bank, :bank_branch, :category, :ac_no)
+        params.require(:my_account).permit(:org_name, :bank, :bank_branch, :category, :ac_no)
       end
 
   end
