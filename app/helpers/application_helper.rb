@@ -44,4 +44,26 @@ module ApplicationHelper
     sort_dir = params[:d] == 'down' ? 'up' : 'down'
     link_to(title, path + (path.include?('?') ? '&' : '?') + {:c => column, :d => sort_dir}.to_query) + icon_to_show_html
   end
+
+  # NOTE casein_show_row_icon ではtitle属性の変更ができないので、アイコンリンク専用のヘルパーとして用意
+  def table_row_icon_link_to(icon_name, path, title: nil, link_options: nil)
+    link_to path, link_options do
+      concat content_tag(:div, class: 'iconRow') {
+        "<span class='glyphicon glyphicon-#{icon_name}' title='#{title}'></span>".html_safe
+      }.html_safe
+    end
+  end
+
+  def table_row_add_icon_link_to(path, options={})
+    table_row_icon_link_to('plus-sign', path, title: '新規作成', link_options: options)
+  end
+
+  def table_row_trash_icon_link_to(path, options={})
+    table_row_icon_link_to('trash', path, title: '削除', link_options: options)
+  end
+
+  def table_row_retweet_icon_link_to(path, options={})
+    table_row_icon_link_to('retweet', path, title: '参照作成', link_options: options)
+  end
+
 end

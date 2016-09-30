@@ -22,14 +22,14 @@
       <td><%= casein_table_cell_link account.category, casein_account_path(account) %></td>
       <td><%= casein_table_cell_link account.ac_no, casein_account_path(account) %></td>
       <td class="new">
-        <%= link_to(casein_show_row_icon("plus-sign"), new_casein_planned_payment_header_path(account_id: account.id)) %>
+        <%= table_row_add_icon_link_to new_casein_planned_payment_header_path(account_id: account.id) %>
       </td>
       <td class="new">
-        <%= link_to(casein_show_row_icon("plus-sign"), new_casein_payment_header_path(account_id: account.id)) %>
+        <%= table_row_add_icon_link_to new_casein_payment_header_path(account_id: account.id) %>
       </td>
       <td class="delete">
         <% if @session_user.is_admin? %>
-        <%= link_to(casein_show_row_icon("trash"), casein_account_path(account), :method => :delete, :data => { :confirm => t('messages.destroy_confirmation', model_name: controller.model.model_name.human) }) %>
+          <%= table_row_trash_icon_link_to casein_account_path(account), :method => :delete, :data => { :confirm => t('messages.destroy_confirmation', model_name: controller.model.model_name.human) }%>
         <% end %>
       </td>
     </tr>
