@@ -38,12 +38,17 @@ module Casein
     private
 
     def get_bank_account_balances
-      direction = if params[:c] == 'bank_long_name' && params[:d] == 'down'
-                    'desc'
-                  else
-                    'asc'
-                  end
-      @bank_account_balances = MyAccount.all.includes(:bank_account_balance).bank_name_order(direction).map{|my_account|
+      my_accounts = MyAccount.all.includes(:bank_account_balance)
+      case params[:c]
+      when 'org_name'
+        my_accounts = my_accounts.org_name_order(params[:d] == 'down' ? 'desc' : 'asc')
+      when 'bank_long_name'
+        my_accounts = my_accounts.bank_name_order(params[:d] == 'down' ? 'desc' : 'asc')
+      else
+        my_accounts = my_accounts.org_name_order('asc').bank_name_order('asc')
+      end
+
+      @bank_account_balances = my_accounts.map{|my_account|
         my_account.bank_account_balance || BankAccountBalance.new(my_account: my_account, estimated_on: @estimated_on)
       }
     end
