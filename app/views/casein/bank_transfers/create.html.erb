@@ -9,7 +9,7 @@
   <%= link_to 'PDF', pdf_casein_payment_header_path(@payment), class: 'btn btn-mini btn-primary', target: "_blank" %>
 </div>
 <div class="well">
-  支払予定:
+  入金予定票:
   <p>
     <%= link_to casein_receipt_header_path(@receipt), target: '_blank' do %>
       No. <%= @receipt.id %>

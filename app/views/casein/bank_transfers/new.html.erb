@@ -1,14 +1,5 @@
 <%= javascript_include_tag 'payment' %>
-
-<script type="text/javascript">
-$(function() {
-  $('#target_date').datepicker({
-      todayBtn: "linked",
-      todayHighlight: true,
-      format: "yyyy-mm-dd"
-  });
-})
-</script>
+<%= javascript_include_tag 'views/bank_transfer_form' %>
 
 <h2>資金移動</h2>
 
