@@ -1,0 +1,85 @@
+<%= javascript_include_tag 'payment' %>
+<%= javascript_include_tag 'views/bank_transfer_form' %>
+
+<h2>資金移動</h2>
+
+<%= form_for @form, url: casein_bank_transfers_path do |f| %>
+
+  <div class="row">
+    <div class="col-md-5">
+      <%= casein_collection_select_i18n f, :src_account_id, Account.only_my_group, label_method: :name %>
+    </div>
+    <div class="col-md-2">
+      <div class="text-center">
+        <br/>
+        <h3>
+          <span class="glyphicon glyphicon-arrow-right"></span>
+        </h3>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <%= casein_collection_select_i18n f, :dst_account_id, Account.only_my_group, label_method: :name %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5">
+      <%= casein_collection_select_i18n f, :src_my_account_id, MyAccount.all, label_method: :bank_label %>
+    </div>
+    <div class="col-md-2">
+      <div class="text-center">
+        <br/>
+        <h3>
+          <span class="glyphicon glyphicon-arrow-right"></span>
+        </h3>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <%= casein_collection_select_i18n f, :dst_my_account_id, MyAccount.all, label_method: :bank_label %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5">
+      <%= casein_collection_select_i18n f, :src_item_id, Item.all, label_method: :name %>
+    </div>
+    <div class="col-md-2">
+      <div class="text-center">
+        <br/>
+        <h3>
+          <span class="glyphicon glyphicon-arrow-right"></span>
+        </h3>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <%= casein_collection_select_i18n f, :dst_item_id, Item.all, label_method: :name %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label class="control-label" for="target_date">
+          <%= BankTransferForm.human_attribute_name :target_date %>
+        </label>
+        <div class="well">
+          <%= f.text_field :target_date, placeholder: 'yyyy/mm/dd', "data-provide" => "datepicker", id: 'target_date', class: "form-control" %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <%= casein_collection_select_i18n f, :project_id, Project.order_for_select, label_method: :name_and_category %>
+    </div>
+    <div class="col-md-4">
+      <%= casein_text_field_i18n f, :amount, class: 'money', required: '' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <%= casein_text_area_i18n f, :comment %>
+    </div>
+  </div>
+  
+  <p class="submits">
+    <%= link_to t('helpers.button.cancel'), new_casein_bank_transfer_path, :class => 'btn btn-mini btn-danger' %>
+    <%= submit_tag t('helpers.submit.create'), :class => "btn btn-mini btn-primary" %>
+  </p>
+
+<% end %>
