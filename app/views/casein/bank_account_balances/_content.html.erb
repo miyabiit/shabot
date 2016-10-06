@@ -94,7 +94,7 @@ $(function() {
       <% %i(current_amount estimate_date_amount current_month_amount two_month_amount three_month_amount).each do |attr_name| -%>
         <td>
           <span class="casein-like">
-            <%= number_with_delimiter @bank_account_balances.map(&attr_name).sum %>
+            <%= number_with_delimiter @bank_account_balances.map(&attr_name).compact.sum %>
           </span>
         </td>
       <% end -%>

@@ -59,7 +59,7 @@ class Report::BankAccountBalanceReport < Report::ReportBase
     render_table_header "入金明細", %W(入金日 入金元 金額 摘要・目的・効果)
     date_range = @current_bank_balance.estimated_on_date_range
     sum = 0
-    @current_bank_balance.receipt_headers.where(receipt_on: date_range).order(:receipt_on).each do |receipt|
+    @current_bank_balance.receipt_headers.joins(:account).where(receipt_on: date_range).order(:receipt_on, 'accounts.name').each do |receipt|
       amount = receipt.amount
       render_row ["", receipt.receipt_on&.strftime('%Y/%m/%d'), receipt.account&.name, amount, receipt.comment], COL_WIDTHS, padding_horizontal: 3
       sum += amount
@@ -72,7 +72,7 @@ class Report::BankAccountBalanceReport < Report::ReportBase
     render_table_header "出金明細", %W(支払日 取引先 金額 摘要・目的・効果), "＊: 実績"
     date_range = @current_bank_balance.estimated_on_date_range
     sum = 0
-    @current_bank_balance.payment_headers.where(payable_on: date_range).order(:payable_on).each do |payment|
+    @current_bank_balance.payment_headers.joins(:account).where(payable_on: date_range).order(:payable_on, 'accounts.name').each do |payment|
       amount = payment.total
       render_row [('＊' unless payment.planned?), payment.payable_on&.strftime('%Y/%m/%d'), payment.account&.name, amount, payment.comment], COL_WIDTHS, padding_horizontal: 3
       sum += amount
