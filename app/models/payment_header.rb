@@ -1,5 +1,6 @@
 class PaymentHeader < ActiveRecord::Base
   extend Enumerize
+  include Enums::OrgNameEnum
 
   has_many :payment_parts, dependent: :destroy
   belongs_to :user, class_name: 'Casein::AdminUser', foreign_key: 'user_id'
@@ -11,7 +12,6 @@ class PaymentHeader < ActiveRecord::Base
   accepts_nested_attributes_for :payment_parts, allow_destroy: true
 
   enumerize :fee_who_paid, in: ["先方負担", "自社負担"]
-  enumerize :org_name, in: %w(シャロンテック 聚楽荘 JAM ベルク ブルームコンサルティング その他)
 
   MAX_PARTS_LENGTH = 5
 

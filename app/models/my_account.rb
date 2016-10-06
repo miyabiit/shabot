@@ -1,6 +1,7 @@
 class MyAccount < ActiveRecord::Base
   extend Enumerize
   include Enums::AccountEnum
+  include Enums::OrgNameEnum
 
   validates :bank, length: { maximum: 30 }, presence: true
   validates :bank_branch, length: { maximum: 30 }, presence: true
@@ -10,6 +11,7 @@ class MyAccount < ActiveRecord::Base
   has_one :bank_account_balance
 
   scope :bank_name_order, -> (direction) { order("bank #{direction}, bank_branch #{direction}, category #{direction}, ac_no #{direction}") }
+  scope :org_name_order, -> (direction) { order("org_name #{direction}") }
 
   # FXME decorator 等に移動
   def bank_label
