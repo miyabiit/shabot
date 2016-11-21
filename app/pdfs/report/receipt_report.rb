@@ -26,14 +26,14 @@ class Report::ReceiptReport < Report::ReportBase
     float do
       bounding_box([0, cursor], width: 220, height: 90) do
         stroke_bounds
-        bounding_box([5, cursor+5], width: 210, height: 80) do
+        bounding_box([5, cursor+5], width: 210, height: 90) do
           move_down 10
-          text @account_address, size: 10
-          move_down 20
-          text @receipt.account&.name, size: 14
-          move_down 2
-          text @account_post, size: 10
-          text "　#{@account_user_name}", size: 12
+          text_box @account_address, size: 10, at: [0, cursor], width: bounds.width
+          move_down 24
+          text_box @receipt.account&.name, size: 14, at: [0, cursor], width: bounds.width
+#           move_down 34
+#           text @account_post, size: 10
+#           text "　#{@account_user_name}", size: 12
         end
       end
     end
