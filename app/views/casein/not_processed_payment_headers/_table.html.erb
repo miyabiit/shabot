@@ -11,6 +11,12 @@ $(function() {
       }
     });
   });
+  $('#check_all').on('change', function(event){
+    var v = $('#check_all').prop('checked');
+    $('input[type=checkbox][data-value-id]').each(function() {
+      $(this).prop('checked', v);
+    });
+  });
 });
 </script>
 
@@ -28,7 +34,10 @@ $(function() {
       <th><%= casein_sort_link "支払金額", :total %></th>
       <th><%= casein_sort_link "事業/プロジェクト", :project_id %></th>
       <th><%= casein_sort_link "摘要・目的・効果", :comment %></th>
-      <th>処理済</th>
+      <th>
+        処理済
+        <%= check_box_tag :check_all, id: 'check_all' %>
+      </th>
     </tr>
   </thead>
 
