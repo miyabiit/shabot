@@ -3,6 +3,7 @@ require 'csv'
 class ReceiptCSV
   HEADER = [
     '入金予定日',
+    '伝票No.',
     'プロジェクト名',
     '費目',
     '金額',
@@ -29,6 +30,7 @@ class ReceiptCSV
         my_account = r.my_account || r.project&.my_account
         csv << [
           r.receipt_on,
+          r.id,
           r.project&.name_and_category,
           r.item&.name,
           r.amount,
