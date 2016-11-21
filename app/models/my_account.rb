@@ -9,6 +9,7 @@ class MyAccount < ActiveRecord::Base
   validates :ac_no, length: { maximum: 20 }, presence: true
 
   has_one :bank_account_balance
+  belongs_to :account
 
   scope :bank_name_order, -> (direction) { order("bank #{direction}, bank_branch #{direction}, category #{direction}, ac_no #{direction}") }
   scope :org_name_order, -> (direction) { order("org_name #{direction}") }

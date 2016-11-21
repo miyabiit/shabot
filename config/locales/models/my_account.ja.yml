@@ -4,8 +4,9 @@ ja:
       my_account: "引落元口座"
     attributes:
       my_account:
-        org_name: "法人名"
+        org_name: "Simulator表示用法人名"
         bank: "銀行"
         bank_branch: "支店"
         category: "種別"
         ac_no: "口座番号"
+        account_id: "取引先"

@@ -1,7 +1,7 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  now_val: 1
-
-two:
-  now_val: 1
+test_1:
+  name: 'slip_no'
+  now_val: 100000
+  max_val: 999999
+  min_val: 100001
+  prefix: 'SH'
+  type: 'SlipNo'
