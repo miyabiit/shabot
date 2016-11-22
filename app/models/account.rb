@@ -26,4 +26,8 @@ class Account < ActiveRecord::Base
   def bank_label
     "#{bank} #{bank_branch}"
   end
+
+  def branch_long_label
+    "#{bank_branch} #{category} #{ac_no}"
+  end
 end

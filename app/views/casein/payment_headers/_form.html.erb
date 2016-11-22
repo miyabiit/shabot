@@ -13,9 +13,13 @@
     <%= "請求先 #{f.object.account&.name}" %>
     <%= casein_text_field f, f.object, :budget_code, {:casein_label => '予算区分'} %>
   </div>
-  <div class="col-lg-4">
+  <div class="col-lg-2">
     <%= '_' %>
     <%= casein_select f, f.object, :fee_who_paid, PaymentHeader.fee_who_paid.options, {:casein_label => '振込手数料'} %>
+  </div>
+  <div class="col-lg-2">
+    <br/>
+    <%= casein_select_i18n f, :payment_type, PaymentHeader.payment_type.options, include_blank: true %>
   </div>
 </div>
 

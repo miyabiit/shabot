@@ -1,5 +1,5 @@
 class Report::ProcessPaymentReport < Report::ReportBase
-  COL_WIDTHS = [15, 45, 40, 90, 55, 60, 60, 65, 90]
+  COL_WIDTHS = [15, 45, 40, 70, 55, 25, 60, 60, 65, 85]
 
   def initialize(pdf, title, payments, from_date = nil, to_date = nil)
     super(pdf)
@@ -21,6 +21,7 @@ class Report::ProcessPaymentReport < Report::ReportBase
         payment.slip_no,
         payment.account&.name,
         payment.payable_on,
+        payment.payment_type&.text,
         amount,
         payment.project&.name,
         payment.project&.category,
@@ -45,7 +46,7 @@ class Report::ProcessPaymentReport < Report::ReportBase
     text_box '＊: 実績', size: 8, at: [0, cursor], width: bounds.width, height: 8, align: :right
     br
     hr
-    render_row ['', '作成者', '伝票No', '支払先', '支払日', '支払金額', 'プロジェクト', '', '摘要・目的・効果'], COL_WIDTHS, padding_horizontal: 3
+    render_row ['', '作成者', '伝票No', '支払先', '支払日', '区分', '支払金額', 'プロジェクト', '', '摘要・目的・効果'], COL_WIDTHS, padding_horizontal: 3
     hr
     br
   end

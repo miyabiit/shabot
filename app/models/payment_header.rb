@@ -11,12 +11,13 @@ class PaymentHeader < ActiveRecord::Base
 
   accepts_nested_attributes_for :payment_parts, allow_destroy: true
 
-  enumerize :fee_who_paid, in: ["先方負担", "自社負担"]
+  enumerize :fee_who_paid, in: %W(先方負担 自社負担)
+  enumerize :payment_type, in: %W(eb withdrawal desk)
 
   MAX_PARTS_LENGTH = 5
 
   validates :comment, length: { maximum: 400 }
-  validates :payment_parts, length: { maximum: MAX_PARTS_LENGTH }
+  validates :payment_parts, length: { maximum: MAX_PARTS_LENGTH, message: "は %{count} つまでにしてください" }
 
   validate :validate_on_processed
 
