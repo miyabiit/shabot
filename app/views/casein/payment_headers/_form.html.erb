@@ -10,7 +10,7 @@
     <%= casein_select f, f.object, :org_name, PaymentHeader.org_name.options, {:casein_label => '請求元法人'} %>
   </div>
   <div class="col-lg-4">
-    <%= '請求先 ' + Account.find(f.object.account_id).name %>
+    <%= "請求先 #{f.object.account&.name}" %>
     <%= casein_text_field f, f.object, :budget_code, {:casein_label => '予算区分'} %>
   </div>
   <div class="col-lg-4">

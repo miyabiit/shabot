@@ -7,6 +7,12 @@ module Casein
       query = query.search(params[:search]) if params[:search].present?
       query = query.search_account(params[:account_name]) if params[:account_name].present?
       query = query.where(payable_on: Range.new(*parse_from_to)) if params[:from].present? || params[:to].present?
+
+      if params[:search]
+        # 初期表示時以外
+        @sum_amount = query.sum_amount
+      end
+
       @payment_headers = query.order(sort_order(:user_id)).paginate :page => params[:page]
       render action: :index
     end

@@ -23,6 +23,16 @@
 <% end %>
 </div>
 
+<% if @sum_amount -%>
+<div class="row">
+  <div class="col-lg-3">
+    <div class="well" style="margin-top: 20px; margin-bottom: 0px;">
+      金額: <%= number_with_delimiter @sum_amount %> 円
+    </div>
+  </div>
+</div>
+<% end -%>
+
 <%= render :partial => 'casein/receipt_headers/table', :locals => { :receipt_headers => @receipt_headers } %>
 
 <div class="text-center">

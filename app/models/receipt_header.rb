@@ -21,4 +21,6 @@ receipt_headers.my_account_id = :my_account_id OR (receipt_headers.my_account_id
 
   scope :like_search, -> (column, word) { where("#{column} LIKE ?", "%#{word}%") }
 
+  scope :sum_amount, -> { sum(:amount) }
+
 end
