@@ -14,6 +14,10 @@ module Casein
       query = query.where(id: params[:slip_no]) if params[:slip_no].present?
       query = query.joins(:account).like_search('accounts.name', params[:account_name]) if params[:account_name].present?
       query = query.where(receipt_on: Range.new(*parse_from_to)) if params[:from].present? || params[:to].present?
+      if params[:slip_no]
+        # 初期表示時以外
+        @sum_amount = query.sum_amount
+      end
       @receipt_headers = query.order(sort_order(:user_id)).paginate :page => params[:page]
     end
   
