@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160930070447) do
+ActiveRecord::Schema.define(version: 20161121031125) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -76,7 +76,10 @@ ActiveRecord::Schema.define(version: 20160930070447) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "org_name",    limit: 255
+    t.integer  "account_id",  limit: 4
   end
+
+  add_index "my_accounts", ["account_id"], name: "index_my_accounts_on_account_id", using: :btree
 
   create_table "number_masters", force: :cascade do |t|
     t.string   "name",       limit: 255

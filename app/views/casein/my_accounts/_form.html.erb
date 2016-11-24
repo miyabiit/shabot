@@ -6,6 +6,9 @@
   <div class="col-lg-6">
     <%= casein_select_i18n f, :org_name, PaymentHeader.org_name.options, include_blank: true %>
   </div>
+  <div class="col-lg-6">
+    <%= casein_collection_select_i18n f, :account_id, Account.only_my_group, label_method: :name, include_blank: true %>
+  </div>
 </div>
 <div class="row">
   <div class="col-lg-6">

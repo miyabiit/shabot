@@ -7,22 +7,6 @@
 
   <div class="row">
     <div class="col-md-5">
-      <%= casein_collection_select_i18n f, :src_account_id, Account.only_my_group, label_method: :name %>
-    </div>
-    <div class="col-md-2">
-      <div class="text-center">
-        <br/>
-        <h3>
-          <span class="glyphicon glyphicon-arrow-right"></span>
-        </h3>
-      </div>
-    </div>
-    <div class="col-md-5">
-      <%= casein_collection_select_i18n f, :dst_account_id, Account.only_my_group, label_method: :name %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-5">
       <%= casein_collection_select_i18n f, :src_my_account_id, MyAccount.all, label_method: :bank_label %>
     </div>
     <div class="col-md-2">
