@@ -43,7 +43,8 @@ module Casein
       @payment_header = build_payment_header(
         :user_id => current_user.id,
         :account_id => @account.id,
-        :slip_no => SlipNo.get_num
+        :slip_no => SlipNo.get_num,
+        :payment_type => :eb
         )
       render action: :new
     end
