@@ -3,7 +3,7 @@ class Report::ReceiptReport < Report::ReportBase
   def initialize(pdf, receipt)
     super(pdf)
 
-    @account_address = '　'
+    @account_address = '[入金元]'
     @account_post = '　'
     @account_user_name = '　'
 
