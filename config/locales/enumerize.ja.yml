@@ -1,0 +1,7 @@
+ja:
+  enumerize:
+    payment_header:
+      payment_type:
+        eb: EB
+        withdrawal: 引落
+        desk: 窓口

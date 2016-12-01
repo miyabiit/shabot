@@ -30,6 +30,7 @@ $(function() {
       <th><%= casein_sort_link "作成者", :user_id %></th>
       <th><%= casein_sort_link "伝票No", :slip_no %></th>
       <th><%= casein_sort_link "支払先", :account_id %></th>
+      <th><%= casein_sort_link "区分", :payment_type %></th>
       <th><%= casein_sort_link "支払日", :payable_on %></th>
       <th><%= casein_sort_link "支払金額", :total %></th>
       <th><%= casein_sort_link "事業/プロジェクト", :project_id %></th>
@@ -48,6 +49,7 @@ $(function() {
       <td><%= casein_table_cell_link payment_header.user&.name, '#', 'data-link-id' => payment_header.id %></td>
       <td><%= casein_table_cell_link payment_header.slip_no, '#', 'data-link-id' => payment_header.id %></td>
       <td><%= casein_table_cell_link truncate(payment_header.account&.name, :length => 10), '#', 'data-link-id' => payment_header.id %></td>
+      <td><%= casein_table_cell_link payment_header.payment_type&.text, '#', 'data-link-id' => payment_header.id %></td>
       <td><%= casein_table_cell_link payment_header.payable_on, '#', 'data-link-id' => payment_header.id %></td>
       <td align="right"><%= casein_table_cell_link number_with_delimiter(payment_header.total), '#', 'data-link-id' => payment_header.id %></td>
       <td><%= casein_table_cell_link payment_header.project&.name_and_category, '#', 'data-link-id' => payment_header.id %></td>

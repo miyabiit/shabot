@@ -6,7 +6,7 @@ module Casein
 
     def pdf
       payment_header = payment_header_search.find params[:id]
-      pdf = PaymentReport.new(payment_header)
+      pdf = PaymentReportPDF.new(payment_header)
       send_data pdf.render,
         filename:  "payment.pdf",
         type:      "application/pdf",

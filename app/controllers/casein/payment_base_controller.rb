@@ -43,7 +43,8 @@ module Casein
       @payment_header = build_payment_header(
         :user_id => current_user.id,
         :account_id => @account.id,
-        :slip_no => SlipNo.get_num
+        :slip_no => SlipNo.get_num,
+        :payment_type => :eb
         )
       render action: :new
     end
@@ -91,7 +92,7 @@ module Casein
     private
       
       def payment_header_params
-        params.require(:payment_header).permit(:user_id, :account_id, :payable_on, :project_id, :org_name, :slip_no, :comment, :budget_code, :fee_who_paid, :my_account_id, :planned, :no_monthly_report, payment_parts_attributes: [:id, :item_id, :amount, :_destroy])
+        params.require(:payment_header).permit(:user_id, :account_id, :payable_on, :project_id, :org_name, :slip_no, :comment, :budget_code, :fee_who_paid, :my_account_id, :planned, :no_monthly_report, :payment_type, payment_parts_attributes: [:id, :item_id, :amount, :_destroy])
       end
 
       def payment_header_find(param_id)

@@ -2,13 +2,15 @@
 
 class PDFBase < Prawn::Document
 
-  def initialize
+  def initialize(opts={})
     super(
-      :page_size => 'A4', 
-      :page_layout => :portrait,
-      :margin => 30,
-      :left_margin => 60,
-      :bottom_margin => 40
+      {
+        :page_size => 'A4', 
+        :page_layout => :portrait,
+        :margin => 30,
+        :left_margin => 60,
+        :bottom_margin => 40
+      }.merge(opts)
     )
     font Rails.root.to_s + '/' + "vendor/fonts/ipaexg.ttf"
   end

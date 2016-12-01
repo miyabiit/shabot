@@ -8,5 +8,7 @@ ja:
         planned: "計画区分"
         processed: "処理済"
         no_monthly_report: "月別一覧出力対象外"
+        payment_type: "支払処理区分"
+        payment_parts: "明細"
 
 

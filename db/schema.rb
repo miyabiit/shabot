@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161121031125) do
+ActiveRecord::Schema.define(version: 20161122051457) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20161121031125) do
     t.integer  "process_user_id",   limit: 4
     t.date     "process_date"
     t.boolean  "no_monthly_report",               default: false
+    t.string   "payment_type",      limit: 255
   end
 
   add_index "payment_headers", ["my_account_id"], name: "index_payment_headers_on_my_account_id", using: :btree
