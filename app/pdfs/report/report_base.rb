@@ -71,8 +71,9 @@ class Report::ReportBase
               end
       padding_left = options[:padding_left]   || options[:padding_horizontal] || 0
       padding_right = options[:padding_right] || options[:padding_horizontal] || 0
+      font_size = options[:font_size] || FONT_SIZE
 
-      text_box str, size: FONT_SIZE, at: Vector[col_widths.take(idx).inject(0, :+) + padding_left, cursor], width: col_widths[idx]-(padding_left+padding_right), height: ROW_SIZE, valign: :center, align: align
+      text_box str, size: font_size, at: Vector[col_widths.take(idx).inject(0, :+) + padding_left, cursor], width: col_widths[idx]-(padding_left+padding_right), height: ROW_SIZE, valign: :center, align: align
     end
     next_row
     if cursor <= 0
