@@ -1,5 +1,5 @@
 class Report::BankAccountBalanceSummaryReport < Report::ReportBase
-  COL_WIDTHS = [90, 140, 55, 55, 55, 55, 55, 55]
+  COL_WIDTHS = [120, 240, 75, 75, 75, 75, 75, 75]
 
   def initialize(pdf, bank_account_balances)
     super(pdf)
@@ -12,12 +12,12 @@ class Report::BankAccountBalanceSummaryReport < Report::ReportBase
   def show
     render_header
 
-    move_down 6
+    move_down 3
     next_page if cursor <= 0
 
     @bank_account_balances.each do |bank_account_balance|
       render_table_row(bank_account_balance)
-      move_down 6
+      move_down 3
       next_page if cursor <= 0
     end
 
@@ -31,7 +31,7 @@ class Report::BankAccountBalanceSummaryReport < Report::ReportBase
     render_title '口座別資金繰残高Simulator'
     move_down 36
     render_dates
-    move_down 18
+    move_down 10
     render_table_header
   end
 
@@ -51,7 +51,7 @@ class Report::BankAccountBalanceSummaryReport < Report::ReportBase
 
   def render_table_header
     hr
-    render_row %W(Simulator表示用法人名 口座 前日繰越残高 推定日 当月末 翌月末 翌々月末), COL_WIDTHS, padding_horizontal: 3
+    render_row %W(法人名 口座 前日繰越残高 推定日 当月末 翌月末 翌々月末), COL_WIDTHS, padding_horizontal: 3
     hr
   end
 
@@ -64,7 +64,7 @@ class Report::BankAccountBalanceSummaryReport < Report::ReportBase
       bank_account_balance.current_month_amount,
       bank_account_balance.two_month_amount,
       bank_account_balance.three_month_amount,
-    ], COL_WIDTHS, padding_horizontal: 3, font_size: 6
+    ], COL_WIDTHS, padding_horizontal: 3
   end
 
   def render_total_row
@@ -77,7 +77,7 @@ class Report::BankAccountBalanceSummaryReport < Report::ReportBase
           @bank_account_balances.map(&attr_name).compact.sum
         }
       )
-    ], COL_WIDTHS, padding_horizontal: 3, font_size: 6
+    ], COL_WIDTHS, padding_horizontal: 3
   end
 
 end
