@@ -57,27 +57,27 @@ $(function() {
           <%= bank_account_balance.my_account&.bank_long_label %>
         </span>
       </td>
-      <td>
+      <td align="right">
         <div class="casein-like">
           <%= text_field_tag 'bank_account_balances[][current_amount]', bank_account_balance.current_amount, class: 'money' %>
         </div>
       </td>
-      <td>
+      <td align="right">
         <span class="casein-like">
           <%= number_with_delimiter bank_account_balance.estimate_date_amount %>
         </span>
       </td>
-      <td>
+      <td align="right">
         <span class="casein-like">
           <%= number_with_delimiter bank_account_balance.current_month_amount %>
         </span>
       </td>
-      <td>
+      <td align="right">
         <span class="casein-like">
           <%= number_with_delimiter bank_account_balance.two_month_amount %>
         </span>
       </td>
-      <td>
+      <td align="right">
         <span class="casein-like">
           <%= number_with_delimiter bank_account_balance.three_month_amount %>
         </span>
@@ -92,7 +92,7 @@ $(function() {
         </span>
       </td>
       <% %i(current_amount estimate_date_amount current_month_amount two_month_amount three_month_amount).each do |attr_name| -%>
-        <td>
+        <td align="right">
           <span class="casein-like">
             <%= number_with_delimiter @bank_account_balances.map(&attr_name).compact.sum %>
           </span>
