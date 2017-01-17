@@ -20,7 +20,7 @@ module Casein
 
     def pdf_each_project_receipt
       from, to = parse_from_to
-      receipt_headers = ReceiptHeader.where(receipt_on: from..to)
+      receipt_headers = ReceiptHeader.where(receipt_on: from..to).where(no_monthly_report: false)
       pdf = EachProjectReceiptList.new(receipt_headers)
       pdf_filename = "receipt-project-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
       send_data pdf.render,
@@ -42,7 +42,7 @@ module Casein
 
     def pdf_each_day_receipt
       from, to = parse_from_to
-      receipt_headers = ReceiptHeader.where(receipt_on: from..to)
+      receipt_headers = ReceiptHeader.where(receipt_on: from..to).where(no_monthly_report: false)
       pdf = EachDayReceiptList.new(receipt_headers)
       pdf_filename = "receipt-eachday-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
       send_data pdf.render,

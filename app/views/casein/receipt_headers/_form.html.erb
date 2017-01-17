@@ -21,18 +21,28 @@
   <div class="col-lg-6">
     <%= casein_date_select_i18n f, :receipt_on %>
   </div>
+  <% if @session_user.is_admin? -%>
+    <div class="col-lg-6">
+      <%= casein_collection_select_i18n f, :my_account_id, MyAccount.all, label_method: :bank_label, include_blank: "(事業・プロジェクトと同じ口座)" %>
+    </div>
+  <% end -%>
 </div>
 
 <div class="row">
-  <div class="col-lg-4">
+  <div class="col-lg-6">
     <%= casein_collection_select_i18n f, :item_id, Item.all, include_blank: true %>
   </div>
   <div class="col-lg-4">
     <%= casein_text_field_i18n f, :amount, class: 'money' %>
   </div>
   <% if @session_user.is_admin? -%>
-    <div class="col-lg-4">
-      <%= casein_collection_select_i18n f, :my_account_id, MyAccount.all, label_method: :bank_label, include_blank: "(事業・プロジェクトと同じ口座)" %>
+    <div class="col-lg-2">
+      <div class="form-group">
+        <%= f.label :no_monthly_report, {class: 'control-label'} %>
+        <div class="well" style="height: 74px">
+          <%= f.check_box :no_monthly_report %>&nbsp; <%= f.label :no_monthly_report, '対象外', {class: 'control-label'} %>
+        </div>
+      </div>
     </div>
   <% end -%>
 </div>

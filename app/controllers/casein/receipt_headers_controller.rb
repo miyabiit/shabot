@@ -85,7 +85,7 @@ module Casein
     private
       
       def receipt_header_params
-        params.require(:receipt_header).permit(:account_id, :receipt_on, :project_id, :comment, :item_id, :amount, :my_account_id)
+        params.require(:receipt_header).permit(:account_id, :receipt_on, :project_id, :comment, :item_id, :amount, :my_account_id, :no_monthly_report)
       end
 
       def receipt_header_search
