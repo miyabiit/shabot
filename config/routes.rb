@@ -28,11 +28,6 @@ Rails.application.routes.draw do
         get 'new_by_last'
       end
     end
-    resources :planned_payment_headers do
-      member do
-        get 'new_by_last'
-      end
-    end
 
     resources :not_processed_payment_headers, only: [:index] do
       collection do

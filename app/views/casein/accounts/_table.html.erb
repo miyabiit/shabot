@@ -24,7 +24,7 @@
       <td><%= casein_table_cell_link account.ac_no, casein_account_path(account) %></td>
       <td><%= casein_table_cell_link account.my_group? ? '◯' : '☓', casein_account_path(account) %></td>
       <td class="new">
-        <%= table_row_add_icon_link_to new_casein_planned_payment_header_path(account_id: account.id) %>
+        <%= table_row_add_icon_link_to new_casein_payment_header_path(account_id: account.id, planned: 1) %>
       </td>
       <td class="new">
         <%= table_row_add_icon_link_to new_casein_payment_header_path(account_id: account.id) %>
