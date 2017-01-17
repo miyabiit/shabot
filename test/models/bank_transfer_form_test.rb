@@ -49,6 +49,7 @@ class BankTransferFormTest < ActiveSupport::TestCase
       assert_equal items(:test_2).id, receipt.item_id
       assert_equal 12345, receipt.amount
       assert_equal my_accounts(:test_2).id, receipt.my_account_id
+      assert_equal true, receipt.no_monthly_report
     end
   end
 end

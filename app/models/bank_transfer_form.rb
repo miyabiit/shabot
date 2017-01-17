@@ -57,7 +57,8 @@ class BankTransferForm
         item_id: self.dst_item_id,
         project_id: self.project_id,
         amount: self.amount,
-        comment: self.comment
+        comment: self.comment,
+        no_monthly_report: true
       )
     end
 

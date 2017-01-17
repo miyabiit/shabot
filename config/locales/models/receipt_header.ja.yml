@@ -13,4 +13,5 @@ ja:
         amount: "金額"
         my_account_id: "入金口座"
         id: "伝票No"
+        no_monthly_report: "月別一覧出力対象外"
 
