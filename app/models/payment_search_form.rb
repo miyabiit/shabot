@@ -39,7 +39,7 @@ class PaymentSearchForm
       query.where(monthly_data: true).where.not(payable_on: nil).each do |payment|
         payment.duplicate({
           user_id: @current_user.id,
-          planned: false,
+          planned: true,
           payable_on: payment.payable_on.next_month
         })
       end
