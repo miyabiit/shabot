@@ -1,0 +1,13 @@
+ja:
+  activemodel:
+    models:
+      payment_search_form: 支払申請書検索
+    attributes:
+      payment_search_form:
+        slip_no: 伝票No
+        account_name: 取引先名
+        from: 日付(開始日)
+        to: 日付(終了日)
+        planned_true: 予定
+        planned_false: 実績
+        monthly_data_true: 定例

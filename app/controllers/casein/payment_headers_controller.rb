@@ -4,22 +4,16 @@ module Casein
 
     target_model :payment_header
 
+    before_action :setup_search_form, only: [:index, :duplicate_monthly_data]
+
     def index
-      query = payment_header_search
-      query = query.search(params[:search]) if params[:search].present?
-      query = query.search_account(params[:account_name]) if params[:account_name].present?
-      query = query.where(payable_on: Range.new(*parse_from_to)) if params[:from].present? || params[:to].present?
-      if params[:planned_true].present? ^ params[:planned_false].present?
-        query = query.where(planned: true)  if params[:planned_true].present?
-        query = query.where(planned: false) if params[:planned_false].present?
-      end
-
-      if params[:search]
+      @query = @form.create_query
+      if params[:q]
         # 初期表示時以外
-        @sum_amount = query.sum_amount
+        @sum_amount = @query.sum_amount
       end
 
-      @payment_headers = query.order(sort_order(:user_id)).paginate :page => params[:page]
+      @payment_headers = @query.order(sort_order(:user_id)).paginate :page => params[:page]
       render action: :index
     end
   
@@ -31,15 +25,8 @@ module Casein
     def new_by_last
       @casein_page_title = 'New payment header'
       last_payment_header = payment_header_find params[:id]
-      @payment_header = last_payment_header.dup
-      @payment_header.slip_no = SlipNo.get_num
-      @payment_header.user_id = current_user.id
-      @payment_header.clear_processed
-      if @payment_header.save
-        last_payment_header.payment_parts.each do |part|
-          new_part = part.dup
-          @payment_header.payment_parts << new_part
-        end
+      PaymentHeader.transaction do
+        @payment_header = last_payment_header.duplicate(user_id: current_user.id)
       end
       render action: :show
     end
@@ -75,7 +62,12 @@ module Casein
     
       if @payment_header.update_attributes payment_header_params
         flash[:notice] = I18n.t('messages.update_model', model_name: model_human_name)
-        render action: :show
+        if params[:add_and_return_index]
+          payment_data_id = "payment_#{@payment_header.id}"
+          redirect_to_payment_index(anchor: payment_data_id, anchor_id: payment_data_id)
+        else
+          render action: :show
+        end
       else
         flash.discard(:notice)
         flash.now[:warning] = create_error_message(@payment_header)
@@ -97,7 +89,7 @@ module Casein
     end
 
     def pdf
-      payment_header = payment_header_search.find params[:id]
+      payment_header = payment_header_find params[:id]
       pdf = PaymentReportPDF.new(payment_header)
       send_data pdf.render,
         filename:  "payment.pdf",
@@ -105,26 +97,37 @@ module Casein
         disposition:  "inline"
     end
   
+    def duplicate_monthly_data
+      if @form.duplicate_monthly_data
+        flash[:notice] = "定例データを一括作成しました"
+        redirect_to_payment_index
+      else
+        @query = @form.create_query
+        @payment_headers = @query.order(sort_order(:user_id)).paginate :page => params[:page]
+        render action: :index
+      end
+    end
+
     private
+
+      def setup_search_form
+        @form = PaymentSearchForm.new(@session_user, params[:q])
+      end
       
       def payment_header_params
-        params.require(:payment_header).permit(:user_id, :account_id, :payable_on, :project_id, :org_name, :slip_no, :comment, :budget_code, :fee_who_paid, :my_account_id, :planned, :no_monthly_report, :payment_type, payment_parts_attributes: [:id, :item_id, :amount, :_destroy])
+        params.require(:payment_header).permit(:user_id, :account_id, :payable_on, :project_id, :org_name, :slip_no, :comment, :budget_code, :fee_who_paid, :my_account_id, :planned, :no_monthly_report, :payment_type, :monthly_data, payment_parts_attributes: [:id, :item_id, :amount, :_destroy])
       end
 
       def payment_header_find(param_id)
         PaymentHeader.onlymine(@session_user).find(param_id)
       end
 
-      def payment_header_search
-        PaymentHeader.onlymine(@session_user)
-      end
-
       def build_payment_header(attrs = {})
         PaymentHeader.new(attrs)
       end
 
-      def redirect_to_payment_index
-        redirect_to casein_payment_headers_path
+      def redirect_to_payment_index(additional_params={})
+        redirect_to casein_payment_headers_path({q: params[:q], c: params[:c], d: params[:d], page: params[:page]}.merge(additional_params))
       end
 
       def redirect_to_payment_show(payment_header)
@@ -139,12 +142,6 @@ module Casein
 
       def model_human_name
         '支払申請書'
-      end
-
-      def parse_from_to
-        from = (Date.parse(params[:from]) rescue Date.parse('1999/1/1'))
-        to = (Date.parse(params[:to]) rescue Date.parse('3000/1/1'))
-        [from, to]
       end
   end
 end

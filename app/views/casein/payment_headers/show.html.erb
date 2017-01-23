@@ -10,7 +10,8 @@
   
   <p class="submits">
     <%= link_to t('helpers.button.cancel'), casein_payment_headers_path, :class => 'btn btn-mini btn-danger' %>
-    <%= f.submit t('helpers.submit.submit'), :class => "btn btn-mini btn-primary", disabled: @payment_header.processed? %>
+    <%= f.submit t('helpers.submit.submit'), :class => "btn btn-mini btn-primary", disabled: @payment_header.processed?, name: :save %>
+    <%= f.submit t('helpers.submit.add_and_return_index'), :class => "btn btn-mini btn-primary", disabled: @payment_header.processed?, name: :add_and_return_index %>
     <%= link_to 'PDF', pdf_casein_payment_header_path, {:class => 'btn btn-mini btn-primary', :target => "_blank", :disabled => ('disabled' if @payment_header.planned)} %>
   </p>
 
@@ -19,5 +20,5 @@
 
 
 <%= content_for :sidebar do %>
-  <li><%= link_to "#{casein_show_icon "th-list"}一覧へ".html_safe, casein_payment_headers_path %></li>
+  <li><%= link_to "#{casein_show_icon "th-list"}一覧へ".html_safe, payments_path %></li>
 <% end %>

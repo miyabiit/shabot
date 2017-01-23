@@ -9,6 +9,7 @@
   <thead>
     <tr>
       <th></th>
+      <th>定例</th>
       <th><%= casein_sort_link "作成者", :user_id %></th>
       <th><%= casein_sort_link "伝票No", :slip_no %></th>
       <th><%= casein_sort_link "お取引先", :account_id %></th>
@@ -17,15 +18,17 @@
       <th><%= casein_sort_link "金額", :total %></th>
       <th><%= casein_sort_link "事業/プロジェクト", :project_id %></th>
       <th><%= casein_sort_link "摘要・目的・効果", :comment %></th>
-      <th nowrap>支払</br><%= @planned ? '予定' : '申請' %></th>
-      <th nowrap>支払</br><%= @planned ? '予定' : '申請' %></th>
+      <th nowrap>支払</br>申請</th>
+      <th nowrap>支払</br>申請</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
   
   <% payment_headers.each do |payment_header| %>
-    <tr>
+    <% payment_data_id = "payment_#{payment_header.id}" -%>
+    <tr id="<%= payment_data_id %>" class="<%= 'success' if payment_data_id == params[:anchor_id] %>">
       <td><%= casein_table_cell_link (payment_header.planned ? '' : '＊'), payment_path(payment_header) %></td>
+      <td><%= casein_table_cell_link (payment_header.monthly_data? ? '◯' : '☓'), payment_path(payment_header) %></td>
       <td><%= casein_table_cell_link Casein::AdminUser.find(payment_header.user_id).name, payment_path(payment_header) %></td>
       <td><%= casein_table_cell_link payment_header.slip_no, payment_path(payment_header) %></td>
       <td><%= casein_table_cell_link truncate(Account.find(payment_header.account_id).name, :length => 10), payment_path(payment_header) rescue "&nsbp;" %></td>

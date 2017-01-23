@@ -27,6 +27,9 @@ Rails.application.routes.draw do
         get 'pdf'
         get 'new_by_last'
       end
+      collection do
+        post :duplicate_monthly_data
+      end
     end
 
     resources :not_processed_payment_headers, only: [:index] do

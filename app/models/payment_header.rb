@@ -89,5 +89,20 @@ payment_headers.my_account_id = :my_account_id OR (payment_headers.my_account_id
     return "" unless my_account_model
     "#{my_account_model.bank_branch} #{my_account_model.category} #{my_account_model.ac_no}" 
   end
+
+  def duplicate(attrs = {})
+    new_payment = self.dup
+    new_payment.slip_no = SlipNo.get_num
+    new_payment.clear_processed
+    new_payment.attributes = attrs
+    if new_payment.save
+      self.payment_parts.each do |part|
+        new_part = part.dup
+        new_payment.payment_parts << new_part
+      end
+    end
+    new_payment
+  end
+
 end
 

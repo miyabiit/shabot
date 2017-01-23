@@ -144,6 +144,7 @@ ja:
       submit: 保存する
       update: 更新する
       add: 追加する
+      add_and_return_index: 保存して一覧へ戻る
     button: 
       cancel: キャンセル
     link: 
