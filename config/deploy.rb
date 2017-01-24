@@ -69,3 +69,5 @@ set :ssh_options, {
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
+
+before 'deploy:publishing', 'db:seed_fu'

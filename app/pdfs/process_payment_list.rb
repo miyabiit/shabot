@@ -1,6 +1,6 @@
 class ProcessPaymentList < PDFBase
 
-	def initialize(payments, title, from_date, to_date)
+  def initialize(payments, title, from_date, to_date)
     super()
 
     payments = payments.payable_on_is_not_null.eager_load(:project, :account).order("payment_headers.payable_on, payment_headers.slip_no")
@@ -9,5 +9,5 @@ class ProcessPaymentList < PDFBase
     report.show
 
     render_page_number
-	end
+  end
 end

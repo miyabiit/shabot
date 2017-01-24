@@ -4,6 +4,7 @@ class ReceiptHeader < ActiveRecord::Base
   belongs_to :project
   belongs_to :item
   belongs_to :my_account
+  belongs_to :my_corporation, foreign_key: 'corporation_code'
 
   validates :amount, numericality: {only_integer: true}
 

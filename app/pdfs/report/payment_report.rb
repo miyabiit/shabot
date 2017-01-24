@@ -39,7 +39,7 @@ class Report::PaymentReport < Report::ReportBase
     end
 
     @pdf.fill_color "0000ff"
-    @pdf.draw_text @payment.org_name , :size => 12, :at => [5,760]
+    @pdf.draw_text @payment.my_corporation&.name, :size => 12, :at => [5,760]
     @pdf.fill_color "000000"
     @pdf.draw_text '作成:' + @payment.created_at.strftime("%Y/%m/%d") , :size => 10, :at => [420,760]
     @pdf.draw_text "支払申請書", :size => 18, :at => [5,730]

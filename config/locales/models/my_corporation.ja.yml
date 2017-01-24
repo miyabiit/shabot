@@ -1,0 +1,8 @@
+ja:
+  activerecord:
+    models:
+      my_corporation: "グループ会社"
+    attributes:
+      my_corporation:
+        code: "法人コード"
+        name: "法人名"

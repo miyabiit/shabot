@@ -1,6 +1,5 @@
 class PaymentHeader < ActiveRecord::Base
   extend Enumerize
-  include Enums::OrgNameEnum
 
   has_many :payment_parts, dependent: :destroy
   belongs_to :user, class_name: 'Casein::AdminUser', foreign_key: 'user_id'
@@ -8,6 +7,7 @@ class PaymentHeader < ActiveRecord::Base
   belongs_to :my_account
   belongs_to :project
   belongs_to :process_user, class_name: 'Casein::AdminUser', foreign_key: 'process_user_id'
+  belongs_to :my_corporation, foreign_key: 'corporation_code'
 
   accepts_nested_attributes_for :payment_parts, allow_destroy: true
 

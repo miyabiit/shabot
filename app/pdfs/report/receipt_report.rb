@@ -65,11 +65,9 @@ class Report::ReceiptReport < Report::ReportBase
     float do
       move_down 180
       bounding_box([0, cursor], width: bounds.width, height: 180) do
-        text "〒102-0093 東京都千代田区平河町2-14-7YUKEN平河町ビル4F", size: 10, align: :right
-        move_down 2
-        text "株式会社シャロンテック", size: 14, align: :right
-        move_down 2
-        text "TEL 03-3239-2431 FAX 03-3239-2438", size: 10, align: :right
+        br
+        text @receipt.my_corporation&.name || '', size: 14, align: :right
+        br
 
         move_down 20
         

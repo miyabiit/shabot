@@ -25,7 +25,7 @@ class BankTransferFormTest < ActiveSupport::TestCase
       assert_equal accounts(:test_2).id, payment.account_id
       assert_equal Date.new(2016, 11, 1), payment.payable_on
       assert_equal projects(:test_1).id, payment.project_id
-      assert_equal 'シャロンテック', payment.org_name
+      assert_equal '1000', payment.corporation_code # シャロンテック
       assert_equal '資金移動テスト', payment.comment
       assert_equal '自社負担', payment.fee_who_paid
       assert_equal my_accounts(:test_1).id, payment.my_account_id

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     end
 
     resources :my_accounts
+    resources :my_corporations
     resources :accounts
     resources :items
     resources :projects
