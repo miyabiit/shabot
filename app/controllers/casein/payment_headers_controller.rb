@@ -63,8 +63,7 @@ module Casein
       if @payment_header.update_attributes payment_header_params
         flash[:notice] = I18n.t('messages.update_model', model_name: model_human_name)
         if params[:add_and_return_index]
-          payment_data_id = "payment_#{@payment_header.id}"
-          redirect_to_payment_index(anchor: payment_data_id, anchor_id: payment_data_id)
+          redirect_to_payment_index(anchor: @payment_header.id, anchor_id: @payment_header.id)
         else
           render action: :show
         end
@@ -127,11 +126,11 @@ module Casein
       end
 
       def redirect_to_payment_index(additional_params={})
-        redirect_to casein_payment_headers_path({q: params[:q], c: params[:c], d: params[:d], page: params[:page]}.merge(additional_params))
+        redirect_to casein_payment_headers_path(query_params.merge(additional_params))
       end
 
       def redirect_to_payment_show(payment_header)
-        redirect_to casein_payment_header_path(payment_header)
+        redirect_to casein_payment_header_path(payment_header, query_params)
       end
 
       def create_error_message(payment_header, action=nil)

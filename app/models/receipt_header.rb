@@ -23,4 +23,10 @@ receipt_headers.my_account_id = :my_account_id OR (receipt_headers.my_account_id
 
   scope :sum_amount, -> { sum(:amount) }
 
+  def duplicate(attrs = {})
+    new_receipt = self.dup
+    new_receipt.attributes = attrs
+    new_receipt.save
+    new_receipt
+  end
 end

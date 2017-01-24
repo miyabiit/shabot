@@ -66,4 +66,7 @@ module ApplicationHelper
     table_row_icon_link_to('retweet', path, title: '参照作成', link_options: options)
   end
 
+  def query_params
+    {q: params[:q], c: params[:c], d: params[:d], page: params[:page]}
+  end
 end

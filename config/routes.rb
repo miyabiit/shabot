@@ -16,6 +16,9 @@ Rails.application.routes.draw do
         get 'copy'
         get 'pdf'
       end
+      collection do
+        post :duplicate_monthly_data
+      end
     end
 
     resources :my_accounts

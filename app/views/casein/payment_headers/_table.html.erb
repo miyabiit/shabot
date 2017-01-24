@@ -25,8 +25,7 @@
   </thead>
   
   <% payment_headers.each do |payment_header| %>
-    <% payment_data_id = "payment_#{payment_header.id}" -%>
-    <tr id="<%= payment_data_id %>" class="<%= 'success' if payment_data_id == params[:anchor_id] %>">
+    <tr id="<%= payment_header.id %>" class="<%= 'success' if payment_header.id.to_s == params[:anchor_id] %>">
       <td><%= casein_table_cell_link (payment_header.planned ? '' : '＊'), payment_path(payment_header) %></td>
       <td><%= casein_table_cell_link (payment_header.monthly_data? ? '◯' : '☓'), payment_path(payment_header) %></td>
       <td><%= casein_table_cell_link Casein::AdminUser.find(payment_header.user_id).name, payment_path(payment_header) %></td>
