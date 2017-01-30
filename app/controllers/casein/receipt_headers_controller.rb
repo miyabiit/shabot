@@ -17,7 +17,7 @@ module Casein
         # 初期表示時以外
         @sum_amount = @query.sum_amount
       end
-      @receipt_headers = @query.order(sort_order(:user_id)).paginate :page => params[:page]
+      @receipt_headers = @query.order(sort_order(:user_id)).order(:id).paginate :page => params[:page]
     end
   
     def show
@@ -92,7 +92,7 @@ module Casein
         redirect_to casein_receipt_headers_path(query_params)
       else
         @query = @form.create_query
-        @receipt_headers = @query.order(sort_order(:user_id)).paginate :page => params[:page]
+        @receipt_headers = @query.order(sort_order(:user_id)).order(:id).paginate :page => params[:page]
         render action: :index
       end
     end

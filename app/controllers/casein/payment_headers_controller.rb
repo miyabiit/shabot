@@ -13,7 +13,7 @@ module Casein
         @sum_amount = @query.sum_amount
       end
 
-      @payment_headers = @query.order(sort_order(:user_id)).paginate :page => params[:page]
+      @payment_headers = @query.order(sort_order(:user_id)).order(:id).paginate :page => params[:page]
       render action: :index
     end
   
@@ -103,7 +103,7 @@ module Casein
         redirect_to_payment_index
       else
         @query = @form.create_query
-        @payment_headers = @query.order(sort_order(:user_id)).paginate :page => params[:page]
+        @payment_headers = @query.order(sort_order(:user_id)).order(:id).paginate :page => params[:page]
         render action: :index
       end
     end
