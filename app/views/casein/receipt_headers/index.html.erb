@@ -52,7 +52,7 @@
       </div>
       <div class="col-lg-offset-7 col-lg-2">
         <div class="pull-right">
-            <%= f.submit "定例データ一括作成", name: nil, class: 'btn btn-primary', disabled: @receipt_headers.empty? || !@form.valid?(:duplicate_monthly_data), disable_with: "作成中", data: {confirm: "検索結果の定例データから次月のデータを作成します。よろしいですか？"} %>
+            <%= f.submit "定例データ一括作成", name: nil, class: 'btn btn-primary', disabled: @receipt_headers.empty? || !@form.valid?(:duplicate_monthly_data), disable_with: "作成中", data: {confirm: "選択中の定例データから次月のデータを作成します。よろしいですか？"} %>
         </div>
       </div>
     </div>
