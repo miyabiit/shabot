@@ -32,21 +32,6 @@ class PaymentSearchForm
     query
   end
 
-  def duplicate_monthly_data
-    return false unless valid?(:duplicate_monthly_data)
-    PaymentHeader.transaction do 
-      query = create_query
-      query.where(monthly_data: true).where.not(payable_on: nil).each do |payment|
-        payment.duplicate({
-          user_id: @current_user.id,
-          planned: true,
-          payable_on: payment.payable_on.next_month
-        })
-      end
-    end
-    true
-  end
-
   def validate_form_to_range
     if from.present? && to.present?
       if to.prev_month.prev_month >= from

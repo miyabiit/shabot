@@ -97,7 +97,8 @@ module Casein
     end
   
     def duplicate_monthly_data
-      if @form.duplicate_monthly_data
+      if @form.valid?(:duplicate_monthly_data) 
+        PaymentHeader.duplicate_monthly_data(current_user, params[:ids])
         flash[:notice] = "定例データを一括作成しました"
         redirect_to_payment_index
       else

@@ -26,20 +26,6 @@ class ReceiptSearchForm
     query
   end
 
-  def duplicate_monthly_data
-    return false unless valid?(:duplicate_monthly_data)
-    ReceiptHeader.transaction do 
-      query = create_query
-      query.where(monthly_data: true).where.not(receipt_on: nil).each do |receipt|
-        receipt.duplicate({
-          user_id: @current_user.id,
-          receipt_on: receipt.receipt_on.next_month
-        })
-      end
-    end
-    true
-  end
-
   def validate_form_to_range
     if from.present? && to.present?
       if to.prev_month.prev_month >= from
