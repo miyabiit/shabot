@@ -27,7 +27,7 @@
   <% payment_headers.each do |payment_header| %>
     <tr id="<%= payment_header.id %>" class="<%= 'success' if payment_header.id.to_s == params[:anchor_id] %>">
       <td><%= casein_table_cell_link (payment_header.planned ? '' : '＊'), payment_path(payment_header) %></td>
-      <td><%= casein_table_cell_link (payment_header.monthly_data? ? '◯' : '☓'), payment_path(payment_header) %></td>
+      <td><%= casein_table_cell_link (payment_header.monthly_data? ? '◯' : ''), payment_path(payment_header) %></td>
       <td><%= casein_table_cell_link Casein::AdminUser.find(payment_header.user_id).name, payment_path(payment_header) %></td>
       <td><%= casein_table_cell_link payment_header.slip_no, payment_path(payment_header) %></td>
       <td><%= casein_table_cell_link truncate(Account.find(payment_header.account_id).name, :length => 10), payment_path(payment_header) rescue "&nsbp;" %></td>

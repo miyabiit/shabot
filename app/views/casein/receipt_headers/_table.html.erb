@@ -14,7 +14,7 @@
   
   <% receipt_headers.each do |receipt_header| %>
     <tr id="<%= receipt_header.id %>" class="<%= 'success' if receipt_header.id.to_s == params[:anchor_id] %>">
-      <td><%= casein_table_cell_link (receipt_header.monthly_data? ? '◯' : '☓'), casein_receipt_header_path(receipt_header, query_params) %></td>
+      <td><%= casein_table_cell_link (receipt_header.monthly_data? ? '◯' : ''), casein_receipt_header_path(receipt_header, query_params) %></td>
       <td><%= casein_table_cell_link receipt_header.user.try(:name), casein_receipt_header_path(receipt_header, query_params) %></td>
       <td><%= casein_table_cell_link receipt_header.id, casein_receipt_header_path(receipt_header, query_params) %></td>
       <td><%= casein_table_cell_link truncate(receipt_header.account.try(:name), length: 20), casein_receipt_header_path(receipt_header, query_params) %></td>
