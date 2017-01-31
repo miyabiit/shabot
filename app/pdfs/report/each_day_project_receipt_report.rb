@@ -1,5 +1,5 @@
 class Report::EachDayProjectReceiptReport < Report::ReportBase
-  COL_WIDTHS = [25, 55, 100, 55, 115, 85, 70]
+  COL_WIDTHS = [25, 15, 55, 100, 55, 100, 85, 70]
 
   def initialize(pdf, title, receipts, break_by)
     super(pdf)
@@ -39,6 +39,7 @@ class Report::EachDayProjectReceiptReport < Report::ReportBase
       amount = receipt.amount
       render_row [
         line_no.to_s,
+        receipt.monthly_data ? '◯' : '',
         receipt.receipt_on,
         receipt.project&.name,
         receipt.project&.category,
@@ -69,10 +70,11 @@ class Report::EachDayProjectReceiptReport < Report::ReportBase
     render_create_date
     br
     br
+    float { text_box '◯: 定例', size: 8, at: [0, cursor], width: bounds.width, height: 10, align: :right, valign: :bottom }
     render_target_date
     @pdf.move_down 16
     hr
-    render_row ['No.', '入金予定日', 'PROJECT', '', '入金元', '金額', '伝票番号'], COL_WIDTHS, padding_horizontal: 3
+    render_row ['No.', '', '入金予定日', 'PROJECT', '', '入金元', '金額', '伝票番号'], COL_WIDTHS, padding_horizontal: 3
     hr
     br
   end
@@ -87,6 +89,6 @@ class Report::EachDayProjectReceiptReport < Report::ReportBase
 
   def render_amount(amount)
     hr
-    render_row ['', '', '', '', '', amount, ''], COL_WIDTHS, padding_horizontal: 3
+    render_row ['', '', '', '', '', '', amount, ''], COL_WIDTHS, padding_horizontal: 3
   end
 end

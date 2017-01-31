@@ -16,6 +16,9 @@ Rails.application.routes.draw do
         get 'copy'
         get 'pdf'
       end
+      collection do
+        post :duplicate_monthly_data
+      end
     end
 
     resources :my_accounts
@@ -27,10 +30,8 @@ Rails.application.routes.draw do
         get 'pdf'
         get 'new_by_last'
       end
-    end
-    resources :planned_payment_headers do
-      member do
-        get 'new_by_last'
+      collection do
+        post :duplicate_monthly_data
       end
     end
 

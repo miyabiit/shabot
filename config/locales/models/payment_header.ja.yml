@@ -10,5 +10,6 @@ ja:
         no_monthly_report: "月別一覧出力対象外"
         payment_type: "支払処理区分"
         payment_parts: "明細"
+        monthly_data: "定例"
 
 

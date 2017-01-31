@@ -2,6 +2,8 @@
 
 <%= javascript_include_tag 'views/receipt_header' %>
 
+<%= render 'casein/layouts/hidden_field_store' %>
+
 <div class="row">
   <div class="col-lg-4">
     <%= "No. #{f.object.id}" %>
@@ -29,11 +31,19 @@
 </div>
 
 <div class="row">
-  <div class="col-lg-6">
+  <div class="col-lg-4">
     <%= casein_collection_select_i18n f, :item_id, Item.all, include_blank: true %>
   </div>
   <div class="col-lg-4">
     <%= casein_text_field_i18n f, :amount, class: 'money' %>
+  </div>
+  <div class="col-lg-2">
+    <div class="form-group">
+      <%= f.label :monthly_data, {class: 'control-label'} %>
+      <div class="well" style="height: 74px">
+        <%= f.check_box :monthly_data %>&nbsp; <%= f.label :monthly_data, '定例', {class: 'control-label'} %>
+      </div>
+    </div>
   </div>
   <% if @session_user.is_admin? -%>
     <div class="col-lg-2">

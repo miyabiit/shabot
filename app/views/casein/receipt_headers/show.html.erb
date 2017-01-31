@@ -11,11 +11,12 @@
   <p class="submits">
     <%= link_to t("helpers.button.cancel"), casein_receipt_headers_path, :class => 'btn btn-mini btn-danger' %>
     <%= f.submit t("helpers.submit.submit"), :class => "btn btn-mini btn-primary" %>
+    <%= f.submit t('helpers.submit.add_and_return_index'), :class => "btn btn-mini btn-primary", name: :add_and_return_index %>
     <%= link_to 'PDF', pdf_casein_receipt_header_path, class: 'btn btn-mini btn-primary', target: "_blank" %>
   </p>
 
 <% end %>
 
 <%= content_for :sidebar do %>
-  <li><%= link_to "#{casein_show_icon "th-list"}#{t 'helpers.link.back_to_list'}".html_safe, casein_receipt_headers_path %></li>
+  <li><%= link_to "#{casein_show_icon "th-list"}#{t 'helpers.link.back_to_list'}".html_safe, casein_receipt_headers_path(query_params) %></li>
 <% end %>

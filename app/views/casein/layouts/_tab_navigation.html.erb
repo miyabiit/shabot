@@ -7,7 +7,6 @@
 <li id="tab-my_accounts"><%= link_to MyAccount.model_name.human, casein_my_accounts_path %></li>
 <% end %>
 <li id="tab-receipt_headers"><%= link_to ReceiptHeader.model_name.human, casein_receipt_headers_path %></li>
-<li id="tab-planned_payment_headers"><%= link_to "支払予定", casein_planned_payment_headers_path %></li>
 <li id="tab-payment_headers"><%= link_to "支払申請書", casein_payment_headers_path %></li>
 <li id="tab-not_processed_payment_headers"><%= link_to "未払一覧", casein_not_processed_payment_headers_path %></li>
 <% if @session_user.is_admin? %>

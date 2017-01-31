@@ -1,0 +1,10 @@
+<% if params[:q].present? -%>
+  <% params[:q].each do |key, value| -%>
+    <%= hidden_field_tag "q[#{key}]", value %>
+  <% end -%>
+<% end -%>
+<% %i(page c d).each do |param_name| -%>
+  <% if params[param_name].present? -%>
+    <%= hidden_field_tag param_name, params[param_name] %>
+  <% end -%>
+<% end -%>
