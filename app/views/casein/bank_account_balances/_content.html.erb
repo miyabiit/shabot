@@ -36,7 +36,7 @@ $(function() {
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= sort_link MyAccount.human_attribute_name(:org_name), :org_name, casein_bank_account_balances_path %></th>
+      <th><%= sort_link MyAccount.human_attribute_name(:corporation_code), :corporation_code, casein_bank_account_balances_path %></th>
       <th><%= sort_link BankAccountBalance.human_attribute_name(:my_account_id), :bank_long_name, casein_bank_account_balances_path %></th>
       <% %i(current_amount estimated_on current_month_amount two_month_amount three_month_amount).each do |attr_name| -%>
         <th><%= BankAccountBalance.human_attribute_name(attr_name) %></th>
@@ -49,7 +49,7 @@ $(function() {
       <%= hidden_field_tag 'bank_account_balances[][my_account_id]', bank_account_balance.my_account_id %>
       <td>
         <span class="casein-like">
-          <%= bank_account_balance.my_account&.org_name %>
+          <%= bank_account_balance.my_account&.my_corporation&.name %>
         </span>
       </td>
       <td>

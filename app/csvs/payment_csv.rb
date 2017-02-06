@@ -47,7 +47,7 @@ class PaymentCSV
             p.processed,
             p.no_monthly_report,
             p.try(:user).try(:name),
-            p.org_name,
+            p.my_corporation&.name,
             p.try(:account).try(:name),
             p.budget_code,
             p.payment_type&.text,

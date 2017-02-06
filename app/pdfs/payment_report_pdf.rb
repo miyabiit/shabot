@@ -3,7 +3,7 @@
 class PaymentReportPDF < PDFBase
 
   A4_SIZE = [595.28, 841.89]
-	
+  
   # A4 -> 595.28 x 841.89
   # コンテンツの横x縦がちょうど510mmx750になるようマージン設定
   def initialize(payment_header)

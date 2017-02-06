@@ -9,7 +9,7 @@
     <%= casein_hidden_field f, f.object, :account_id  %>
     <%= casein_hidden_field f, f.object, :slip_no  %>
     <%= 'No. ' + f.object.slip_no.to_s  %>
-    <%= casein_select f, f.object, :org_name, PaymentHeader.org_name.options, {:casein_label => '請求元法人'} %>
+    <%= casein_collection_select_i18n f, :corporation_code, MyCorporation.all, label_method: :name, casein_label: '請求元法人' %>
   </div>
   <div class="col-lg-6">
     <%= "請求先 #{f.object.account&.name}" %>

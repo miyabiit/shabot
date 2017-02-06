@@ -57,7 +57,7 @@ class Report::BankAccountBalanceSummaryReport < Report::ReportBase
 
   def render_table_row(bank_account_balance)
     render_row [
-      bank_account_balance.my_account&.org_name,
+      bank_account_balance.my_account&.my_corporation&.name,
       bank_account_balance.my_account&.bank_long_label,
       bank_account_balance.current_amount,
       bank_account_balance.estimate_date_amount,

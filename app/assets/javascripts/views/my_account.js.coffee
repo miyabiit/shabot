@@ -1,4 +1,4 @@
 #= require ../widgets/autocomplete-combo
 
 $ ->
-  $("#my_account_org_name").autocomplete_combo()
+  $("#my_account_corporation_code").autocomplete_combo()

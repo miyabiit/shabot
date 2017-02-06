@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170123014652) do
+ActiveRecord::Schema.define(version: 20170124101315) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -69,17 +69,28 @@ ActiveRecord::Schema.define(version: 20170123014652) do
   end
 
   create_table "my_accounts", force: :cascade do |t|
-    t.string   "bank",        limit: 255
-    t.string   "bank_branch", limit: 255
-    t.string   "category",    limit: 255
-    t.string   "ac_no",       limit: 255
+    t.string   "bank",             limit: 255
+    t.string   "bank_branch",      limit: 255
+    t.string   "category",         limit: 255
+    t.string   "ac_no",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "org_name",    limit: 255
-    t.integer  "account_id",  limit: 4
+    t.integer  "account_id",       limit: 4
+    t.integer  "corporation_code", limit: 4
+    t.string   "org_name",         limit: 255
   end
 
   add_index "my_accounts", ["account_id"], name: "index_my_accounts_on_account_id", using: :btree
+  add_index "my_accounts", ["corporation_code"], name: "index_my_accounts_on_corporation_code", using: :btree
+
+  create_table "my_corporations", id: false, force: :cascade do |t|
+    t.integer  "code",       limit: 4,   null: false
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "my_corporations", ["code"], name: "index_my_corporations_on_code", unique: true, using: :btree
 
   create_table "number_masters", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -102,7 +113,6 @@ ActiveRecord::Schema.define(version: 20170123014652) do
     t.integer  "project_id",        limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "org_name",          limit: 255
     t.string   "slip_no",           limit: 255
     t.text     "comment",           limit: 65535
     t.string   "budget_code",       limit: 255
@@ -115,8 +125,11 @@ ActiveRecord::Schema.define(version: 20170123014652) do
     t.boolean  "no_monthly_report",               default: false
     t.string   "payment_type",      limit: 255
     t.boolean  "monthly_data",                    default: false
+    t.integer  "corporation_code",  limit: 4
+    t.string   "org_name",          limit: 255
   end
 
+  add_index "payment_headers", ["corporation_code"], name: "index_payment_headers_on_corporation_code", using: :btree
   add_index "payment_headers", ["my_account_id"], name: "index_payment_headers_on_my_account_id", using: :btree
   add_index "payment_headers", ["process_user_id"], name: "index_payment_headers_on_process_user_id", using: :btree
 
@@ -151,9 +164,11 @@ ActiveRecord::Schema.define(version: 20170123014652) do
     t.datetime "updated_at"
     t.boolean  "no_monthly_report",               default: false
     t.boolean  "monthly_data",                    default: false
+    t.integer  "corporation_code",  limit: 4
   end
 
   add_index "receipt_headers", ["account_id"], name: "index_receipt_headers_on_account_id", using: :btree
+  add_index "receipt_headers", ["corporation_code"], name: "index_receipt_headers_on_corporation_code", using: :btree
   add_index "receipt_headers", ["item_id"], name: "index_receipt_headers_on_item_id", using: :btree
   add_index "receipt_headers", ["my_account_id"], name: "index_receipt_headers_on_my_account_id", using: :btree
   add_index "receipt_headers", ["user_id"], name: "index_receipt_headers_on_user_id", using: :btree

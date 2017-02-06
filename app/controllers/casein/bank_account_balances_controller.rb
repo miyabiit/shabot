@@ -40,12 +40,12 @@ module Casein
     def get_bank_account_balances
       my_accounts = MyAccount.all.includes(:bank_account_balance)
       case params[:c]
-      when 'org_name'
-        my_accounts = my_accounts.org_name_order(params[:d] == 'down' ? 'desc' : 'asc')
+      when 'corporation_code'
+        my_accounts = my_accounts.corporation_code_order(params[:d] == 'down' ? 'desc' : 'asc')
       when 'bank_long_name'
         my_accounts = my_accounts.bank_name_order(params[:d] == 'down' ? 'desc' : 'asc')
       else
-        my_accounts = my_accounts.org_name_order('asc').bank_name_order('asc')
+        my_accounts = my_accounts.corporation_code_order('asc').bank_name_order('asc')
       end
 
       @bank_account_balances = my_accounts.map{|my_account|

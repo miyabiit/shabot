@@ -5,6 +5,7 @@ ja:
     attributes:
       receipt_header:
         user_id: "作成者"
+        corporation_code: "入金先法人"
         account_id: "入金元"
         receipt_on: "入金予定日"
         project_id: "事業・プロジェクト"

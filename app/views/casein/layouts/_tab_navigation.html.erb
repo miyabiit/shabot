@@ -3,8 +3,9 @@
 <li id="tab-accounts"><%= link_to "お取引先", casein_accounts_path %></li>
 <li id="tab-items"><%= link_to "費目", casein_items_path %></li>
 <% if @session_user.is_admin? %>
-<li id="tab-projects"><%= link_to "事業・プロジェクト登録", casein_projects_path %></li>
+<li id="tab-projects"><%= link_to "事業・プロジェクト", casein_projects_path %></li>
 <li id="tab-my_accounts"><%= link_to MyAccount.model_name.human, casein_my_accounts_path %></li>
+<li id="tab-my_corporations"><%= link_to MyCorporation.model_name.human, casein_my_corporations_path %></li>
 <% end %>
 <li id="tab-receipt_headers"><%= link_to ReceiptHeader.model_name.human, casein_receipt_headers_path %></li>
 <li id="tab-payment_headers"><%= link_to "支払申請書", casein_payment_headers_path %></li>

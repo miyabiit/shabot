@@ -35,7 +35,7 @@ class BankTransferForm
         user_id: self.user_id,
         payable_on: self.target_date,
         slip_no: SlipNo.get_num,
-        org_name: 'シャロンテック',
+        corporation_code: '1000',
         account_id: MyAccount.find(self.dst_my_account_id).account_id,
         my_account_id: self.src_my_account_id, 
         project_id: self.project_id,

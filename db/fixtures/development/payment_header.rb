@@ -12,7 +12,7 @@ srand 1234
     r.comment = "テスト用自動生成データ"
     r.my_account_id = rand(1..5)
     r.planned = (rand(0..1) == 1)
-    r.org_name = PaymentHeader.org_name.values[rand(0..5)]
+    r.corporation_code = %W(1000 2000 2100 2200 2300 2400 9999)[rand(7)]
     r.fee_who_paid = PaymentHeader.fee_who_paid.values[rand(0..1)]
     r.slip_no = SlipNo.get_num
   end  

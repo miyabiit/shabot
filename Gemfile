@@ -50,7 +50,6 @@ group :development, :test do
 
   gem 'ffaker'
   gem 'gimei'
-  gem 'seed-fu'
   gem 'romaji'
 end
 
@@ -69,6 +68,8 @@ group :test do
   gem 'minitest-spec-rails'
   gem 'minitest-bang'
 end
+
+gem 'seed-fu'
 
 gem 'casein', '~>5.1.1'
 gem 'prawn'
