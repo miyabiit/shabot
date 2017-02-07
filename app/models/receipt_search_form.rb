@@ -7,11 +7,6 @@ class ReceiptSearchForm
   attribute :to               , type: Date
   attribute :monthly_data_true, type: Boolean
 
-  validates :from, presence: true, on: :duplicate_monthly_data
-  validates :to, presence: true, on: :duplicate_monthly_data
-  validates :monthly_data_true, presence: true, on: :duplicate_monthly_data
-  validate  :validate_form_to_range, on: :duplicate_monthly_data
-
   def initialize(current_user, attrs={}, &block)
     super(attrs, &block)
     @current_user = current_user
@@ -24,14 +19,6 @@ class ReceiptSearchForm
     query = query.where(receipt_on: ((self.from || Date.new(1999, 1, 1)) .. (self.to || Date.new(3000, 1, 1)))) if self.from || self.to
     query = query.where(monthly_data: true)  if self.monthly_data_true.present?
     query
-  end
-
-  def validate_form_to_range
-    if from.present? && to.present?
-      if to.prev_month.prev_month >= from
-        errors.add :base, '開始日と終了日は2ヶ月未満の期間を指定してください'
-      end
-    end
   end
 
 end

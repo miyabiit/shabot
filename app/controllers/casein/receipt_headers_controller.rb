@@ -86,15 +86,9 @@ module Casein
     end
 
     def duplicate_monthly_data
-      if @form.valid?(:duplicate_monthly_data) 
-        ReceiptHeader.duplicate_monthly_data(current_user, params[:ids])
-        flash[:notice] = "定例データを一括作成しました"
-        redirect_to casein_receipt_headers_path(query_params)
-      else
-        @query = @form.create_query
-        @receipt_headers = @query.order(sort_order(:user_id)).order(:id).paginate :page => params[:page]
-        render action: :index
-      end
+      ReceiptHeader.duplicate_monthly_data(current_user, params[:ids])
+      flash[:notice] = "定例データを一括作成しました"
+      redirect_to casein_receipt_headers_path(query_params)
     end
   
     private
