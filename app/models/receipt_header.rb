@@ -35,9 +35,10 @@ receipt_headers.my_account_id = :my_account_id OR (receipt_headers.my_account_id
     def duplicate_monthly_data(current_user, target_ids)
       ReceiptHeader.transaction do 
         query = ReceiptHeader.where(id: target_ids)
-        query.onlymine(current_user).where(monthly_data: true).where.not(receipt_on: nil).each do |receipt|
+        query.onlymine(current_user).where.not(receipt_on: nil).each do |receipt|
           receipt.duplicate({
             user_id: current_user.id,
+            monthly_data: true,
             receipt_on: receipt.receipt_on.next_month
           })
         end

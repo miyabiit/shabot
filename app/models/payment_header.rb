@@ -108,10 +108,11 @@ payment_headers.my_account_id = :my_account_id OR (payment_headers.my_account_id
     def duplicate_monthly_data(current_user, target_ids)
       PaymentHeader.transaction do 
         query = PaymentHeader.where(id: target_ids)
-        query.onlymine(current_user).where(monthly_data: true).where.not(payable_on: nil).each do |payment|
+        query.onlymine(current_user).where.not(payable_on: nil).each do |payment|
           payment.duplicate({
             user_id: current_user.id,
             planned: true,
+            monthly_data: true,
             payable_on: payment.payable_on.next_month
           })
         end
