@@ -97,15 +97,9 @@ module Casein
     end
   
     def duplicate_monthly_data
-      if @form.valid?(:duplicate_monthly_data) 
-        PaymentHeader.duplicate_monthly_data(current_user, params[:ids])
-        flash[:notice] = "定例データを一括作成しました"
-        redirect_to_payment_index
-      else
-        @query = @form.create_query
-        @payment_headers = @query.order(sort_order(:user_id)).order(:id).paginate :page => params[:page]
-        render action: :index
-      end
+      PaymentHeader.duplicate_monthly_data(current_user, params[:ids])
+      flash[:notice] = "定例データを一括作成しました"
+      redirect_to_payment_index
     end
 
     private
