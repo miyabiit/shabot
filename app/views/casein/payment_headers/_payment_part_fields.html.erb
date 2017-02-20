@@ -4,7 +4,7 @@
       <div class="form-group">
         <%= f.label :item_id, class: 'control-label'%>
         <div class="well">
-          <%= f.collection_select :item_id, Item.all, :id, :name, {}, {class: 'form-control'} %>
+          <%= f.collection_select :item_id, Item.not_deleted, :id, :name, {}, {class: 'form-control'} %>
         </div>
       </div>
     </div>

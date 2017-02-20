@@ -1,6 +1,7 @@
 class Account < ActiveRecord::Base
   extend Enumerize
   include Enums::AccountEnum
+  include Concerns::LogicalDelete
 
   has_many :payment_headers
   

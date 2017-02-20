@@ -8,7 +8,7 @@
   
   <p class="submits">
     <%= link_to t('helpers.button.cancel'), casein_my_corporations_path, :class => 'btn btn-mini btn-danger' %>
-    <%= f.submit t('helpers.submit.submit'), :class => "btn btn-mini btn-primary" %>
+    <%= f.submit t('helpers.submit.submit'), disabled: @my_corporation.deleted?, class: "btn btn-mini btn-primary" %>
   </p>
 
 <% end %>

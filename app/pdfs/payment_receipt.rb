@@ -6,7 +6,7 @@ class PaymentReceipt < PDFBase
     summary = PaymentReceiptSummary.new(from, to)
     all_project_report = Report::PaymentReceipt::AllProjectReport.new(summary, self)
     all_project_report.show
-    Project.all.order(:id).each_with_index do |project, project_i|
+    Project.not_deleted.order(:id).each_with_index do |project, project_i|
       start_new_page
       project_report = Report::PaymentReceipt::ProjectReport.new(project, summary, self)
       project_report.show

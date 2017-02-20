@@ -41,7 +41,7 @@
 
   <p class="submits">
       <%= link_to t('helpers.button.cancel'), casein_admin_users_path, :class => 'btn btn-mini btn-danger' %>
-    <%= f.submit t('helpers.submit.submit'), :class => "btn btn-mini btn-primary" %>
+    <%= f.submit t('helpers.submit.submit'), disabled: @casein_admin_user.deleted?, class: "btn btn-mini btn-primary" %>
   </p>
 <% end %>
 
@@ -68,7 +68,7 @@
     </div>
     
     <p class="submits">
-      <%= f.submit "Reset", :class => "btn btn-mini btn-warning" %>
+      <%= f.submit "Reset", disabled: @casein_admin_user.deleted?, class: "btn btn-mini btn-warning" %>
     </p>
     
   <% end %>
@@ -100,7 +100,7 @@
     </div>
     
     <p class="submits">
-      <%= f.submit "Change", :class => "btn btn-mini btn-primary" %>
+      <%= f.submit "Change", disabled: @casein_admin_user.deleted?, class: "btn btn-mini btn-primary" %>
     </p>
 
   <% end %>

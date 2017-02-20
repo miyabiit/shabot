@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-5">
-    <%= casein_collection_select_i18n f, :src_my_account_id, MyAccount.all, label_method: :bank_label %>
+    <%= casein_collection_select_i18n f, :src_my_account_id, MyAccount.not_deleted, label_method: :bank_label %>
   </div>
   <div class="col-md-2">
     <div class="text-center">
@@ -11,12 +11,12 @@
     </div>
   </div>
   <div class="col-md-5">
-    <%= casein_collection_select_i18n f, :dst_my_account_id, MyAccount.all, label_method: :bank_label %>
+    <%= casein_collection_select_i18n f, :dst_my_account_id, MyAccount.not_deleted, label_method: :bank_label %>
   </div>
 </div>
 <div class="row">
   <div class="col-md-5">
-    <%= casein_collection_select_i18n f, :src_item_id, Item.all, label_method: :name %>
+    <%= casein_collection_select_i18n f, :src_item_id, Item.not_deleted, label_method: :name %>
   </div>
   <div class="col-md-2">
     <div class="text-center">
@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="col-md-5">
-    <%= casein_collection_select_i18n f, :dst_item_id, Item.all, label_method: :name %>
+    <%= casein_collection_select_i18n f, :dst_item_id, Item.not_deleted, label_method: :name %>
   </div>
 </div>
 <div class="row">
@@ -42,7 +42,7 @@
     </div>
   </div>
   <div class="col-md-4">
-    <%= casein_collection_select_i18n f, :project_id, Project.order_for_select, label_method: :name_and_category %>
+    <%= casein_collection_select_i18n f, :project_id, Project.not_deleted.order_for_select, label_method: :name_and_category %>
   </div>
   <div class="col-md-4">
     <%= casein_text_field_i18n f, :amount, class: 'money', required: '' %>

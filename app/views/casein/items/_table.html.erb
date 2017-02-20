@@ -10,11 +10,11 @@
   </thead>
   
   <% items.each do |item| %>
-    <tr>
+    <tr class="<%= 'danger' if item.deleted? %>">
       <td><%= casein_table_cell_link item.name, casein_item_path(item) %></td>
       <td><%= casein_table_cell_link item.group, casein_item_path(item) %></td>
       <td class="delete">
-      <% if @session_user.is_admin? %>
+      <% if !item.deleted? && @session_user.is_admin? %>
         <%= table_row_trash_icon_link_to casein_item_path(item), :method => :delete, :data => { :confirm => t("messages.destroy_confirmation", model_name: controller.model.model_name.human) }%>
       <% end %>
       </td>

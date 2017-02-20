@@ -38,7 +38,7 @@ module Casein
     private
 
     def get_bank_account_balances
-      my_accounts = MyAccount.all.includes(:bank_account_balance)
+      my_accounts = MyAccount.not_deleted.includes(:bank_account_balance)
       case params[:c]
       when 'corporation_code'
         my_accounts = my_accounts.corporation_code_order(params[:d] == 'down' ? 'desc' : 'asc')
