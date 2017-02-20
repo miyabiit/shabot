@@ -1,9 +1,9 @@
 require 'test_helper'
 
-class BankTransferFormTest < ActiveSupport::TestCase
-  describe "#create!" do
+class BankTransferTest < ActiveSupport::TestCase
+  describe "#transfer!" do
     let!(:form) {
-      BankTransferForm.new(
+      BankTransfer.new(
         target_date: '2016-11-1',
         src_my_account_id: my_accounts(:test_1).id,
         dst_my_account_id: my_accounts(:test_2).id,
@@ -16,16 +16,28 @@ class BankTransferFormTest < ActiveSupport::TestCase
       )
     }
     it 'success bank transfer' do
-      results = form.create!
-      results.each(&:reload)
-      payment, receipt = results
+      bank_transfer = form.transfer!
+      bank_transfer.reload
+      payment = bank_transfer.payment_header
+      receipt = bank_transfer.receipt_header
+
+      # bank_transfer
+      assert_equal Date.new(2016, 11, 1), bank_transfer.target_date
+      assert_equal my_accounts(:test_1).id,  bank_transfer.src_my_account_id
+      assert_equal my_accounts(:test_2).id,  bank_transfer.dst_my_account_id
+      assert_equal items(:test_1).id,  bank_transfer.src_item_id
+      assert_equal items(:test_2).id,  bank_transfer.dst_item_id
+      assert_equal projects(:test_1).id,  bank_transfer.project_id
+      assert_equal 12345,  bank_transfer.amount
+      assert_equal '資金移動テスト',  bank_transfer.comment
+      assert_equal casein_admin_users(:taro).id, bank_transfer.user_id
 
       # payment
       assert_equal casein_admin_users(:taro).id, payment.user_id
-      assert_equal accounts(:test_2).id, payment.account_id
+      assert_equal nil, payment.account_id
       assert_equal Date.new(2016, 11, 1), payment.payable_on
       assert_equal projects(:test_1).id, payment.project_id
-      assert_equal 1000, payment.corporation_code # シャロンテック
+      assert_equal my_corporations(:test_1).code, payment.corporation_code
       assert_equal '資金移動テスト', payment.comment
       assert_equal '自社負担', payment.fee_who_paid
       assert_equal my_accounts(:test_1).id, payment.my_account_id
@@ -42,9 +54,10 @@ class BankTransferFormTest < ActiveSupport::TestCase
 
       # receipt
       assert_equal casein_admin_users(:taro).id, receipt.user_id
-      assert_equal accounts(:test_1).id, receipt.account_id
+      assert_equal nil, receipt.account_id
       assert_equal Date.new(2016, 11, 1), receipt.receipt_on
       assert_equal projects(:test_1).id, receipt.project_id
+      assert_equal my_corporations(:test_2).code, receipt.corporation_code
       assert_equal '資金移動テスト', receipt.comment
       assert_equal items(:test_2).id, receipt.item_id
       assert_equal 12345, receipt.amount

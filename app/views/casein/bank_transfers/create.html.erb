@@ -1,21 +1,6 @@
 <h2>登録完了</h2>
 <div class="well">
-  支払申請書:
-  <p>
-    <%= link_to casein_payment_header_path(@payment), target: '_blank' do %>
-      No. <%= @payment.slip_no %>
-    <% end %>
-  </p>
-  <%= link_to 'PDF', pdf_casein_payment_header_path(@payment), class: 'btn btn-mini btn-primary', target: "_blank" %>
-</div>
-<div class="well">
-  入金予定票:
-  <p>
-    <%= link_to casein_receipt_header_path(@receipt), target: '_blank' do %>
-      No. <%= @receipt.id %>
-    <% end %>
-  </p>
-  <%= link_to 'PDF', pdf_casein_receipt_header_path(@receipt), class: 'btn btn-mini btn-primary', target: "_blank" %>
+  <%= link_to 'PDF', '#', class: 'btn btn-mini btn-primary', target: "_blank" %>
 </div>
 <%= content_for :sidebar do %>
   <li><%= link_to "続けて登録", new_casein_bank_transfer_path, class: 'btn btn-mini btn-default' %></li>

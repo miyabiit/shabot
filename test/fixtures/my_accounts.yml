@@ -4,6 +4,6 @@ test_<%= id %>:
   bank_branch: テスト支店<%= id %>
   category: 普通
   ac_no: <%= (1..16).map{|i| rand(0..9).to_s}.join %>
-  account: test_<%= id %>
+  my_corporation: test_<%= id %>
 <% end %>
 
