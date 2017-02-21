@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220071551) do
+ActiveRecord::Schema.define(version: 20170221102859) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -100,12 +100,10 @@ ActiveRecord::Schema.define(version: 20170220071551) do
     t.string   "ac_no",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_id",       limit: 4
     t.integer  "corporation_code", limit: 4
     t.string   "org_name",         limit: 255
   end
 
-  add_index "my_accounts", ["account_id"], name: "index_my_accounts_on_account_id", using: :btree
   add_index "my_accounts", ["corporation_code"], name: "index_my_accounts_on_corporation_code", using: :btree
 
   create_table "my_corporations", id: false, force: :cascade do |t|

@@ -2,7 +2,6 @@ class Account < ActiveRecord::Base
   extend Enumerize
   include Enums::AccountEnum
 
-  has_one :my_account
   has_many :payment_headers
   
   validates :name, uniqueness: true
