@@ -4,8 +4,11 @@ class BankTransfer < ActiveRecord::Base
   belongs_to :receipt_header
   belongs_to :payment_header
 
+  belongs_to :project
   belongs_to :src_my_account, class_name: 'MyAccount', foreign_key: 'src_my_account_id'
   belongs_to :dst_my_account, class_name: 'MyAccount', foreign_key: 'dst_my_account_id'
+  belongs_to :src_item, class_name: 'Item', foreign_key: 'src_item_id'
+  belongs_to :dst_item, class_name: 'Item', foreign_key: 'dst_item_id'
   belongs_to :user, class_name: 'Casein::AdminUser', foreign_key: 'user_id'
 
   validates :target_date, :src_my_account_id, :dst_my_account_id, :src_item_id, :dst_item_id, :project_id, :amount, presence: true

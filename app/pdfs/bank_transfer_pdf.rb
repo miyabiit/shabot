@@ -5,9 +5,8 @@ class BankTransferPDF < PDFBase
   def initialize(bank_transfer_report)
     super()
 
-    summary_report = Report::BankTransferReport.new(self, bank_transfer_report)
-    summary_report.show
-
-    render_page_number
+    Report::BankTransferReport.new(self, bank_transfer_report, '(移動元保管用)').show
+    start_new_page
+    Report::BankTransferReport.new(self, bank_transfer_report, '(移動先保管用)').show
   end
 end

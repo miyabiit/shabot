@@ -6,6 +6,7 @@ module Casein
     target_model :bank_transfer
 
     def index
+      params[:d] ||= 'down'
       @bank_transfers = BankTransfer.order(sort_order(:id)).paginate :page => params[:page]
     end
 
@@ -14,7 +15,12 @@ module Casein
 
       respond_to do |format|
         format.pdf do
-
+          pdf = BankTransferPDF.new(@bank_transfer)
+          pdf_filename = "bank-transfer-#{@bank_transfer.id}.pdf"
+          send_data pdf.render,
+            filename:  pdf_filename,
+            type:      "application/pdf",
+            disposition:  "attachment"
         end
       end
     end
@@ -25,7 +31,7 @@ module Casein
     end
     
     def create
-      @bank_transfer = BankTransfer.new(params[:bank_transfer])
+      @bank_transfer = BankTransfer.new(bank_transfer_params)
       @bank_transfer.user_id = current_user.id
       if @bank_transfer.valid?
         @bank_transfer.transfer!
@@ -33,5 +39,11 @@ module Casein
         render action: :new
       end
     end
+
+    private
+      
+      def bank_transfer_params
+        params.require(:bank_transfer).permit(:target_date, :amount, :src_my_account_id, :dst_my_account_id, :src_item_id, :dst_item_id, :project_id, :comment)
+      end
   end
 end
