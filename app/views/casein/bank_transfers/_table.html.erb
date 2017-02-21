@@ -16,12 +16,12 @@
   
   <% bank_transfers.each do |bank_transfer| %>
     <tr>
-      <td><%= casein_table_cell_link bank_transfer&.target_date, casein_bank_transfer_path(bank_transfer, format: :pdf) %></td>
-      <td><%= casein_table_cell_link bank_transfer.user&.name, casein_bank_transfer_path(bank_transfer, format: :pdf) %></td>
-      <td><%= casein_table_cell_link truncate(bank_transfer.project&.name, length: 15), casein_bank_transfer_path(bank_transfer, format: :pdf) %></td>
-      <td><%= casein_table_cell_link truncate(bank_transfer.src_my_account&.bank_label, length: 15), casein_bank_transfer_path(bank_transfer, format: :pdf) %></td>
-      <td><%= casein_table_cell_link truncate(bank_transfer.dst_my_account&.bank_label, length: 15), casein_bank_transfer_path(bank_transfer, format: :pdf) %></td>
-      <td><%= casein_table_cell_link truncate(bank_transfer.comment, length: 15), casein_bank_transfer_path(bank_transfer, format: :pdf) %></td>
+      <td><%= casein_table_cell_link bank_transfer&.target_date, casein_bank_transfer_path(bank_transfer) %></td>
+      <td><%= casein_table_cell_link bank_transfer.user&.name, casein_bank_transfer_path(bank_transfer) %></td>
+      <td><%= casein_table_cell_link truncate(bank_transfer.project&.name, length: 15), casein_bank_transfer_path(bank_transfer) %></td>
+      <td><%= casein_table_cell_link truncate(bank_transfer.src_my_account&.bank_label, length: 15), casein_bank_transfer_path(bank_transfer) %></td>
+      <td><%= casein_table_cell_link truncate(bank_transfer.dst_my_account&.bank_label, length: 15), casein_bank_transfer_path(bank_transfer) %></td>
+      <td><%= casein_table_cell_link truncate(bank_transfer.comment, length: 15), casein_bank_transfer_path(bank_transfer) %></td>
       <td class="delete">
         <%= table_row_trash_icon_link_to casein_bank_transfer_path(bank_transfer), :method => :delete, :data => { :confirm => t("messages.destroy_confirmation", model_name: controller.model.model_name.human) } %>
       </td>

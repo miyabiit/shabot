@@ -22,6 +22,7 @@ module Casein
             type:      "application/pdf",
             disposition:  "attachment"
         end
+        format.html
       end
     end
 
@@ -38,6 +39,13 @@ module Casein
       else
         render action: :new
       end
+    end
+
+    def destroy
+      @bank_transfer = BankTransfer.find params[:id]
+      @bank_transfer.destroy
+      flash[:notice] = I18n.t('messages.destroy_model', model_name: model.model_name.human)
+      redirect_to casein_bank_transfers_path
     end
 
     private

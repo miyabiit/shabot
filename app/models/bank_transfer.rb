@@ -1,8 +1,8 @@
 # coding: utf-8
 
 class BankTransfer < ActiveRecord::Base
-  belongs_to :receipt_header
-  belongs_to :payment_header
+  belongs_to :receipt_header, dependent: :destroy
+  belongs_to :payment_header, dependent: :destroy
 
   belongs_to :project
   belongs_to :src_my_account, class_name: 'MyAccount', foreign_key: 'src_my_account_id'
