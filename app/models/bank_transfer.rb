@@ -35,6 +35,7 @@ class BankTransfer < ActiveRecord::Base
         slip_no: SlipNo.get_num,
         corporation_code: self.src_my_account&.corporation_code,
         my_account_id: self.src_my_account_id, 
+        account_id: -1, # dummy
         project_id: self.project_id,
         fee_who_paid: '自社負担',
         planned: false,
@@ -51,6 +52,7 @@ class BankTransfer < ActiveRecord::Base
         receipt_on: self.target_date,
         corporation_code: self.dst_my_account&.corporation_code,
         my_account_id: self.dst_my_account_id,
+        account_id: -1, # dummy
         item_id: self.dst_item_id,
         project_id: self.project_id,
         amount: self.amount,
