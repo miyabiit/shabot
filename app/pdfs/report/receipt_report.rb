@@ -30,7 +30,7 @@ class Report::ReceiptReport < Report::ReportBase
           move_down 10
           text_box @account_address, size: 10, at: [0, cursor], width: bounds.width
           move_down 24
-          text_box @receipt.account&.name, size: 14, at: [0, cursor], width: bounds.width
+          text_box @receipt.account&.name, size: 14, at: [0, cursor], width: bounds.width if @receipt.account
 #           move_down 34
 #           text @account_post, size: 10
 #           text "　#{@account_user_name}", size: 12

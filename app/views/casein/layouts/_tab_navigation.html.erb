@@ -11,7 +11,7 @@
 <li id="tab-payment_headers"><%= link_to "支払申請書", casein_payment_headers_path %></li>
 <li id="tab-not_processed_payment_headers"><%= link_to "未払一覧", casein_not_processed_payment_headers_path %></li>
 <% if @session_user.is_admin? %>
-<li id="tab-bank_transfers"><%= link_to "資金移動", new_casein_bank_transfer_path %></li>
+<li id="tab-bank_transfers"><%= link_to "資金移動", casein_bank_transfers_path %></li>
 <li id="tab-bank_account_balances"><%= link_to "残高Simulator", casein_bank_account_balances_path %></li>
 <% end %>
 <li id="tab-reports"><%= link_to "Reports", casein_reports_path %></li>

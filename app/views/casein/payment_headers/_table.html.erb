@@ -34,7 +34,7 @@
       <td><%= casein_table_cell_link (payment_header.planned ? '' : '＊'), payment_path(payment_header) %></td>
       <td><%= casein_table_cell_link Casein::AdminUser.find(payment_header.user_id).name, payment_path(payment_header) %></td>
       <td><%= casein_table_cell_link payment_header.slip_no, payment_path(payment_header) %></td>
-      <td><%= casein_table_cell_link truncate(Account.find(payment_header.account_id).name, :length => 10), payment_path(payment_header) rescue "&nsbp;" %></td>
+      <td><%= casein_table_cell_link truncate(payment_header.account&.name, length: 10), payment_path(payment_header) %></td>
       <td><%= casein_table_cell_link payment_header.payment_type&.text, payment_path(payment_header) %></td>
       <td><%= casein_table_cell_link payment_header.payable_on, payment_path(payment_header) %></td>
       <td align="right"><%= casein_table_cell_link number_with_delimiter(payment_header.total), payment_path(payment_header) %></td>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124101315) do
+ActiveRecord::Schema.define(version: 20170221102859) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -36,6 +36,31 @@ ActiveRecord::Schema.define(version: 20170124101315) do
     t.integer  "estimate_date_amount", limit: 8
     t.date     "based_on"
   end
+
+  create_table "bank_transfers", force: :cascade do |t|
+    t.integer  "receipt_header_id", limit: 4
+    t.integer  "payment_header_id", limit: 4
+    t.date     "target_date"
+    t.integer  "amount",            limit: 4
+    t.integer  "src_my_account_id", limit: 4
+    t.integer  "dst_my_account_id", limit: 4
+    t.integer  "src_item_id",       limit: 4
+    t.integer  "dst_item_id",       limit: 4
+    t.integer  "project_id",        limit: 4
+    t.integer  "user_id",           limit: 4
+    t.text     "comment",           limit: 65535
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "bank_transfers", ["dst_item_id"], name: "index_bank_transfers_on_dst_item_id", using: :btree
+  add_index "bank_transfers", ["dst_my_account_id"], name: "index_bank_transfers_on_dst_my_account_id", using: :btree
+  add_index "bank_transfers", ["payment_header_id"], name: "index_bank_transfers_on_payment_header_id", using: :btree
+  add_index "bank_transfers", ["project_id"], name: "index_bank_transfers_on_project_id", using: :btree
+  add_index "bank_transfers", ["receipt_header_id"], name: "index_bank_transfers_on_receipt_header_id", using: :btree
+  add_index "bank_transfers", ["src_item_id"], name: "index_bank_transfers_on_src_item_id", using: :btree
+  add_index "bank_transfers", ["src_my_account_id"], name: "index_bank_transfers_on_src_my_account_id", using: :btree
+  add_index "bank_transfers", ["user_id"], name: "index_bank_transfers_on_user_id", using: :btree
 
   create_table "casein_admin_users", force: :cascade do |t|
     t.string   "login",               limit: 255,             null: false
@@ -75,12 +100,10 @@ ActiveRecord::Schema.define(version: 20170124101315) do
     t.string   "ac_no",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_id",       limit: 4
     t.integer  "corporation_code", limit: 4
     t.string   "org_name",         limit: 255
   end
 
-  add_index "my_accounts", ["account_id"], name: "index_my_accounts_on_account_id", using: :btree
   add_index "my_accounts", ["corporation_code"], name: "index_my_accounts_on_corporation_code", using: :btree
 
   create_table "my_corporations", id: false, force: :cascade do |t|
@@ -180,4 +203,6 @@ ActiveRecord::Schema.define(version: 20170124101315) do
     t.datetime "updated_at",             null: false
   end
 
+  add_foreign_key "bank_transfers", "payment_headers"
+  add_foreign_key "bank_transfers", "receipt_headers"
 end

@@ -10,7 +10,7 @@ module Casein
     # before_filter :needs_admin_or_current_user, :only => [:action1, :action2]
   
     def index
-      @accounts =  Account.search(params[:search]).order(sort_order(:name)).paginate :page => params[:page]
+      @accounts =  Account.except_my_group.search(params[:search]).order(sort_order(:name)).paginate :page => params[:page]
     end
   
     def show
@@ -60,7 +60,7 @@ module Casein
     private
       
       def account_params
-        params.require(:account).permit(:name, :bank, :bank_branch, :category, :ac_no, :my_group)
+        params.require(:account).permit(:name, :bank, :bank_branch, :category, :ac_no)
       end
 
   end

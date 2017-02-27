@@ -66,6 +66,10 @@ module ApplicationHelper
     table_row_icon_link_to('retweet', path, title: '参照作成', link_options: options)
   end
 
+  def table_row_pdf_icon_link_to(path, options={})
+    table_row_icon_link_to('save-file', path, title: 'PDF', link_options: options)
+  end
+
   def query_params
     {q: params[:q], c: params[:c], d: params[:d], page: params[:page]}
   end

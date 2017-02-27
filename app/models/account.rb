@@ -2,7 +2,6 @@ class Account < ActiveRecord::Base
   extend Enumerize
   include Enums::AccountEnum
 
-  has_one :my_account
   has_many :payment_headers
   
   validates :name, uniqueness: true
@@ -12,7 +11,7 @@ class Account < ActiveRecord::Base
   validates :category, length: { maximum: 10 }
   validates :ac_no, length: { maximum: 20 }
 
-  scope :only_my_group, -> { where(my_group: true) }
+  scope :except_my_group, -> { where.not(my_group: true) }
 
   def self.search(search)
     if search

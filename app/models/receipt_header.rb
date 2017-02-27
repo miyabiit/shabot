@@ -13,6 +13,9 @@ class ReceiptHeader < ActiveRecord::Base
   scope :left_join_projects, -> {
     joins("LEFT OUTER JOIN projects ON projects.id = receipt_headers.project_id")
   }
+  scope :left_join_accounts , -> {
+    joins("LEFT OUTER JOIN accounts ON accounts.id = receipt_headers.account_id")
+  }
   scope :with_my_account_id, -> (my_account_id) {
     sql = <<-SQL
 receipt_headers.my_account_id = :my_account_id OR (receipt_headers.my_account_id IS NULL AND projects.my_account_id = :my_account_id)
