@@ -26,15 +26,20 @@ class Report::BankTransferReport < Report::ReportBase
   def render_content
     render_row ['実施日', @bank_transfer.target_date.strftime('%Y年%m月%d日')], [100, 150], font_size: 12
     br
+    br
     render_row ['金額', @bank_transfer.amount, '円'], [80, 105, 20], font_size: 12
+    br
     br
     render_bank '移動元', @bank_transfer.src_my_account
     br
+    br
     render_bank '移動先', @bank_transfer.dst_my_account
+    br
     br
     render_row ['経理処理', "移動元", @bank_transfer.src_item&.name, @bank_transfer.project&.name_and_category], [100, 60, 100, 240], font_size: 12
     br
     render_row ['', "移動先", @bank_transfer.dst_item&.name, @bank_transfer.project&.name_and_category], [100, 60, 100, 240], font_size: 12
+    br
     br
     render_row ['備考', @bank_transfer.comment], [100, bounds.width - 100], font_size: 12
   end
