@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221102859) do
+ActiveRecord::Schema.define(version: 20170306055504) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20170221102859) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "my_group",                default: false
+    t.datetime "deleted_at"
   end
 
   create_table "bank_account_balances", force: :cascade do |t|
@@ -84,6 +85,7 @@ ActiveRecord::Schema.define(version: 20170221102859) do
     t.datetime "updated_at"
     t.string   "member_code",         limit: 255
     t.string   "section",             limit: 255
+    t.datetime "deleted_at"
   end
 
   create_table "items", force: :cascade do |t|
@@ -91,7 +93,19 @@ ActiveRecord::Schema.define(version: 20170221102859) do
     t.string   "group",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
+
+  create_table "linked_services", force: :cascade do |t|
+    t.string   "type",             limit: 255
+    t.integer  "corporation_code", limit: 4,   null: false
+    t.boolean  "sync"
+    t.datetime "synced_at"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "linked_services", ["corporation_code"], name: "index_linked_services_on_corporation_code", using: :btree
 
   create_table "my_accounts", force: :cascade do |t|
     t.string   "bank",             limit: 255
@@ -102,6 +116,7 @@ ActiveRecord::Schema.define(version: 20170221102859) do
     t.datetime "updated_at"
     t.integer  "corporation_code", limit: 4
     t.string   "org_name",         limit: 255
+    t.datetime "deleted_at"
   end
 
   add_index "my_accounts", ["corporation_code"], name: "index_my_accounts_on_corporation_code", using: :btree
@@ -111,6 +126,7 @@ ActiveRecord::Schema.define(version: 20170221102859) do
     t.string   "name",       limit: 255, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "my_corporations", ["code"], name: "index_my_corporations_on_code", unique: true, using: :btree
@@ -162,6 +178,8 @@ ActiveRecord::Schema.define(version: 20170221102859) do
     t.integer  "amount",            limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "tax_type",          limit: 255,   default: "ex"
+    t.text     "comment",           limit: 65535
   end
 
   create_table "projects", force: :cascade do |t|
@@ -170,6 +188,7 @@ ActiveRecord::Schema.define(version: 20170221102859) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "my_account_id", limit: 4
+    t.datetime "deleted_at"
   end
 
   add_index "projects", ["my_account_id"], name: "index_projects_on_my_account_id", using: :btree
@@ -188,6 +207,7 @@ ActiveRecord::Schema.define(version: 20170221102859) do
     t.boolean  "no_monthly_report",               default: false
     t.boolean  "monthly_data",                    default: false
     t.integer  "corporation_code",  limit: 4
+    t.string   "tax_type",          limit: 255,   default: "ex"
   end
 
   add_index "receipt_headers", ["account_id"], name: "index_receipt_headers_on_account_id", using: :btree

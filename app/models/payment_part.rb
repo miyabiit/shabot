@@ -1,4 +1,6 @@
 class PaymentPart < ActiveRecord::Base
+  include Enums::TaxTypeEnum
+
   belongs_to :payment_header
   belongs_to :item
   

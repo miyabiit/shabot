@@ -6,3 +6,5 @@ ja:
       payment_part:
         item_id: "費目"
         amount: "金額"
+        comment: "備考"
+        tax_type: "消費税区分"

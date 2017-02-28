@@ -56,7 +56,7 @@ class Report::PaymentReport < Report::ReportBase
       [mc('所属'), mc(@payment.user&.section&.to_s), mc('支払先'), mc(@payment.account&.name)],
       *(
         %W(１ ２ ３ ４ ５).map.with_index {|num, i| 
-          [mc("勘定科目#{num}"), mc(@payment.payment_parts.at(i)&.item&.name), mc('金額'), mc(@payment.payment_parts.at(i)&.amount&.to_s(:delimited), align: :right)]
+          [mc("勘定科目#{num}"), mc(@payment.payment_parts.at(i)&.item&.name), mc("金額#{' (税込)' if @payment.payment_parts.at(i)&.tax_type&.to_sym == :in }"), mc(@payment.payment_parts.at(i)&.amount&.to_s(:delimited), align: :right)]
         }
       ),
       [mc('支払日'), make_table([[mc(@payment.payable_on&.to_s, width: 100), mc(@payment.payment_type&.text, align: :right, width: 70)]]) {|sub_table| sub_table.cells.border_width = 0},
@@ -86,7 +86,18 @@ class Report::PaymentReport < Report::ReportBase
   end
 
   def render_etc
-    move_down 5
-    @pdf.text_box '(証憑等添付)', :size => 10, at: [5, cursor]
+    bounding_box([0, cursor], width: bounds.width, height: 250) do
+      move_down 5
+      bounding_box([5, cursor], width: bounds.width - 10, height: bounds.height - 10) do
+        @pdf.text_box '(証憑等添付)', :size => 10, at: [0, cursor]
+        move_down 20
+        @payment.payment_parts.map(&:comment).each do |comment|
+          if comment.present?
+            text comment, size: 12, align: :left
+            move_down 6
+          end
+        end
+      end
+    end
   end
 end
