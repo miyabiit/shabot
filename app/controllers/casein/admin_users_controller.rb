@@ -102,7 +102,7 @@ module Casein
     def destroy
       user = Casein::AdminUser.find params[:id]
       if user.is_admin? == false || Casein::AdminUser.has_more_than_one_admin
-        user.destroy
+        user.logical_delete
         flash[:notice] = user.name + " has been deleted"
       end
       redirect_to casein_admin_users_path

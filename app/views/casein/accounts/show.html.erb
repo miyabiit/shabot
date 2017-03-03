@@ -8,9 +8,9 @@
   
   <p class="submits">
     <%= link_to t('helpers.button.cancel'), casein_accounts_path, :class => 'btn btn-mini btn-danger' %>
-    <%= f.submit t('helpers.submit.submit'), :class => "btn btn-mini btn-primary" %>
-    <%= f.submit "保存 & 新伝票", :name => "new_slip", :class => "btn btn-mini btn-primary" %>
-    <%= link_to '新伝票(のみ)', new_casein_payment_header_path(account_id: @account.id), :class => "btn btn-mini btn-primary" %>
+    <%= f.submit t('helpers.submit.submit'), disabled: @account.deleted?, class: "btn btn-mini btn-primary" %>
+    <%= f.submit "保存 & 新伝票", disabled: @account.deleted?, name: "new_slip", class: "btn btn-mini btn-primary" %>
+    <%= link_to '新伝票(のみ)', new_casein_payment_header_path(account_id: @account.id), disabled: @account.deleted?, class: "btn btn-mini btn-primary" %>
   </p>
 
 <% end %>

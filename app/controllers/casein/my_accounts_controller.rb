@@ -49,7 +49,7 @@ module Casein
     def destroy
       @my_account = MyAccount.find params[:id]
 
-      @my_account.destroy
+      @my_account.logical_delete
       flash[:notice] = I18n.t('messages.destroy_model', model_name: model.model_name.human)
       redirect_to casein_my_accounts_path
     end

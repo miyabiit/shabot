@@ -11,12 +11,12 @@
   </thead>
   
   <% projects.each do |project| %>
-    <tr>
+    <tr class="<%= 'danger' if project.deleted? %>">
       <td><%= casein_table_cell_link project.name, casein_project_path(project) %></td>
       <td><%= casein_table_cell_link project.category, casein_project_path(project) %></td>
       <td><%= casein_table_cell_link project.my_account.try(:bank_label), casein_project_path(project) %></td>
       <td class="delete">
-      <% if @session_user.is_admin? %>
+      <% if !project.deleted? && @session_user.is_admin? %>
         <%= table_row_trash_icon_link_to casein_project_path(project), :method => :delete, :data => { :confirm => t("messages.destroy_confirmation", model_name: controller.model.model_name.human) } %>
       <% end %>
       </td>

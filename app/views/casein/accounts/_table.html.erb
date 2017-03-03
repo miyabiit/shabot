@@ -15,20 +15,24 @@
   </thead>
   
   <% accounts.each do |account| %>
-    <tr>
+    <tr class="<%= 'danger' if account.deleted? %>">
       <td><%= casein_table_cell_link account.name, casein_account_path(account) %></td>
       <td><%= casein_table_cell_link account.bank, casein_account_path(account) %></td>
       <td><%= casein_table_cell_link account.bank_branch, casein_account_path(account) %></td>
       <td><%= casein_table_cell_link account.category, casein_account_path(account) %></td>
       <td><%= casein_table_cell_link account.ac_no, casein_account_path(account) %></td>
       <td class="new">
-        <%= table_row_add_icon_link_to new_casein_payment_header_path(account_id: account.id, planned: 1) %>
+        <% if !account.deleted?  %>
+          <%= table_row_add_icon_link_to new_casein_payment_header_path(account_id: account.id, planned: 1) %>
+        <% end %>
       </td>
       <td class="new">
-        <%= table_row_add_icon_link_to new_casein_payment_header_path(account_id: account.id) %>
+        <% if !account.deleted?  %>
+          <%= table_row_add_icon_link_to new_casein_payment_header_path(account_id: account.id) %>
+        <% end %>
       </td>
       <td class="delete">
-        <% if @session_user.is_admin? %>
+        <% if !account.deleted? && @session_user.is_admin? %>
           <%= table_row_trash_icon_link_to casein_account_path(account), :method => :delete, :data => { :confirm => t('messages.destroy_confirmation', model_name: controller.model.model_name.human) }%>
         <% end %>
       </td>

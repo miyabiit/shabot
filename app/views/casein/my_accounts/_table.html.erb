@@ -13,14 +13,16 @@
   </thead>
   
   <% my_accounts.each do |my_account| %>
-    <tr>
+    <tr class="<%= 'danger' if my_account.deleted? %>">
       <td><%= casein_table_cell_link my_account&.my_corporation&.name, casein_my_account_path(my_account) %></td>
       <td><%= casein_table_cell_link my_account.bank, casein_my_account_path(my_account) %></td>
       <td><%= casein_table_cell_link my_account.bank_branch, casein_my_account_path(my_account) %></td>
       <td><%= casein_table_cell_link my_account.category, casein_my_account_path(my_account) %></td>
       <td><%= casein_table_cell_link my_account.ac_no, casein_my_account_path(my_account) %></td>
       <td class="delete">
-        <%= table_row_trash_icon_link_to casein_my_account_path(my_account), :method => :delete, :data => { :confirm => t("messages.destroy_confirmation", model_name: controller.model.model_name.human) } %>
+        <% if !my_account.deleted?  %>
+          <%= table_row_trash_icon_link_to casein_my_account_path(my_account), :method => :delete, :data => { :confirm => t("messages.destroy_confirmation", model_name: controller.model.model_name.human) } %>
+        <% end %>
       </td>
     </tr>
   <% end %>

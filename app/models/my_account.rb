@@ -1,6 +1,7 @@
 class MyAccount < ActiveRecord::Base
   extend Enumerize
   include Enums::AccountEnum
+  include Concerns::LogicalDelete
 
   validates :bank, length: { maximum: 30 }, presence: true
   validates :bank_branch, length: { maximum: 30 }, presence: true

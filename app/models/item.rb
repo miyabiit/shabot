@@ -1,4 +1,5 @@
 class Item < ActiveRecord::Base
+  include Concerns::LogicalDelete
 
   validates :name, uniqueness: true
 

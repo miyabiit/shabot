@@ -11,11 +11,14 @@
   </thead>
   
   <% my_corporations.each do |my_corporation| %>
-    <tr>
+    <tr class="<%= 'danger' if my_corporation.deleted? %>">
       <td><%= casein_table_cell_link my_corporation.code, casein_my_corporation_path(my_corporation) %></td>
       <td><%= casein_table_cell_link my_corporation.name, casein_my_corporation_path(my_corporation) %></td>
       <td class="delete">
-        <%= table_row_trash_icon_link_to casein_my_corporation_path(my_corporation), :method => :delete, :data => { :confirm => t("messages.destroy_confirmation", model_name: controller.model.model_name.human) } %>
+
+        <% if !my_corporation.deleted? %>
+          <%= table_row_trash_icon_link_to casein_my_corporation_path(my_corporation), :method => :delete, :data => { :confirm => t("messages.destroy_confirmation", model_name: controller.model.model_name.human) } %>
+        <% end %>
       </td>
     </tr>
   <% end %>

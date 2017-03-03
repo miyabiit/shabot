@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="col-lg-6">
-    <%= casein_collection_select_i18n f, :corporation_code, MyCorporation.all, label_method: :name, include_blank: true %>
+    <%= casein_collection_select_i18n f, :corporation_code, MyCorporation.not_deleted, label_method: :name, include_blank: true %>
   </div>
 </div>
 <div class="row">

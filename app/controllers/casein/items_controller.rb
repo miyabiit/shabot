@@ -48,7 +48,7 @@ module Casein
     def destroy
       @item = Item.find params[:id]
 
-      @item.destroy
+      @item.logical_delete
       flash[:notice] = I18n.t('messages.destroy_model', model_name: model.model_name.human)
       redirect_to casein_items_path
     end

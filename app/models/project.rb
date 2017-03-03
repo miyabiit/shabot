@@ -1,4 +1,5 @@
 class Project < ActiveRecord::Base
+  include Concerns::LogicalDelete
 
   validates :name , uniqueness: { scope: [:category] }
 
