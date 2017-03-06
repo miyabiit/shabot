@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306055504) do
+ActiveRecord::Schema.define(version: 20170306080009) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -98,11 +98,11 @@ ActiveRecord::Schema.define(version: 20170306055504) do
 
   create_table "linked_services", force: :cascade do |t|
     t.string   "type",             limit: 255
-    t.integer  "corporation_code", limit: 4,   null: false
-    t.boolean  "sync"
+    t.integer  "corporation_code", limit: 4,                   null: false
+    t.boolean  "sync",                         default: false
     t.datetime "synced_at"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
   end
 
   add_index "linked_services", ["corporation_code"], name: "index_linked_services_on_corporation_code", using: :btree
