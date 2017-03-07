@@ -5,3 +5,7 @@ ja:
         eb: EB
         withdrawal: 引落
         desk: 窓口
+    defaults:
+      tax_type:
+        ex: 税抜
+        in: 税込

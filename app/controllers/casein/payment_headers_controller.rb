@@ -109,7 +109,7 @@ module Casein
       end
       
       def payment_header_params
-        params.require(:payment_header).permit(:user_id, :account_id, :payable_on, :project_id, :corporation_code, :slip_no, :comment, :budget_code, :fee_who_paid, :my_account_id, :planned, :no_monthly_report, :payment_type, :monthly_data, payment_parts_attributes: [:id, :item_id, :amount, :_destroy])
+        params.require(:payment_header).permit(:user_id, :account_id, :payable_on, :project_id, :corporation_code, :slip_no, :comment, :budget_code, :fee_who_paid, :my_account_id, :planned, :no_monthly_report, :payment_type, :monthly_data, payment_parts_attributes: [:id, :item_id, :amount, :tax_type, :comment, :_destroy])
       end
 
       def payment_header_find(param_id)

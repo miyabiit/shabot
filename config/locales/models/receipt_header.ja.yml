@@ -17,4 +17,4 @@ ja:
         no_monthly_report: "月別一覧出力対象外"
         monthly_data: "定例"
         planned: "計画区分"
-
+        tax_type: "消費税区分"

@@ -9,3 +9,27 @@
     <%= casein_text_field_i18n f, :name %>
   </div>
 </div>
+<table class="table table-striped table-condensed">
+  <thead>
+    <th>連携サービス名</th>
+    <th>同期の有無</th>
+  </thead>
+  <tbody>
+    <%= f.fields_for :linked_services do |service_f| %>
+      <tr>
+        <td>
+          <div class="casein-like">
+            <%= service_f.object.name %>
+          </div>
+        </td>
+        <td>
+          <div class="casein-like">
+            <label>
+              <%= service_f.check_box :sync %>&nbsp;同期
+            </label>
+          </div>
+        </td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>

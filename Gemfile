@@ -62,6 +62,8 @@ group :deployment do
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
   gem 'capistrano-passenger'
+
+  gem 'rails-erd'
 end
 
 group :test do

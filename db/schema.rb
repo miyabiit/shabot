@@ -96,6 +96,17 @@ ActiveRecord::Schema.define(version: 20170307054944) do
     t.datetime "deleted_at"
   end
 
+  create_table "linked_services", force: :cascade do |t|
+    t.string   "type",             limit: 255
+    t.integer  "corporation_code", limit: 4,                   null: false
+    t.boolean  "sync",                         default: false
+    t.datetime "synced_at"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
+
+  add_index "linked_services", ["corporation_code"], name: "index_linked_services_on_corporation_code", using: :btree
+
   create_table "my_accounts", force: :cascade do |t|
     t.string   "bank",             limit: 255
     t.string   "bank_branch",      limit: 255
@@ -167,6 +178,8 @@ ActiveRecord::Schema.define(version: 20170307054944) do
     t.integer  "amount",            limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "tax_type",          limit: 255,   default: "ex"
+    t.text     "comment",           limit: 65535
   end
 
   create_table "projects", force: :cascade do |t|
@@ -195,6 +208,7 @@ ActiveRecord::Schema.define(version: 20170307054944) do
     t.boolean  "monthly_data",                    default: false
     t.integer  "corporation_code",  limit: 4
     t.boolean  "planned",                         default: true
+    t.string   "tax_type",          limit: 255,   default: "ex"
   end
 
   add_index "receipt_headers", ["account_id"], name: "index_receipt_headers_on_account_id", using: :btree

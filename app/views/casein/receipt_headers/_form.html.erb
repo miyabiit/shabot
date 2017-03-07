@@ -42,11 +42,14 @@
 </div>
 
 <div class="row">
-  <div class="col-lg-4">
+  <div class="col-lg-3">
     <%= casein_collection_select_i18n f, :item_id, Item.not_deleted, include_blank: true %>
   </div>
-  <div class="col-lg-4">
+  <div class="col-lg-3">
     <%= casein_text_field_i18n f, :amount, class: 'money' %>
+  </div>
+  <div class="col-lg-2">
+    <%= casein_select_i18n f, :tax_type, ReceiptHeader.tax_type.options, include_blank: true %>
   </div>
   <div class="col-lg-2">
     <div class="form-group">

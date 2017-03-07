@@ -1,4 +1,6 @@
 class ReceiptHeader < ActiveRecord::Base
+  include Enums::TaxTypeEnum
+
   belongs_to :user, class_name: 'Casein::AdminUser', foreign_key: 'user_id'
   belongs_to :account
   belongs_to :project

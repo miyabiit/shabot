@@ -6,6 +6,7 @@ class PaymentCSV
     '伝票No.',
     'プロジェクト名',
     '費目',
+    '消費税区分',
     '金額',
     '計画区分',
     '処理済',
@@ -20,7 +21,8 @@ class PaymentCSV
     '引落元銀行支店名',
     '引落元銀行種別',
     '引落元銀行口座番号',
-    '摘要・目的・効果'
+    '摘要・目的・効果', 
+    '備考'
   ]
 
   def initialize(from, to)
@@ -42,6 +44,7 @@ class PaymentCSV
             p.slip_no,
             p.try(:project).try(:name_and_category),
             part.try(:item).try(:name),
+            part.tax_type&.text,
             part.amount,
             p.planned,
             p.processed,
@@ -56,7 +59,8 @@ class PaymentCSV
             my_account.try(:bank_branch),
             my_account.try(:category),
             "=\"#{my_account.try(:ac_no)}\"",
-            p.comment
+            p.comment,
+            part.comment
           ]
         end
       end

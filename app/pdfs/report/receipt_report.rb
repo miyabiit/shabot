@@ -99,10 +99,11 @@ class Report::ReceiptReport < Report::ReportBase
       move_down 14
       
       table [
-        [make_cell('費 目', align: :center, width: 130), make_cell('明 細', align: :center, width: bounds.width - 250), make_cell('金 額', align: :center, width: 120)],
+        [make_cell('費 目', align: :center, width: 130), make_cell('明 細', align: :center, width: bounds.width - 320), make_cell('消費税区分', align: :center, width: 70), make_cell('金 額', align: :center, width: 120)],
         [
           make_cell(@receipt.item&.name, align: :left, height: 200),
           make_cell(@receipt.comment, align: :left),
+          make_cell(@receipt.tax_type&.text, align: :center),
           make_cell(@receipt.amount&.to_s(:delimited), align: :right)
         ]
       ]
