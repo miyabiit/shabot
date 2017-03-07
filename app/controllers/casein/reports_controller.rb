@@ -100,6 +100,14 @@ module Casein
         disposition:  "attachment"
     end
 
+    def pdf_each_bank_payment_receipt
+      pdf = EachBankPaymentReceipt.new(params[:from], params[:to])
+      send_data pdf.render,
+        filename:  "each-bank-payment-receipt-#{params[:from]&.gsub('/', '')}-#{params[:to]&.gsub('/', '')}.pdf",
+        type:      "application/pdf",
+        disposition:  "attachment"
+    end
+
     private
 
       def parse_from_to
