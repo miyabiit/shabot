@@ -1,10 +1,10 @@
 <h2>Reports</h2>
 <%= form_tag pdf_each_project_receipt_casein_reports_path, method: :get, id: 'each-project-receipt-list', class: 'form-inline' do %>
-  <%= render 'form', title: '【収入】月別プロジェクト別入金予定一覧' %>
+  <%= render 'form', title: '【収入】月別プロジェクト別入金予定・実績一覧' %>
   <button type="submit" class="btn">PDF</button>
 <% end -%>
 <%= form_tag pdf_each_day_receipt_casein_reports_path, method: :get, id: 'each-day-receipt-list', class: 'form-inline' do %>
-  <%= render 'form', title: '【収入】月別入金日別入金予定一覧' %>
+  <%= render 'form', title: '【収入】月別入金日別入金予定・実績一覧' %>
   <button type="submit" class="btn">PDF</button>
 <% end -%>
 

@@ -7,7 +7,7 @@ class Report::ReceiptReport < Report::ReportBase
     @account_post = '　'
     @account_user_name = '　'
 
-    @title = "入 金 予 定 票"
+    @title = receipt.planned? ? "入 金 予 定 票" : "入 金 連 絡"
 
     @receipt = receipt
   end
@@ -89,7 +89,7 @@ class Report::ReceiptReport < Report::ReportBase
       stroke_rectangle [0, cursor], 220, 24
       bounding_box([5, cursor], width: 210, height: 24) do
         float do
-          text_box "入金予定金額", align: :left, valign: :center
+          text_box "入金金額", align: :left, valign: :center
         end
         float do
           text_box "#{@receipt.amount&.to_s(:delimited)} 円", valign: :center, align: :right

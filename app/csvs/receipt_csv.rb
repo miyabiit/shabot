@@ -2,11 +2,12 @@ require 'csv'
 
 class ReceiptCSV
   HEADER = [
-    '入金予定日',
+    '入金日',
     '伝票No.',
     'プロジェクト名',
     '費目',
     '金額',
+    '計画区分',
     '月別一覧出力対象外',
     '作成者',
     '入金先法人',
@@ -36,6 +37,7 @@ class ReceiptCSV
           r.project&.name_and_category,
           r.item&.name,
           r.amount,
+          r.planned,
           r.no_monthly_report,
           r.user&.name,
           r.my_corporation&.name,

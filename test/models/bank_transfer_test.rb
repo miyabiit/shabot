@@ -34,7 +34,7 @@ class BankTransferTest < ActiveSupport::TestCase
 
       # payment
       assert_equal casein_admin_users(:taro).id, payment.user_id
-      assert_equal nil, payment.account_id
+      assert_equal -1, payment.account_id
       assert_equal Date.new(2016, 11, 1), payment.payable_on
       assert_equal projects(:test_1).id, payment.project_id
       assert_equal my_corporations(:test_1).code, payment.corporation_code
@@ -54,7 +54,7 @@ class BankTransferTest < ActiveSupport::TestCase
 
       # receipt
       assert_equal casein_admin_users(:taro).id, receipt.user_id
-      assert_equal nil, receipt.account_id
+      assert_equal -1, receipt.account_id
       assert_equal Date.new(2016, 11, 1), receipt.receipt_on
       assert_equal projects(:test_1).id, receipt.project_id
       assert_equal my_corporations(:test_2).code, receipt.corporation_code
@@ -62,6 +62,7 @@ class BankTransferTest < ActiveSupport::TestCase
       assert_equal items(:test_2).id, receipt.item_id
       assert_equal 12345, receipt.amount
       assert_equal my_accounts(:test_2).id, receipt.my_account_id
+      assert_equal false, receipt.planned
       assert_equal true, receipt.no_monthly_report
     end
   end

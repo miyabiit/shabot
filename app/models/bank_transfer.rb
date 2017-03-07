@@ -57,7 +57,8 @@ class BankTransfer < ActiveRecord::Base
         project_id: self.project_id,
         amount: self.amount,
         comment: self.comment,
-        no_monthly_report: true
+        no_monthly_report: true,
+        planned: false
       )
 
       self.payment_header = payment

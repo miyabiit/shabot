@@ -1,13 +1,13 @@
 ja:
   activerecord:
     models:
-      receipt_header: "入金予定"
+      receipt_header: "入金"
     attributes:
       receipt_header:
         user_id: "作成者"
         corporation_code: "入金先法人"
         account_id: "入金元"
-        receipt_on: "入金予定日"
+        receipt_on: "入金日"
         project_id: "事業・プロジェクト"
         comment: "摘要・目的・効果"
         item_id: "費目"
@@ -16,4 +16,5 @@ ja:
         id: "伝票No"
         no_monthly_report: "月別一覧出力対象外"
         monthly_data: "定例"
+        planned: "計画区分"
 

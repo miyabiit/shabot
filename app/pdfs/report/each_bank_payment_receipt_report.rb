@@ -59,11 +59,11 @@ class Report::EachBankPaymentReceiptReport < Report::ReportBase
   end
 
   def render_receipts
-    render_table_header "入金明細", %W(入金日 入金元 金額 摘要・目的・効果)
+    render_table_header "入金明細", %W(入金日 入金元 金額 摘要・目的・効果), "＊: 実績"
     sum = 0
     @receipt_headers.with_my_account_id(@current_my_account.id).each do |receipt|
       amount = receipt.amount
-      render_row ["", receipt.receipt_on&.strftime('%Y/%m/%d'), receipt.account&.name, amount, receipt.comment], COL_WIDTHS, padding_horizontal: 3
+      render_row [('＊' unless receipt.planned?), receipt.receipt_on&.strftime('%Y/%m/%d'), receipt.account&.name, amount, receipt.comment], COL_WIDTHS, padding_horizontal: 3
       sum += amount
     end
     hr
