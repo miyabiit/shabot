@@ -98,15 +98,18 @@ class Report::ReceiptReport < Report::ReportBase
 
       move_down 14
       
-      table [
-        [make_cell('費 目', align: :center, width: 130), make_cell('明 細', align: :center, width: bounds.width - 320), make_cell('消費税区分', align: :center, width: 70), make_cell('金 額', align: :center, width: 120)],
+      table([
+        [make_cell('費 目', align: :center, width: 130), make_cell('明 細', align: :center, width: bounds.width - 250, colspan: 2), make_cell('金 額', align: :center, width: 120)],
         [
           make_cell(@receipt.item&.name, align: :left, height: 200),
-          make_cell(@receipt.comment, align: :left),
-          make_cell(@receipt.tax_type&.text, align: :center),
+          make_cell(@receipt.comment, align: :left, width: bounds.width - 300),
+          make_cell(@receipt.tax_type&.to_sym == :in ? '(税込)' : '', align: :center, width: 50),
           make_cell(@receipt.amount&.to_s(:delimited), align: :right)
         ]
-      ]
+      ]) do |t|
+        t.column(1).borders = [:left, :top, :bottom]
+        t.column(2).borders = [:right, :top, :bottom]
+      end
 
       move_down 10
 
