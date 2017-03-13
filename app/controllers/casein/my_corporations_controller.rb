@@ -54,7 +54,7 @@ module Casein
     private
       
       def my_corporation_params
-        params.require(:my_corporation).permit(:code, :name)
+        params.require(:my_corporation).permit(:code, :name, linked_services_attributes: [:id, :sync])
       end
 
   end

@@ -32,6 +32,7 @@ module Casein
 
       src_receipt_header = receipt_header_search.find(params[:id])
       @receipt_header = src_receipt_header.dup
+      @receipt_header.tax_type ||= :ex
 
       render :new
     end
@@ -97,7 +98,7 @@ module Casein
       end
       
       def receipt_header_params
-        params.require(:receipt_header).permit(:corporation_code, :account_id, :receipt_on, :project_id, :comment, :item_id, :amount, :my_account_id, :no_monthly_report, :monthly_data)
+        params.require(:receipt_header).permit(:corporation_code, :account_id, :receipt_on, :project_id, :comment, :item_id, :amount, :my_account_id, :no_monthly_report, :monthly_data, :tax_type, :planned)
       end
 
       def receipt_header_search

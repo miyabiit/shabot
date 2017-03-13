@@ -7,7 +7,7 @@ class Report::ReceiptReport < Report::ReportBase
     @account_post = '　'
     @account_user_name = '　'
 
-    @title = "入 金 予 定 票"
+    @title = receipt.planned? ? "入 金 予 定 票" : "入 金 連 絡"
 
     @receipt = receipt
   end
@@ -89,7 +89,7 @@ class Report::ReceiptReport < Report::ReportBase
       stroke_rectangle [0, cursor], 220, 24
       bounding_box([5, cursor], width: 210, height: 24) do
         float do
-          text_box "入金予定金額", align: :left, valign: :center
+          text_box "入金金額", align: :left, valign: :center
         end
         float do
           text_box "#{@receipt.amount&.to_s(:delimited)} 円", valign: :center, align: :right
@@ -98,14 +98,18 @@ class Report::ReceiptReport < Report::ReportBase
 
       move_down 14
       
-      table [
-        [make_cell('費 目', align: :center, width: 130), make_cell('明 細', align: :center, width: bounds.width - 250), make_cell('金 額', align: :center, width: 120)],
+      table([
+        [make_cell('費 目', align: :center, width: 130), make_cell('明 細', align: :center, width: bounds.width - 250, colspan: 2), make_cell('金 額', align: :center, width: 120)],
         [
           make_cell(@receipt.item&.name, align: :left, height: 200),
-          make_cell(@receipt.comment, align: :left),
+          make_cell(@receipt.comment, align: :left, width: bounds.width - 300),
+          make_cell(@receipt.tax_type&.to_sym == :in ? '(税込)' : '', align: :center, width: 50),
           make_cell(@receipt.amount&.to_s(:delimited), align: :right)
         ]
-      ]
+      ]) do |t|
+        t.column(1).borders = [:left, :top, :bottom]
+        t.column(2).borders = [:right, :top, :bottom]
+      end
 
       move_down 10
 

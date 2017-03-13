@@ -1,14 +1,41 @@
 <h2>Reports</h2>
-<% Report::ReportList.each do |name, report_id, path| %>
-  <form id="<%= report_id %>" class="form-inline" action="<%= path %>">
-    <label style="display: block; width: 30pm;"><%= name %></label>
-    <input type="text" class="input-medium" placeholder="from yyyy/mm/dd" name="from" data-provide="datepicker">
-    <input type="text" class="input" placeholder="to yyyy/mm/dd" name="to" data-provide="datepicker">
-    <% if report_id == 'payment-receipt' -%>
-      <%= link_to '入金明細CSV', csv_receipt_casein_reports_path, 'data-form-id' => report_id, :class => 'btn btn-default' %>
-      <%= link_to '出金明細CSV', csv_payment_casein_reports_path, 'data-form-id' => report_id, :class => 'btn btn-default' %>
-    <% else -%>
-      <button type="submit" class="btn">PDF</button>
-    <% end -%>
-  </form>
-<% end %>
+<%= form_tag pdf_each_project_receipt_casein_reports_path, method: :get, id: 'each-project-receipt-list', class: 'form-inline' do %>
+  <%= render 'form', title: '【収入】月別プロジェクト別入金予定・実績一覧' %>
+  <button type="submit" class="btn">PDF</button>
+<% end -%>
+<%= form_tag pdf_each_day_receipt_casein_reports_path, method: :get, id: 'each-day-receipt-list', class: 'form-inline' do %>
+  <%= render 'form', title: '【収入】月別入金日別入金予定・実績一覧' %>
+  <button type="submit" class="btn">PDF</button>
+<% end -%>
+
+<hr>
+
+<%= form_tag pdf_each_project_payment_casein_reports_path, method: :get, id: 'each-project-payment-list', class: 'form-inline' do %>
+  <%= render 'form', title: '【支出】月別プロジェクト別出金予定・実績一覧' %>
+  <button type="submit" class="btn">PDF</button>
+<% end -%>
+<%= form_tag pdf_each_day_payment_casein_reports_path, method: :get, id: 'each-day-payment-list', class: 'form-inline' do %>
+  <%= render 'form', title: '【支出】月別支払日別出金予定・実績一覧' %>
+  <button type="submit" class="btn">PDF</button>
+<% end -%>
+
+<%= form_tag pdf_not_processed_payment_casein_reports_path, method: :get, id: 'not-processed-payment', class: 'form-inline' do %>
+  <%= render 'form', title: '【支出】未払申請一覧' %>
+  <button type="submit" class="btn">PDF</button>
+<% end -%>
+<%= form_tag pdf_processed_payment_casein_reports_path, method: :get, id: 'processed-payment', class: 'form-inline' do %>
+  <%= render 'form', title: '【支出】支払処理済申請一覧' %>
+  <button type="submit" class="btn">PDF</button>
+<% end -%>
+
+<hr>
+
+<%= form_tag pdf_each_bank_payment_receipt_casein_reports_path, method: :get, id: 'each-bank-payment-receipt', class: 'form-inline' do %>
+  <%= render 'form', title: '口座別入出金明細' %>
+  <button type="submit" class="btn">PDF</button>
+<% end -%>
+<%= form_tag pdf_payment_receipt_casein_reports_path, method: :get, id: 'payment-receipt', class: 'form-inline' do %>
+  <%= render 'form', title: '入出金レポート' %>
+  <%= link_to '入金明細CSV', csv_receipt_casein_reports_path, 'data-form-id' => 'payment-receipt', :class => 'btn btn-default' %>
+  <%= link_to '出金明細CSV', csv_payment_casein_reports_path, 'data-form-id' => 'payment-receipt', :class => 'btn btn-default' %>
+<% end -%>

@@ -2,12 +2,12 @@ ja:
   views:
     receipt_header:
       index:
-        title: 入金予定一覧
+        title: 入金一覧
       show:
-        title: 入金予定詳細
+        title: 入金詳細
       new:
-        title: 入金予定の新規作成
+        title: 入金の新規作成
       copy:
-        title: 入金予定のコピー作成
+        title: 入金のコピー作成
       update:
-        title: 入金予定の更新
+        title: 入金の更新

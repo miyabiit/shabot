@@ -28,13 +28,21 @@
       〜
       <%= f.text_field :to, placeholder: 'yyyy/mm/dd', "data-provide" => "datepicker", size: 12 %>
     </div>
-    <div class="col-lg-2">
+    <div class="col-lg-3">
+      <label>
+        <%= f.check_box :planned_true %>&nbsp;予定
+      </label>
+      &nbsp;
+      <label>
+        <%= f.check_box :planned_false %>&nbsp;実績
+      </label>
+      &nbsp;
       <label>
         <%= f.check_box :monthly_data_true %>&nbsp;定例
       </label>
-    </div>
-    <div class="col-lg-1">
+      <div class="pull-right">
       <%= f.submit "検索", :name => nil %>
+      </div>
     </div>
   </div>
 <% end %>

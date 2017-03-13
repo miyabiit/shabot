@@ -1,4 +1,6 @@
 class ReceiptHeader < ActiveRecord::Base
+  include Enums::TaxTypeEnum
+
   belongs_to :user, class_name: 'Casein::AdminUser', foreign_key: 'user_id'
   belongs_to :account
   belongs_to :project
@@ -41,6 +43,7 @@ receipt_headers.my_account_id = :my_account_id OR (receipt_headers.my_account_id
         query.onlymine(current_user).where.not(receipt_on: nil).each do |receipt|
           receipt.duplicate({
             user_id: current_user.id,
+            planned: true,
             monthly_data: true,
             receipt_on: receipt.receipt_on.next_month
           })
