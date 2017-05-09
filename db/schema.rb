@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307092249) do
+ActiveRecord::Schema.define(version: 20170509000044) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20170307092249) do
     t.integer  "receipt_header_id", limit: 4
     t.integer  "payment_header_id", limit: 4
     t.date     "target_date"
-    t.integer  "amount",            limit: 4
+    t.integer  "amount",            limit: 8
     t.integer  "src_my_account_id", limit: 4
     t.integer  "dst_my_account_id", limit: 4
     t.integer  "src_item_id",       limit: 4
@@ -175,7 +175,7 @@ ActiveRecord::Schema.define(version: 20170307092249) do
   create_table "payment_parts", force: :cascade do |t|
     t.integer  "payment_header_id", limit: 4
     t.integer  "item_id",           limit: 4
-    t.integer  "amount",            limit: 4
+    t.integer  "amount",            limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "tax_type",          limit: 255,   default: "ex"
@@ -200,15 +200,15 @@ ActiveRecord::Schema.define(version: 20170307092249) do
     t.integer  "project_id",        limit: 4
     t.text     "comment",           limit: 65535
     t.integer  "item_id",           limit: 4
-    t.integer  "amount",            limit: 4
+    t.integer  "amount",            limit: 8
     t.integer  "my_account_id",     limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "no_monthly_report",               default: false
     t.boolean  "monthly_data",                    default: false
     t.integer  "corporation_code",  limit: 4
-    t.boolean  "planned",                         default: true
     t.string   "tax_type",          limit: 255,   default: "ex"
+    t.boolean  "planned",                         default: true
   end
 
   add_index "receipt_headers", ["account_id"], name: "index_receipt_headers_on_account_id", using: :btree
