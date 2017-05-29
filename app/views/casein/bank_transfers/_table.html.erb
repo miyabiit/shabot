@@ -8,6 +8,7 @@
       <th><%= casein_sort_link BankTransfer.human_attribute_name(:project_id), :project_id %></th>
       <th><%= casein_sort_link BankTransfer.human_attribute_name(:src_my_account_id), :src_my_account_id %></th>
       <th><%= casein_sort_link BankTransfer.human_attribute_name(:dst_my_account_id), :dst_my_account_id %></th>
+      <th><%= casein_sort_link BankTransfer.human_attribute_name(:amount), :amount %></th>
       <th><%= casein_sort_link BankTransfer.human_attribute_name(:comment), :comment %></th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
@@ -18,10 +19,11 @@
     <tr>
       <td><%= casein_table_cell_link bank_transfer&.target_date, casein_bank_transfer_path(bank_transfer) %></td>
       <td><%= casein_table_cell_link bank_transfer.user&.name, casein_bank_transfer_path(bank_transfer) %></td>
-      <td><%= casein_table_cell_link truncate(bank_transfer.project&.name, length: 15), casein_bank_transfer_path(bank_transfer) %></td>
-      <td><%= casein_table_cell_link truncate(bank_transfer.src_my_account&.bank_label, length: 15), casein_bank_transfer_path(bank_transfer) %></td>
-      <td><%= casein_table_cell_link truncate(bank_transfer.dst_my_account&.bank_label, length: 15), casein_bank_transfer_path(bank_transfer) %></td>
-      <td><%= casein_table_cell_link truncate(bank_transfer.comment, length: 15), casein_bank_transfer_path(bank_transfer) %></td>
+      <td><%= casein_table_cell_link truncate(bank_transfer.project&.name, length: 10, omission: '…'), casein_bank_transfer_path(bank_transfer) %></td>
+      <td><%= casein_table_cell_link truncate(bank_transfer.src_my_account&.bank_label, length: 15, omission: '…'), casein_bank_transfer_path(bank_transfer) %></td>
+      <td><%= casein_table_cell_link truncate(bank_transfer.dst_my_account&.bank_label, length: 15, omission: '…'), casein_bank_transfer_path(bank_transfer) %></td>
+      <td align="right"><%= casein_table_cell_link number_with_delimiter(bank_transfer.amount), casein_bank_transfer_path(bank_transfer) %></td>
+      <td><%= casein_table_cell_link truncate(bank_transfer.comment, length: 8, omission: '…'), casein_bank_transfer_path(bank_transfer) %></td>
       <td class="delete">
         <%= table_row_trash_icon_link_to casein_bank_transfer_path(bank_transfer), :method => :delete, :data => { :confirm => t("messages.destroy_confirmation", model_name: controller.model.model_name.human) } %>
       </td>
