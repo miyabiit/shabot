@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170509000044) do
+ActiveRecord::Schema.define(version: 20170529031508) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 20170509000044) do
     t.boolean  "my_group",                default: false
     t.datetime "deleted_at"
   end
+
+  create_table "bank_account_balance_per5days", force: :cascade do |t|
+    t.integer  "bank_account_balance_id", limit: 4, null: false
+    t.date     "target_date"
+    t.integer  "amount",                  limit: 8
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "bank_account_balance_per5days", ["bank_account_balance_id"], name: "index_bank_account_balance_per5days_on_bank_account_balance_id", using: :btree
 
   create_table "bank_account_balances", force: :cascade do |t|
     t.integer  "my_account_id",        limit: 4
@@ -224,6 +234,7 @@ ActiveRecord::Schema.define(version: 20170509000044) do
     t.datetime "updated_at",             null: false
   end
 
+  add_foreign_key "bank_account_balance_per5days", "bank_account_balances"
   add_foreign_key "bank_transfers", "payment_headers"
   add_foreign_key "bank_transfers", "receipt_headers"
 end
