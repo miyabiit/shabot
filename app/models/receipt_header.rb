@@ -7,6 +7,9 @@ class ReceiptHeader < ActiveRecord::Base
   belongs_to :item
   belongs_to :my_account
   belongs_to :my_corporation, foreign_key: 'corporation_code'
+  has_one :receipt_invoice_info, dependent: :destroy
+
+  accepts_nested_attributes_for :receipt_invoice_info
 
   validates :amount, numericality: {only_integer: true}
 
@@ -32,6 +35,7 @@ receipt_headers.my_account_id = :my_account_id OR (receipt_headers.my_account_id
   def duplicate(attrs = {})
     new_receipt = self.dup
     new_receipt.attributes = attrs
+    new_receipt.receipt_invoice_info = receipt_invoice_info.dup if receipt_invoice_info
     new_receipt.save
     new_receipt
   end

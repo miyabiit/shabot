@@ -71,13 +71,17 @@ class Report::ReceiptReport < Report::ReportBase
 
         move_down 20
         
-        sign_cell_opts = {width: 60, height: 55}
-        table [
-          [make_cell(content: '検印', align: :center), make_cell(content: '検印', align: :center), make_cell(content: '担当', align: :center)],
-          [make_cell(sign_cell_opts), make_cell(sign_cell_opts), make_cell(sign_cell_opts)],
-        ], position: :right, cell_style: {padding: 2}
+        render_signs
       end
     end
+  end
+
+  def render_signs
+    sign_cell_opts = {width: 60, height: 55}
+    table [
+      [make_cell(content: '検印', align: :center), make_cell(content: '検印', align: :center), make_cell(content: '担当', align: :center)],
+      [make_cell(sign_cell_opts), make_cell(sign_cell_opts), make_cell(sign_cell_opts)],
+    ], position: :right, cell_style: {padding: 2}
   end
 
   def render_content

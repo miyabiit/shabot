@@ -13,8 +13,9 @@ Rails.application.routes.draw do
 
     resources :receipt_headers do
       member do
-        get 'copy'
-        get 'pdf'
+        get :copy
+        get :plan_pdf
+        get :invoice_pdf
       end
       collection do
         post :duplicate_monthly_data
