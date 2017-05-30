@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170529031508) do
+ActiveRecord::Schema.define(version: 20170530024013) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -219,6 +219,7 @@ ActiveRecord::Schema.define(version: 20170529031508) do
     t.integer  "corporation_code",  limit: 4
     t.string   "tax_type",          limit: 255,   default: "ex"
     t.boolean  "planned",                         default: true
+    t.boolean  "invoice_target",                  default: false
   end
 
   add_index "receipt_headers", ["account_id"], name: "index_receipt_headers_on_account_id", using: :btree
@@ -226,6 +227,25 @@ ActiveRecord::Schema.define(version: 20170529031508) do
   add_index "receipt_headers", ["item_id"], name: "index_receipt_headers_on_item_id", using: :btree
   add_index "receipt_headers", ["my_account_id"], name: "index_receipt_headers_on_my_account_id", using: :btree
   add_index "receipt_headers", ["user_id"], name: "index_receipt_headers_on_user_id", using: :btree
+
+  create_table "receipt_invoice_infos", force: :cascade do |t|
+    t.integer  "receipt_header_id",           limit: 4,   null: false
+    t.string   "dst_post_num",                limit: 255
+    t.string   "dst_address1",                limit: 255
+    t.string   "dst_address2",                limit: 255
+    t.string   "dst_person_name",             limit: 255
+    t.string   "src_post_num",                limit: 255
+    t.string   "src_address1",                limit: 255
+    t.string   "src_address2",                limit: 255
+    t.string   "src_tel",                     limit: 255
+    t.string   "src_fax",                     limit: 255
+    t.string   "trans_dst_bank_info",         limit: 255
+    t.string   "trans_dst_bank_account_name", limit: 255
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
+
+  add_index "receipt_invoice_infos", ["receipt_header_id"], name: "index_receipt_invoice_infos_on_receipt_header_id", using: :btree
 
   create_table "reports", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -237,4 +257,5 @@ ActiveRecord::Schema.define(version: 20170529031508) do
   add_foreign_key "bank_account_balance_per5days", "bank_account_balances"
   add_foreign_key "bank_transfers", "payment_headers"
   add_foreign_key "bank_transfers", "receipt_headers"
+  add_foreign_key "receipt_invoice_infos", "receipt_headers"
 end

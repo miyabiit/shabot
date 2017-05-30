@@ -1,0 +1,20 @@
+ja:
+  activerecord:
+    models:
+      receipt_invoice_info: "請求書情報"
+    attributes:
+      receipt_invoice_info: &receipt_invoice_info_attributes
+        receipt_header_id: "入金"
+        dst_post_num: "請求先郵便番号"
+        dst_address1: "請求先住所1"
+        dst_address2: "請求先住所2"
+        dst_person_name: "請求先担当者"
+        src_post_num: "請求元郵便番号"
+        src_address1: "請求元住所1"
+        src_address2: "請求元住所2"
+        src_tel: "請求元TEL"
+        src_fax: "請求元FAX"
+        trans_dst_bank_info: "振込先口座情報"
+        trans_dst_bank_account_name: "振込先口座名義"
+      "receipt_header/receipt_invoice_info":
+        <<: *receipt_invoice_info_attributes

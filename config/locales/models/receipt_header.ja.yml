@@ -18,3 +18,4 @@ ja:
         monthly_data: "定例"
         planned: "計画区分"
         tax_type: "消費税区分"
+        invoice_target: "請求書発行対象"

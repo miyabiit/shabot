@@ -22,10 +22,12 @@ module Casein
   
     def show
       @receipt_header = receipt_header_search.find params[:id]
+      @receipt_header.build_receipt_invoice_info unless @receipt_header.receipt_invoice_info
     end
   
     def new
       @receipt_header = ReceiptHeader.new
+      @receipt_header.build_receipt_invoice_info
     end
 
     def copy
@@ -33,6 +35,11 @@ module Casein
       src_receipt_header = receipt_header_search.find(params[:id])
       @receipt_header = src_receipt_header.dup
       @receipt_header.tax_type ||= :ex
+      if src_receipt_header.receipt_invoice_info
+        @receipt_header.receipt_invoice_info = src_receipt_header.receipt_invoice_info.dup
+      else
+        @receipt_header.build_receipt_invoice_info
+      end
 
       render :new
     end
@@ -77,11 +84,20 @@ module Casein
       redirect_to casein_receipt_headers_path(query_params)
     end
 
-    def pdf
+    def plan_pdf
       receipt_header = receipt_header_search.find params[:id]
       pdf = ReceiptReportPDF.new(receipt_header)
       send_data pdf.render,
         filename:  "receipt.pdf",
+        type:      "application/pdf",
+        disposition:  "inline"
+    end
+
+    def invoice_pdf
+      receipt_header = receipt_header_search.find params[:id]
+      pdf = InvoicePDF.new(receipt_header)
+      send_data pdf.render,
+        filename:  "invoice.pdf",
         type:      "application/pdf",
         disposition:  "inline"
     end
@@ -98,7 +114,7 @@ module Casein
       end
       
       def receipt_header_params
-        params.require(:receipt_header).permit(:corporation_code, :account_id, :receipt_on, :project_id, :comment, :item_id, :amount, :my_account_id, :no_monthly_report, :monthly_data, :tax_type, :planned)
+        params.require(:receipt_header).permit(:corporation_code, :account_id, :receipt_on, :project_id, :comment, :item_id, :amount, :my_account_id, :no_monthly_report, :monthly_data, :tax_type, :planned, :invoice_target, receipt_invoice_info_attributes: [:id, :dst_post_num, :dst_address1, :dst_address2, :dst_person_name, :src_post_num, :src_address1, :src_address2, :src_tel, :src_fax, :trans_dst_bank_info, :trans_dst_bank_account_name])
       end
 
       def receipt_header_search
