@@ -11,6 +11,15 @@ class BankAccountBalanceTest < ActiveSupport::TestCase
       ReceiptHeader.where(my_account: my_accounts(:test_1), receipt_on: receipt_on).sum(:amount)
     end
 
+    describe "5日区切りの確認" do
+      it "月またぎの場合にも5日区切りの対象日が正しいこと" do
+        balance = BankAccountBalance.new(my_account: my_accounts(:test_1), current_amount: 100, estimated_on: '2015/11/15', based_on: Date.new(2015, 12, 21), today: Date.new(2015, 11, 5))
+        balance.calculate
+
+        assert_equal [Date.new(2015, 12, 25), Date.new(2015, 12, 31), Date.new(2016, 1, 5), Date.new(2016, 1, 10)], balance.per5days.map(&:target_date)
+      end
+    end
+
     describe "推定日が未来" do
       it "金額計算結果が正しいこと" do
         balance = BankAccountBalance.new(my_account: my_accounts(:test_1), current_amount: 100, estimated_on: '2015/11/15', based_on: Date.new(2015, 11, 5), today: Date.new(2015, 11, 5))
@@ -31,6 +40,20 @@ class BankAccountBalanceTest < ActiveSupport::TestCase
         # three_month_amount
         date_range = Date.new(2015, 11, 5) .. Date.new(2016, 1, 31)
         assert_equal (100 - payment_sum(date_range) + receipt_sum(date_range)), balance.three_month_amount
+
+        # 5days amount
+        date_range = Date.new(2015, 11, 5) .. Date.new(2015, 11, 10)
+        assert_equal Date.new(2015, 11, 10), balance.per5days&.at(0)&.target_date
+        assert_equal (100 - payment_sum(date_range) + receipt_sum(date_range)), balance.per5days&.at(0)&.amount
+        date_range = Date.new(2015, 11, 5) .. Date.new(2015, 11, 15)
+        assert_equal Date.new(2015, 11, 15), balance.per5days&.at(1)&.target_date
+        assert_equal (100 - payment_sum(date_range) + receipt_sum(date_range)), balance.per5days&.at(1)&.amount
+        date_range = Date.new(2015, 11, 5) .. Date.new(2015, 11, 20)
+        assert_equal Date.new(2015, 11, 20), balance.per5days&.at(2)&.target_date
+        assert_equal (100 - payment_sum(date_range) + receipt_sum(date_range)), balance.per5days&.at(2)&.amount
+        date_range = Date.new(2015, 11, 5) .. Date.new(2015, 11, 25)
+        assert_equal Date.new(2015, 11, 25), balance.per5days&.at(3)&.target_date
+        assert_equal (100 - payment_sum(date_range) + receipt_sum(date_range)), balance.per5days&.at(3)&.amount
       end
     end
     describe "推定日が過去" do
