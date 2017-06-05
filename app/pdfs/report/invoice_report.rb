@@ -21,8 +21,8 @@ class Report::InvoiceReport < Report::ReceiptReport
           move_down 10
           text_box "〒#{@invoice_info.dst_post_num}", size: 9, at: [0, cursor], width: 70
           text_box @account_address, size: 9, at: [60, cursor], width: (bounds.width - 70)
-          move_down 36
-          text_box @receipt.account&.name, size: 14, at: [0, cursor], width: bounds.width if @receipt.account
+          move_down 38
+          text_box @receipt.account&.name, size: 12, at: [0, cursor], width: bounds.width if @receipt.account
           move_down 26
           text "#{@invoice_info.dst_person_name}", size: 12
         end
@@ -39,7 +39,7 @@ class Report::InvoiceReport < Report::ReceiptReport
         move_down 2
         text @company_address2 , size: 9, align: :right
         move_down 4
-        text @receipt.my_corporation&.name || '', size: 14, align: :right
+        text @receipt.my_corporation&.name || '', size: 12, align: :right
         move_down 4
         text "TEL #{@invoice_info.src_tel} FAX #{@invoice_info.src_fax}", size: 9, align: :right
         move_down 20
