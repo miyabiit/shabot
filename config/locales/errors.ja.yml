@@ -1,0 +1,11 @@
+ja:
+  errors:
+    messages:
+      error_occured: 'エラーが発生しました。'
+      request_busy: 'ビジー状態です。少し間をおいてから、再度アクセスしてください。'
+      unauthorized: '対象サービスの認証情報がありません。'
+      input_error: '入力エラーがあります。'
+      not_found: '要求されたリソースは存在しません。'
+      forbidden: '許可されていません。'
+      data_size_over: '%{name}は%{max_size}個を超えては作成できません。'
+      file_size_over: '%{max_size}MBを超えるファイルはアップロードできません。'

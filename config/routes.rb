@@ -114,4 +114,10 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  get '*path' => 'errors#render_404'
+  put '*path' => 'errors#render_404'
+  post '*path' => 'errors#render_404'
+  patch '*path' => 'errors#render_404'
+  delete '*path' => 'errors#render_404'
 end
