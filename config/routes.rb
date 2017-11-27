@@ -115,9 +115,9 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  get '*path' => 'errors#render_404'
-  put '*path' => 'errors#render_404'
-  post '*path' => 'errors#render_404'
-  patch '*path' => 'errors#render_404'
-  delete '*path' => 'errors#render_404'
+  get '*path' => 'errors#render_404', constraints: Casein::RouteConstraint.new
+  put '*path' => 'errors#render_404', constraints: Casein::RouteConstraint.new
+  post '*path' => 'errors#render_404', constraints: Casein::RouteConstraint.new
+  patch '*path' => 'errors#render_404', constraints: Casein::RouteConstraint.new
+  delete '*path' => 'errors#render_404', constraints: Casein::RouteConstraint.new
 end
