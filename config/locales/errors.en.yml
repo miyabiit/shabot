@@ -1,0 +1,11 @@
+en:
+  errors:
+    messages:
+      error_occured: 'Error occured'
+      request_busy: 'Server is busy.'
+      unauthorized: 'Not authorized for target service.'
+      input_error: 'Input Error'
+      not_found: 'Requested resource is not found'
+      forbidden: 'Forbidden Operation'
+      data_size_over: '%{name} size must be less than equal to %{max_size}.'
+      file_size_over: 'Can not upload the file that is size over %{max_size}MB.'
