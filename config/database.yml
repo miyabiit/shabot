@@ -60,3 +60,10 @@ production:
   username: <%= ENV['PRODUCTION_SHABOT_DATABASE_USER'] %>
   host: <%= ENV['PRODUCTION_SHABOT_DATABASE_HOST'] %>
   password: <%= ENV['PRODUCTION_SHABOT_DATABASE_PASSWORD'] %>
+
+production_8woods:
+  <<: *default
+  database: shabot_production_8woods
+  username: <%= ENV['PRODUCTION_SHABOT_DATABASE_USER'] %>
+  host: <%= ENV['PRODUCTION_SHABOT_DATABASE_HOST'] %>
+  password: <%= ENV['PRODUCTION_SHABOT_DATABASE_PASSWORD'] %>
