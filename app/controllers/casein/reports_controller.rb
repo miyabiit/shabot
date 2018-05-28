@@ -10,6 +10,7 @@ module Casein
     def pdf_each_project_payment
       from, to = parse_from_to
       payment_headers = PaymentHeader.where(payable_on: from..to).where(no_monthly_report: false)
+      payment_headers = add_project_condition(payment_headers)
       pdf = EachProjectPaymentList.new(payment_headers)
       pdf_filename = "payment-project-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
       send_data pdf.render,
@@ -21,6 +22,7 @@ module Casein
     def pdf_each_project_receipt
       from, to = parse_from_to
       receipt_headers = ReceiptHeader.where(receipt_on: from..to).where(no_monthly_report: false)
+      receipt_headers = add_project_condition(receipt_headers)
       pdf = EachProjectReceiptList.new(receipt_headers)
       pdf_filename = "receipt-project-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
       send_data pdf.render,
@@ -32,6 +34,7 @@ module Casein
     def pdf_each_day_payment
       from, to = parse_from_to
       payment_headers = PaymentHeader.where(payable_on: from..to).where(no_monthly_report: false)
+      payment_headers = add_project_condition(payment_headers)
       pdf = EachDayPaymentList.new(payment_headers)
       pdf_filename = "payment-eachday-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
       send_data pdf.render,
@@ -43,6 +46,7 @@ module Casein
     def pdf_each_day_receipt
       from, to = parse_from_to
       receipt_headers = ReceiptHeader.where(receipt_on: from..to).where(no_monthly_report: false)
+      receipt_headers = add_project_condition(receipt_headers)
       pdf = EachDayReceiptList.new(receipt_headers)
       pdf_filename = "receipt-eachday-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
       send_data pdf.render,
@@ -53,7 +57,7 @@ module Casein
 
     def pdf_payment_receipt
       from, to = parse_from_to
-      pdf = PaymentReceipt.new(from, to)
+      pdf = PaymentReceipt.new(from, to, params[:project_name])
       send_data pdf.render,
         filename:  "payment-receipt-#{from.strftime("%y%m%d")}-#{to.strftime("%y%m%d")}.pdf",
         type:      "application/pdf",
@@ -62,7 +66,7 @@ module Casein
 
     def csv_receipt
       from, to = parse_from_to
-      csv = ReceiptCSV.new(from, to)
+      csv = ReceiptCSV.new(from, to, params[:project_name])
       send_data csv.generate,
         filename:  "receipt-#{from.strftime("%y%m%d")}-#{to.strftime("%y%m%d")}.csv",
         type:      "text/csv; charset=shift_jis",
@@ -71,7 +75,7 @@ module Casein
 
     def csv_payment
       from, to = parse_from_to
-      csv = PaymentCSV.new(from, to)
+      csv = PaymentCSV.new(from, to, params[:project_name])
       send_data csv.generate,
         filename:  "payment-#{from.strftime("%y%m%d")}-#{to.strftime("%y%m%d")}.csv",
         type:      "text/csv; charset=shift_jis",
@@ -81,6 +85,7 @@ module Casein
     def pdf_not_processed_payment
       from, to = parse_from_to
       payment_headers = PaymentHeader.where(processed: false, payable_on: from..to)
+      payment_headers = add_project_condition(payment_headers)
       pdf = ProcessPaymentList.new(payment_headers, '未払申請一覧', params[:from], params[:to])
       pdf_filename = "not-processed-payment-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
       send_data pdf.render,
@@ -92,6 +97,7 @@ module Casein
     def pdf_processed_payment
       from, to = parse_from_to
       payment_headers = PaymentHeader.where(processed: true, payable_on: from..to)
+      payment_headers = add_project_condition(payment_headers)
       pdf = ProcessPaymentList.new(payment_headers, '支払処理済申請一覧', params[:from], params[:to])
       pdf_filename = "processed-payment-" + from.strftime("%y%m%d") + "-" + to.strftime("%y%m%d") + '.pdf'
       send_data pdf.render,
@@ -101,7 +107,7 @@ module Casein
     end
 
     def pdf_each_bank_payment_receipt
-      pdf = EachBankPaymentReceipt.new(params[:from], params[:to])
+      pdf = EachBankPaymentReceipt.new(params[:from], params[:to], params[:project_name])
       send_data pdf.render,
         filename:  "each-bank-payment-receipt-#{params[:from]&.gsub('/', '')}-#{params[:to]&.gsub('/', '')}.pdf",
         type:      "application/pdf",
@@ -116,5 +122,9 @@ module Casein
         [from, to]
       end
 
+      def add_project_condition(query)
+        return query if params[:project_name].blank?
+        query.joins(:project).where(projects: {name: params[:project_name]})
+      end
   end
 end

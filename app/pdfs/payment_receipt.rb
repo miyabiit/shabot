@@ -1,9 +1,9 @@
 class PaymentReceipt < PDFBase
 
-  def initialize(from, to)
+  def initialize(from, to, project_name)
     super()
 
-    summary = PaymentReceiptSummary.new(from, to)
+    summary = PaymentReceiptSummary.new(from, to, project_name)
     all_project_report = Report::PaymentReceipt::AllProjectReport.new(summary, self)
     all_project_report.show
     Project.not_deleted.order(:id).each_with_index do |project, project_i|

@@ -25,9 +25,10 @@ class PaymentCSV
     '備考'
   ]
 
-  def initialize(from, to)
+  def initialize(from, to, project_name)
     @from = from
     @to = to
+    @project_name = project_name
   end
 
   def generate
@@ -35,6 +36,9 @@ class PaymentCSV
 
     payments = PaymentHeader.includes({project: :my_account}, :user, :account, :my_account, {payment_parts: :item})
                             .payable_on_is_not_null.where(payable_on: (@from..@to))
+    if @project_name.present?
+      payments = payments.where(projects: {name: @project_name})
+    end
     CSV.generate(:headers => HEADER, :write_headers => true) {|csv|
       payments.find_each do |p|
         p.payment_parts.each do |part|

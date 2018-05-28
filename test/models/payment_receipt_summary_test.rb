@@ -4,7 +4,7 @@ class PaymentReceiptSummaryTest < ActiveSupport::TestCase
 
   describe "#summaries_by_year" do
     let!(:summary) do
-      PaymentReceiptSummary.new(Date.parse('2015/11/18'), Date.parse('2016/1/5'))
+      PaymentReceiptSummary.new(Date.parse('2015/11/18'), Date.parse('2016/1/5'), nil)
     end
     let (:summaries_by_year) { summary.summaries_by_year }
 
@@ -108,7 +108,7 @@ class PaymentReceiptSummaryTest < ActiveSupport::TestCase
 
   describe "#summaries_project_by_year" do
     let!(:summary) do
-      PaymentReceiptSummary.new(Date.parse('2015/11/18'), Date.parse('2016/1/5'))
+      PaymentReceiptSummary.new(Date.parse('2015/11/18'), Date.parse('2016/1/5'), nil)
     end
     let (:summaries_by_year) { summary.summaries_project_by_year(projects(:test_1)) }
 
@@ -196,7 +196,7 @@ class PaymentReceiptSummaryTest < ActiveSupport::TestCase
   end
 
   describe "#break_by_10days" do
-    let(:summary) { PaymentReceiptSummary.new(Date.parse('1999/7/1'), Date.parse('2999/12/31')) }
+    let(:summary) { PaymentReceiptSummary.new(Date.parse('1999/7/1'), Date.parse('2999/12/31'), nil) }
 
     it do
       result = summary.break_by_10days(Date.parse('2016/1/3'), Date.parse('2016/2/18'))
