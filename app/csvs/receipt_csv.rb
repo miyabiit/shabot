@@ -19,9 +19,10 @@ class ReceiptCSV
     '入金先銀行口座番号',
     '摘要・目的・効果']
 
-  def initialize(from, to)
+  def initialize(from, to, project_name)
     @from = from
     @to = to
+    @project_name = project_name
   end
 
   def generate
@@ -29,6 +30,9 @@ class ReceiptCSV
 
     receipts = ReceiptHeader.includes({project: :my_account} , :item, :user, :account, :my_account)
                             .receipt_on_is_not_null.where(receipt_on: (@from..@to))
+    if @project_name.present?
+      receipts = receipts.where(projects: {name: @project_name})
+    end
     CSV.generate(:headers => HEADER, :write_headers => true) {|csv|
       receipts.find_each do |r|
         my_account = r.my_account || r.project&.my_account

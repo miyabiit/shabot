@@ -1,3 +1,4 @@
 <label style="display: block; width: 30pm;"><%= title %></label>
+<%= select_tag 'project_name', options_for_select(Project.all_names), include_blank: '(全事業)' %>
 <input type="text" class="input-medium" placeholder="from yyyy/mm/dd" name="from" data-provide="datepicker">
 <input type="text" class="input" placeholder="to yyyy/mm/dd" name="to" data-provide="datepicker">

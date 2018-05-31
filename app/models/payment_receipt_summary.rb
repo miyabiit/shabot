@@ -23,13 +23,17 @@ class PaymentReceiptSummary
 
   attr_reader :from, :to
 
-  def initialize(from, to)
+  def initialize(from, to, project_name)
     @from = from
     @to = to
 
     @receipts = ReceiptHeader.receipt_on_is_not_null
     @payments = PaymentHeader.payable_on_is_not_null
-    @projects = Hash[Project.all.map{|p| [p.id, p]}]
+    if project_name.present?
+      @receipts = ReceiptHeader.joins(:project).where(projects: {name: project_name})
+      @payments = PaymentHeader.joins(:project).where(projects: {name: project_name})
+    end
+    @projects = Hash[(project_name.present? ? Project.where(name: project_name) : Project.all).map{|p| [p.id, p]}]
 
     from_min = [@receipts.minimum(:receipt_on), @payments.minimum(:payable_on)].compact.min.try(:beginning_of_month).try(:to_date)
     to_max = [@receipts.maximum(:receipt_on), @payments.maximum(:payable_on)].compact.max.try(:end_of_month).try(:to_date)

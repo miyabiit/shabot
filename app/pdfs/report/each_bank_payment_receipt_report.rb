@@ -1,7 +1,7 @@
 class Report::EachBankPaymentReceiptReport < Report::ReportBase
   COL_WIDTHS = [15, 80, 120, 80, 225]
 
-  def initialize(pdf, from_date, to_date)
+  def initialize(pdf, from_date, to_date, project_name)
     super(pdf)
 
     @pdf.line_width = 0.5
@@ -11,6 +11,10 @@ class Report::EachBankPaymentReceiptReport < Report::ReportBase
     @my_accounts = MyAccount.not_deleted.corporation_code_order('asc').bank_name_order('asc')
     @receipt_headers = ReceiptHeader.left_join_accounts.left_join_projects.where(receipt_on: @date_range).order(:receipt_on, 'accounts.name')
     @payment_headers = PaymentHeader.left_join_accounts.left_join_projects.where(payable_on: @date_range).order(:payable_on, 'accounts.name')
+    if project_name.present?
+      @receipt_headers = @receipt_headers.where(projects: {name: project_name})
+      @payment_headers = @payment_headers.where(projects: {name: project_name})
+    end
     @current_my_account = @my_accounts.first
   end
 
