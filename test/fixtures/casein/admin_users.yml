@@ -11,3 +11,11 @@ hanako:
   email: hanako@example.com
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("hanako" + salt) %>
+
+api_user:
+  login: api_user
+  name: api_user
+  email: api_user@example.com
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("api_user" + salt) %>
+  api_token: 'TESTTOKEN'

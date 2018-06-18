@@ -7,6 +7,21 @@ receipt_on_<%= date.strftime('%Y%m%d') %>:
   item: test_<%= rand(1..2) %>
   my_account: test_<%= rand(1..2) %>
   amount: <%= rand(10000..10000000) %>
+  comment: <%= "コメント#{date.to_s(:db)}" %>
+  corporation_code: test_<%= rand(1..2) %>
+<% end %>
+<% (Date.parse('2017/11/1')..Date.parse('2018/1/31')).each_with_index do |date, idx| %>
+receipt_on_<%= date.strftime('%Y%m%d') %>:
+  receipt_on: <%= date.strftime('%Y-%m-%d') %>
+  user: taro 
+  account: test_<%= rand(1..2) %>
+  project: test_<%= rand(1..2) %>
+  item: test_<%= rand(1..2) %>
+  my_account: test_<%= rand(1..2) %>
+  amount: <%= rand(10000..10000000) %>
+  planned: false
+  comment: <%= "コメント#{date.to_s(:db)}" %>
+  corporation_code: test_<%= rand(1..2) %>
 <% end %>
 no_my_account:
   receipt_on: '2016-2-1'
@@ -15,3 +30,4 @@ no_my_account:
   project: test_1
   item: test_1
   amount: 99999
+  corporation_code: test_1

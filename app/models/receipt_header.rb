@@ -27,6 +27,11 @@ receipt_headers.my_account_id = :my_account_id OR (receipt_headers.my_account_id
     SQL
     where(sql, my_account_id: my_account_id)
   }
+  scope :receipt_on_from_to, -> (from, to) {
+    form = Date.new(1999, 1, 1) if from.blank?
+    to = Date.new(3000, 1, 1) if to.blank?
+    where(receipt_on: from..to)
+  }
 
   scope :like_search, -> (column, word) { where("#{column} LIKE ?", "%#{word}%") }
 

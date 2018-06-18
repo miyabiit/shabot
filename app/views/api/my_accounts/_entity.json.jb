@@ -1,0 +1,9 @@
+{
+  id: entity.id, # ID
+  bank: entity.bank, # 銀行
+  bank_branch: entity.bank_branch, # 支店
+  category: entity.category, # 種別
+  corporation_code: entity.corporation_code, # 法人コード
+  created_at: entity.created_at, # 作成日
+  updated_at: entity.updated_at, # 更新日
+}

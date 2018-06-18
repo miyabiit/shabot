@@ -1,0 +1,5 @@
+{
+  id: entity.id, # ID
+  name: entity.name, # 費目名
+  group: entity.group, # 分類
+}

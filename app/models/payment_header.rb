@@ -57,6 +57,11 @@ payment_headers.my_account_id = :my_account_id OR (payment_headers.my_account_id
     SQL
     where(sql, my_account_id: my_account_id)
   }
+  scope :payable_on_from_to, -> (from, to) {
+    form = Date.new(1999, 1, 1) if from.blank?
+    to = Date.new(3000, 1, 1) if to.blank?
+    where(payable_on: from..to)
+  }
 
   scope :sum_amount, -> { joins(:payment_parts).sum('payment_parts.amount') }
 

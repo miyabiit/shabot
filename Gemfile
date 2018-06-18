@@ -83,5 +83,6 @@ gem 'therubyracer'
 
 gem 'enumerize'
 gem 'active_attr'
+gem 'jb'
 
 gem 'silencer'
