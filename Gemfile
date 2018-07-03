@@ -86,3 +86,5 @@ gem 'active_attr'
 gem 'jb'
 
 gem 'silencer'
+
+gem 'rack-cors'
