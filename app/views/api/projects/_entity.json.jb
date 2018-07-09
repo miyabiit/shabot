@@ -1,0 +1,12 @@
+{
+  id: entity.id, # ID
+  name: entity.name, # 事業名
+  category: entity.category, # プロジェクト名
+  my_account: { # 引き落とし元口座
+    id: entity.my_account&.id, # ID
+    bank: entity.my_account&.bank, # 銀行
+    bank_branch: entity.my_account&.bank_branch, # 支店
+    category: entity.my_account&.category, # 種別
+    corporation_code: entity.my_account&.corporation_code, # 法人コード
+  }
+}

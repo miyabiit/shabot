@@ -1,0 +1,1 @@
+render 'api/my_corporations/entity', entity: @my_corporation

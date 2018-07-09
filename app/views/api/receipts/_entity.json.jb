@@ -1,0 +1,25 @@
+{
+  id: entity.id, # ID
+  receipt_date: entity.receipt_on, # 入金日
+  planned: entity.planned, # 入金予定フラグ(boolean)
+  amount: entity.amount, # 金額
+  comment: entity.comment, # 摘要・目的・効果
+  corporation_code: entity.corporation_code, # 入金先法人コード
+  tax_type: entity.tax_type_text, # 消費税区分
+  receipt_from: { # 入金元
+    id: entity.account&.id, # お取引先ID
+    name: entity.account&.name, # 名前
+    bank: entity.account&.bank, # 銀行
+    bank_branch: entity.account&.bank_branch, # 支店
+    category: entity.account&.category, # 種別
+  },
+  project: {
+    id: entity.project&.id, # 事業・プロジェクトID
+    name: entity.project&.name, # 事業名
+    category: entity.project&.category, # プロジェクト名
+  },
+  item: { # 費目
+    id: entity.item&.id, # 費目ID
+    name: entity.item&.name, # 費目名
+  },
+}

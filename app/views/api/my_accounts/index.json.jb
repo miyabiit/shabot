@@ -1,0 +1,1 @@
+render partial: 'api/my_accounts/entity', collection: @my_accounts, as: :entity

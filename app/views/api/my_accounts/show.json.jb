@@ -1,0 +1,1 @@
+render 'api/my_accounts/entity', entity: @my_account

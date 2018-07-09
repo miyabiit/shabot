@@ -1,0 +1,1 @@
+render partial: 'api/my_corporations/entity', collection: @my_corporations, as: :entity

@@ -1,0 +1,1 @@
+render 'api/projects/entity', entity: @project

@@ -1,0 +1,23 @@
+{
+  id: entity.id, # ID
+  slip_no: entity.slip_no, # Slip Number
+  planned: entity.planned, # 支払予定フラグ(boolean)
+  project: { # 事業・プロジェクト
+    id: entity.project&.id, # ID
+    name: entity.project&.name, # 事業名
+    category: entity.project&.category, # プロジェクト名
+  },
+  payment_date: entity.payable_on, # 支払日
+  payment_to: { # お取引先(請求先)
+    id: entity.account&.id, # お取引先:ID
+    name: entity.account&.name, # お取引先:名前
+    bank: entity.account&.bank, # お取引先:銀行
+    bank_branch: entity.account&.bank_branch, # お取引先:支店
+    category: entity.account&.category, # お取引先:種別
+    my_group: entity.account&.my_group, # お取引先:自社グループフラグ
+  },
+  comment: entity.comment, # 摘要・目的・効果
+  total_amount: entity.total, # 合計金額
+  created_at: entity.created_at, # 作成日
+  updated_at: entity.updated_at, # 更新日
+}

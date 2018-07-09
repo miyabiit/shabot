@@ -1,0 +1,7 @@
+{
+  id: entity.id, # ID
+  code: entity.code, # 法人コード
+  name: entity.name, # 法人名
+  created_at: entity.created_at, # 作成日
+  updated_at: entity.updated_at, # 更新日
+}
