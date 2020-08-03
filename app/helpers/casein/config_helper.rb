@@ -15,6 +15,8 @@ module Casein
     def casein_config_hostname
       if Rails.env.production?
         'http://shabot.shallontec.biz'
+      elsif Rails.env.production_8woods?
+        'http://8woods.shallontec.biz'
       else
         'http://localhost:3000'
       end
