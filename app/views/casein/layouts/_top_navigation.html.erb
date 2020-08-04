@@ -2,4 +2,4 @@
 <!-- e.g. <li class="hidden-xs hidden-sm"><%= link_to "Visit site", casein_config_hostname, :target => "_blank" %></li> -->
 
 <li><%= link_to "Visit site", casein_config_hostname %></li>
-<li><%= link_to "発電所統計", "http://solar.shallontec.biz" %></li>
+<li><%= link_to "発電所統計", "http://solar.shallontec.biz" unless Rails.env.production_oosumiff? %></li>
