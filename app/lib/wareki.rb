@@ -1,7 +1,7 @@
 class Wareki
   DEFS = [
     [(Date.new(1926, 12, 25)..Date.new(1989, 1, 7)), "昭和"],
-    [(Date.new(1989,  1, 8)..Date.new(2030, 1, 1)), "平成"]
+    [(Date.new(1989,  1, 8)..Date.new(2019, 4, 30)), "平成"]
   ]
 
   def self.to_wareki(date)
@@ -16,7 +16,7 @@ class Wareki
                     end
       date&.strftime("#{wareki_text}%-m月%-d日")
     else
-      date&.strftime('%Y年%m月%d日')
+      date&.strftime('%Y年%-m月%-d日')
     end
   end
 end
