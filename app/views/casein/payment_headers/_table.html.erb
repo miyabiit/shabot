@@ -38,7 +38,7 @@
       <td><%= casein_table_cell_link payment_header.payment_type&.text, payment_path(payment_header) %></td>
       <td><%= casein_table_cell_link payment_header.payable_on, payment_path(payment_header) %></td>
       <td align="right"><%= casein_table_cell_link number_with_delimiter(payment_header.total), payment_path(payment_header) %></td>
-      <td><%= casein_table_cell_link Project.find(payment_header.project_id).name_and_category, payment_path(payment_header) %></td>
+      <td><%= casein_table_cell_link payment_header.project&.name_and_category, payment_path(payment_header) %></td>
       <td><%= casein_table_cell_link truncate(payment_header.comment, :length => 15), payment_path(payment_header) %></td>
       <td class="new">
         <%= table_row_add_icon_link_to new_payment_path(payment_header) %>
